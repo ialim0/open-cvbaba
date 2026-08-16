@@ -1,0 +1,237 @@
+<div class="pdf-page">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+    
+    .pdf-page {
+        font-family: 'Crimson Text', serif;
+        font-size: 12pt;
+        line-height: 1.35;
+        color: #000;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #000;
+    }
+    
+    .header h1 {
+        font-size: 26pt;
+        font-weight: 700;
+        margin: 0 0 6px 0;
+        letter-spacing: 1px;
+    }
+    
+    .contact-info {
+        font-family: 'Inter', sans-serif;
+        font-size: 10pt;
+        color: #333;
+    }
+    
+    .contact-info a {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    .section-title {
+        font-size: 14pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        border-bottom: 1.5px solid #000;
+        margin-top: 14px;
+        margin-bottom: 8px;
+        padding-bottom: 2px;
+    }
+    
+    .entry {
+        margin-bottom: 12px;
+    }
+    
+    .entry-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1px;
+    }
+    
+    .job-title {
+        font-weight: 700;
+        font-size: 12pt;
+    }
+    
+    .date {
+        font-style: italic;
+        font-size: 11pt;
+        color: #333;
+    }
+    
+    .subheader {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 5px;
+    }
+    
+    .institution {
+        font-weight: 600;
+        margin-left: 20px;
+        font-size: 11.5pt;
+    }
+    
+    .location {
+        font-style: italic;
+        font-size: 11pt;
+        color: #333;
+    }
+    
+    .degree {
+        margin-left: 20px;
+        font-size: 11.5pt;
+    }
+    
+    .tech-stack {
+        margin-left: 20px;
+        font-size: 11pt;
+        color: #444;
+        margin-bottom: 5px;
+    }
+    
+    ul {
+        margin: 0 0 0 20px;
+        padding: 0;
+        list-style-position: outside;
+    }
+    
+    li {
+        margin-bottom: 3px;
+        padding-left: 8px;
+        font-size: 12pt;
+    }
+    
+    .skills-section > div {
+        margin-bottom: 5px;
+        font-size: 12pt;
+    }
+    
+    .skills-section strong {
+        font-weight: 700;
+    }
+</style>
+
+<div class="header">
+    <h1>JAKE RYAN</h1>
+    <div class="contact-info">
+        123-456-7890 | jake@test.edu | linkedin.com/in/jake | github.com/jake
+    </div>
+</div>
+
+<div class="section-title">Education</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <div class="job-title">Southwestern University</div>
+        <div class="date">Georgetown, TX</div>
+    </div>
+    <div class="subheader">
+        <div class="degree">Bachelor of Arts in Computer Science, Minor in Business</div>
+        <div class="date">Aug. 2018 - May 2021</div>
+    </div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <div class="job-title">Blinn College</div>
+        <div class="date">Bryan, TX</div>
+    </div>
+    <div class="subheader">
+        <div class="degree">Associate of Liberal Arts</div>
+        <div class="date">Aug. 2014 - May 2018</div>
+    </div>
+</div>
+
+<div class="section-title">Experience</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <div class="job-title">Undergraduate Research Assistant</div>
+        <div class="date">June 2020 - Present</div>
+    </div>
+    <div class="subheader">
+        <div class="institution">Texas A&M University</div>
+        <div class="location">College Station, TX</div>
+    </div>
+    <ul>
+        <li>Developed a REST API using Flask, React, and PostgreSQL.</li>
+        <li>Developed a full-stack web application using Flask, React, PostgreSQL and Docker to analyze GitHub data.</li>
+        <li>Created visualizations of GitHub collaboration.</li>
+    </ul>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <div class="job-title">Information Technology Support Specialist</div>
+        <div class="date">Sep. 2018 - Present</div>
+    </div>
+    <div class="subheader">
+        <div class="institution">Southwestern University</div>
+        <div class="location">Georgetown, TX</div>
+    </div>
+    <ul>
+        <li>Set up campus computers and troubleshoot computer problems for students, faculty, and staff.</li>
+        <li>Maintained computers, classroom equipment, and printers across campus.</li>
+    </ul>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <div class="job-title">Artificial Intelligence Research Assistant</div>
+        <div class="date">May 2019 - July 2019</div>
+    </div>
+    <div class="subheader">
+        <div class="institution">Southwestern University</div>
+        <div class="location">Georgetown, TX</div>
+    </div>
+    <ul>
+        <li>Developed a genetic algorithm to produce procedural dungeons.</li>
+        <li>Presented virtually to the World Conference on Computational Intelligence.</li>
+    </ul>
+</div>
+
+<div class="section-title">Projects</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <div class="job-title">GitViz</div>
+        <div class="date">June 2020 - Present</div>
+    </div>
+    <div class="tech-stack">Python, Flask, React, PostgreSQL, Docker</div>
+    <ul>
+        <li>Developed a full-stack web application with Flask serving a REST API with React as the frontend.</li>
+        <li>Implemented GitHub OAuth to pull data and visualize collaboration.</li>
+        <li>Used Flask and Redis for asynchronous tasks.</li>
+    </ul>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <div class="job-title">Simple Paintball</div>
+        <div class="date">May 2018 - May 2020</div>
+    </div>
+    <div class="tech-stack">Spigot API, Java, Maven, Git</div>
+    <ul>
+        <li>Developed a Minecraft plugin; published with 25+ downloads and a 4.5/5-star review.</li>
+        <li>Implemented continuous delivery using Travis-CI.</li>
+    </ul>
+</div>
+
+<div class="section-title">Technical Skills</div>
+<div class="skills-section">
+    <div><strong>Languages:</strong> Java, Python, C/C++, SQL (Postgres), JavaScript, HTML/CSS, R</div>
+    <div><strong>Frameworks:</strong> React, Node.js, Flask, Material UI</div>
+    <div><strong>Developer Tools:</strong> Git, Docker, Google Cloud Platform, VS Code</div>
+    <div><strong>Libraries:</strong> pandas, NumPy, Matplotlib</div>
+</div>
+
+</div>

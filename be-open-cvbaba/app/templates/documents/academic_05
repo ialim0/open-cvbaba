@@ -1,0 +1,248 @@
+<div class="pdf-page">
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+
+.pdf-page {
+    box-sizing: border-box;
+    width: 794px;
+    height: 1123px;
+    padding: 38px;
+    background: white;
+    overflow: hidden;
+}
+
+
+.cv-container {
+    width: 100%;
+    height: 100%;
+   
+    font-family: 'Arimo', Arial, sans-serif; 
+    line-height: 1.35;
+    color: #333;
+    font-size: 10.5pt;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.name {
+    font-size: 18pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    color: #000;
+}
+.title {
+    font-size: 11pt;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+.contact-info {
+    font-size: 9pt;
+    line-height: 1.4;
+    color: #555;
+}
+
+/* Sections */
+.section { margin-bottom: 12px; }
+.section-title {
+    font-size: 11pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid #333;
+    margin-bottom: 8px;
+    padding-bottom: 2px;
+    letter-spacing: 0.5px;
+}
+
+/* Entries */
+.entry { margin-bottom: 10px; }
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+.entry-title { font-weight: 700; font-size: 10.5pt; }
+.entry-date { font-size: 10pt; text-align: right; min-width: 100px; }
+.entry-subtitle {
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+    margin-bottom: 2px;
+    font-size: 10pt;
+}
+
+/* --- LIST STYLING (UPDATED) --- */
+/* Standard Lists (for details, awards, service) */
+ul.standard-list {
+    margin: 2px 0 0 0;
+    padding-left: 18px; /* Indentation for bullets */
+    list-style-type: disc;
+}
+ul.standard-list li {
+    margin-bottom: 3px;
+    font-size: 10pt;
+}
+
+/* Publications List (Specific formatting) */
+ul.publication-list {
+    margin: 2px 0 0 0;
+    padding-left: 18px;
+    list-style-type: square; /* Square bullets for distinction */
+}
+ul.publication-list li {
+    margin-bottom: 6px;
+    font-size: 10pt;
+}
+
+/* Inline Interests List */
+ul.interests-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+ul.interests-list li {
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 10pt;
+}
+ul.interests-list li::after {
+    content: "•"; /* Bullet separator */
+    margin-left: 15px;
+    color: #ccc;
+}
+ul.interests-list li:last-child::after { content: ""; }
+
+/* Utility */
+.journal { font-style: italic; }
+table.skills { width: 100%; border-collapse: collapse; }
+table.skills td { padding: 2px 0; font-size: 10pt; vertical-align: top; }
+table.skills td:first-child { width: 120px; font-weight: 700; }
+</style>
+
+<div class="cv-container">
+    <div class="header">
+        <div class="name">Professor Maria Elena Rodriguez, Ph.D.</div>
+        <div class="title">Distinguished Researcher in Machine Learning &amp; Artificial Intelligence</div>
+        <div class="contact-info">
+            Department of Computer Science, MIT<br>
+            77 Massachusetts Avenue, Cambridge, MA 02139<br>
+            rodriguez@mit.edu &bull; (617) 555-0123 &bull; ORCID: 0000-0002-1234-5678
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Research Interests</div>
+        <ul class="interests-list">
+            <li>Foundation Models</li>
+            <li>Causal Machine Learning</li>
+            <li>Computational Neuroscience</li>
+            <li>Ethical AI</li>
+            <li>Quantum Machine Learning</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Academic Appointments</div>
+        <div class="entry">
+            <div class="entry-header">
+                <span class="entry-title">Professor of Computer Science</span>
+                <span class="entry-date">2019 - Present</span>
+            </div>
+            <div class="entry-subtitle">
+                <span>Massachusetts Institute of Technology</span>
+            </div>
+            <div class="entry-details">
+                <ul class="standard-list">
+                    <li>Director, AI Safety and Alignment Laboratory</li>
+                    <li>Principal Investigator, NSF AI Institute</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Selected Publications</div>
+        <ul class="publication-list">
+            <li>
+                Rodriguez, M.E., et al. (2023). "Emergence of Consciousness in Large Language Models." <span class="journal">Nature Machine Intelligence</span>.
+            </li>
+            <li>
+                Rodriguez, M.E., Chang, J. (2022). "Quantum-Inspired Neural Networks." <span class="journal">Science</span>.
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Grants &amp; Funding</div>
+        <ul class="standard-list">
+            <li>
+                <strong>NSF CAREER Award ($2,000,000)</strong> (2022 - 2027)<br>
+                <em>Advancing AI Safety through Causal Learning</em>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Technical Expertise</div>
+        <table class="skills">
+            <tbody>
+                <tr>
+                    <td>Deep Learning:</td>
+                    <td>PyTorch, TensorFlow, JAX</td>
+                </tr>
+                <tr>
+                    <td>Languages:</td>
+                    <td>Python, C++</td>
+                </tr>
+                <tr>
+                    <td>Tools:</td>
+                    <td>Weights &amp; Biases, MLflow</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Academic Service</div>
+        <ul class="standard-list">
+            <li><strong>Area Chair:</strong> NeurIPS, ICML, ICLR</li>
+            <li><strong>Reviewer:</strong> Nature Machine Intelligence, Science</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Awards &amp; Honors</div>
+        <ul class="standard-list">
+            <li>Fellow, ACM, 2023</li>
+            <li>Best Paper Award, NeurIPS 2022</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Education</div>
+        <div class="entry">
+            <div class="entry-header">
+                <span class="entry-title">Ph.D. in Computer Science</span>
+                <span class="entry-date">2012 - 2016</span>
+            </div>
+            <div class="entry-subtitle">Stanford University</div>
+        </div>
+        <div class="entry">
+            <div class="entry-header">
+                <span class="entry-title">B.Sc. in Electrical Engineering</span>
+                <span class="entry-date">2008 - 2012</span>
+            </div>
+            <div class="entry-subtitle">University of California, Berkeley</div>
+        </div>
+    </div>
+</div>
+</div>

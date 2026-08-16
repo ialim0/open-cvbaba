@@ -1,0 +1,220 @@
+<div class="pdf-page">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+        .pdf-page {
+            box-sizing: border-box;
+            width: 794px;
+            height: 1123px;
+            padding: 38px;
+            background: white;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            line-height: 1.5;
+            font-size: 10.5pt;
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* FAANG 03 Specific Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 24pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 9.5pt;
+            color: #555;
+        }
+        
+        .contact-info p {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .contact-info i {
+            margin-right: 4px;
+            color: #555;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            font-size: 11pt;
+            border-bottom: 1px solid #000;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            padding-bottom: 3px;
+            color: #000;
+        }
+
+        .entry {
+            margin-bottom: 12px;
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 10.5pt;
+            color: #000;
+            float: left;
+        }
+
+        .date {
+            float: right;
+            font-size: 10pt;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .company {
+            clear: both;
+            font-style: italic;
+            font-size: 10pt;
+            color: #444;
+            margin-bottom: 4px;
+        }
+
+        ul {
+            margin-top: 4px;
+            padding-left: 18px;
+            list-style-type: disc;
+        }
+        
+        li {
+            margin-bottom: 3px;
+        }
+
+        .skills-list {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+        
+        .skills-list strong {
+            font-weight: 600;
+            color: #000;
+        }
+        
+        .details {
+            margin-top: 4px;
+        }
+        
+        /* Clearfix for floated elements */
+        .entry::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+    </style>
+
+    <div class="header">
+        <h1>John Doe</h1>
+    </div>
+
+    <div class="contact-info">
+        <p>
+            <span><i class="fas fa-envelope"></i> johndoe@example.com</span>
+            <span>|</span>
+            <span><i class="fas fa-phone"></i> (555) 123-4567</span>
+            <span>|</span>
+            <span><i class="fab fa-github"></i> github.com/johndoe</span>
+            <span>|</span>
+            <span><i class="fab fa-linkedin"></i> linkedin.com/in/johndoe</span>
+        </p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Skills</div>
+        <div class="skills-list">
+            <strong>Languages:</strong> C/C++, Java, Python, JavaScript, SQL<br>
+            <strong>Technologies & Tools:</strong> AWS, Docker, Kubernetes, Spark, Hive, Elasticsearch, Spring Boot, Redis
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Work Experience</div>
+        <div class="entry">
+            <div class="job-title">Lead Software Engineer</div>
+            <div class="date">Mar 2021 - Present</div>
+            <div class="company">TechCorp Solutions</div>
+            <ul>
+                <li>Designed and implemented scalable cloud-based solutions, reducing system downtime by 30%.</li>
+                <li>Optimized database queries, leading to a 40% performance boost in core applications.</li>
+                <li>Led a cross-functional team to deliver projects on time, achieving 95% client satisfaction.</li>
+                <li>Technologies: AWS, Docker, Kubernetes, PostgreSQL, Python</li>
+            </ul>
+        </div>
+
+        <div class="entry">
+            <div class="job-title">Software Developer</div>
+            <div class="date">Sept 2019 - Mar 2021</div>
+            <div class="company">Innovatech Inc.</div>
+            <ul>
+                <li>Developed automation scripts that saved 20+ hours per week for the QA team.</li>
+                <li>Created a custom API for internal tools, streamlining data exchange across systems.</li>
+                <li>Technologies: Java, Spring Boot, TypeScript, MySQL</li>
+            </ul>
+        </div>
+
+        <div class="entry">
+            <div class="job-title">Junior Developer</div>
+            <div class="date">Aug 2017 - Aug 2019</div>
+            <div class="company">NextGen Technologies</div>
+            <ul>
+                <li>Built a data visualization tool using React and D3.js, improving decision-making processes.</li>
+                <li>Collaborated on a project to migrate legacy systems to a microservices architecture.</li>
+                <li>Technologies: Python, React, Redux, Kafka</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Education</div>
+        <div class="entry">
+            <div class="job-title">B.S. in Computer Science</div>
+            <div class="date">Aug 2013 - Jun 2017</div>
+            <div class="company">Tech University</div>
+            <div class="details">
+                <strong>Relevant Coursework:</strong> Data Structures, Algorithms, Machine Learning, Database Systems, Computer Networks
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Personal Projects</div>
+        <ul>
+            <li><strong>Task Manager App:</strong> Built a full-stack application for managing daily tasks using React and Node.js.</li>
+            <li><strong>Traffic Optimizer:</strong> Developed a simulation to optimize traffic flow using Dijkstra's algorithm and C++.</li>
+            <li><strong>Data Clustering Tool:</strong> Applied KMeans clustering to group datasets for market analysis.</li>
+        </ul>
+    </div>
+</div>

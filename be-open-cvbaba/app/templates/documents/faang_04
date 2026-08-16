@@ -1,0 +1,246 @@
+<div class="pdf-page">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+        .pdf-page {
+            box-sizing: border-box;
+            width: 794px;
+            height: 1123px;
+            padding: 30px;
+            background: white;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            line-height: 1.3;
+            font-size: 10pt;
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* FAANG 04 Specific Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 12px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 20pt;
+            font-weight: 700;
+            color: #000;
+            line-height: 1.1;
+        }
+
+        .role-title {
+            font-size: 10.5pt;
+            color: #555;
+            margin-top: 3px;
+            font-weight: 400;
+        }
+
+        .contact-links {
+            font-size: 8.5pt;
+            text-align: right;
+            line-height: 1.4;
+            color: #444;
+        }
+
+        .section-header {
+            text-transform: uppercase;
+            font-weight: 700;
+            border-bottom: 1px solid #ccc;
+            margin: 12px 0 6px 0;
+            font-size: 10.5pt;
+            color: #000;
+            padding-bottom: 1px;
+        }
+
+        .education-item,
+        .experience-item,
+        .project {
+            margin: 8px 0;
+        }
+
+        .job-title,
+        .project-title {
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10pt;
+            color: #000;
+        }
+
+        .job-subtitle {
+            font-style: italic;
+            color: #444;
+            font-size: 9.5pt;
+            margin-bottom: 1px;
+        }
+
+        .tech-stack {
+            font-style: italic;
+            color: #666;
+            font-size: 9pt;
+        }
+
+        ul {
+            margin: 3px 0;
+            padding-left: 14px;
+            list-style-type: disc;
+        }
+
+        li {
+            margin-bottom: 1px;
+            font-size: 9.5pt;
+        }
+
+        .skills-grid {
+            margin: 4px 0;
+            font-size: 9.5pt;
+            line-height: 1.4;
+        }
+
+        .citation {
+            font-size: 8.5pt;
+            color: #666;
+            margin-left: 3px;
+            font-style: italic;
+        }
+    </style>
+
+    <header>
+        <div>
+            <h1>Michael Zhang</h1>
+            <div class="role-title">Senior Software Engineer</div>
+        </div>
+        <div class="contact-links">
+            michael.zhang@gmail.com | (650) 555-0123<br>
+            michaelzhang.dev | github.com/mzhang
+        </div>
+    </header>
+
+    <div class="section-header">Education</div>
+    <div class="education-item">
+        <div class="job-title">
+            <span>Stanford University</span>
+            <span>Sep 2020 - Jun 2022</span>
+        </div>
+        <div class="job-subtitle">M.S. Computer Science - Machine Learning; GPA: 3.92</div>
+        <div style="font-size: 9.5pt;">Research: Distributed Systems, Deep Learning, NLP</div>
+    </div>
+    <div class="education-item">
+        <div class="job-title">
+            <span>UC Berkeley</span>
+            <span>Aug 2016 - May 2020</span>
+        </div>
+        <div class="job-subtitle">B.S. Computer Science and Mathematics; GPA: 3.95</div>
+    </div>
+
+    <div class="section-header">Skills</div>
+    <div class="skills-grid">
+        <div><strong>Languages & Frameworks:</strong> Python, Java, Go, C++, TypeScript, SQL, React, TensorFlow, PyTorch
+        </div>
+        <div style="margin-top: 3px;"><strong>Infrastructure & Tools:</strong> Kubernetes, Docker, gRPC, AWS (ECS,
+            Lambda, S3), GCP (GKE, Cloud Run), Terraform, Ansible, Kafka, Redis, PostgreSQL, MongoDB, Elasticsearch,
+            Spark, Git, Jenkins</div>
+    </div>
+
+    <div class="section-header">Experience</div>
+    <div class="experience-item">
+        <div class="job-title">
+            <span>Google Cloud Platform</span>
+            <span>Jul 2022 - Present</span>
+        </div>
+        <div class="job-subtitle">Senior Software Engineer</div>
+        <ul>
+            <li>Led serverless container orchestration service, reducing cold start latency by 40% <span
+                    class="citation">[Kubernetes, Go]</span></li>
+            <li>Designed distributed tracing pipeline, improving reliability to 99.99% <span class="citation">[gRPC,
+                    Prometheus]</span></li>
+            <li>Built ML model for predictive autoscaling, saving $3M annually <span class="citation">[TensorFlow,
+                    Python]</span></li>
+        </ul>
+    </div>
+
+    <div class="experience-item">
+        <div class="job-title">
+            <span>Meta</span>
+            <span>May 2021 - Aug 2021</span>
+        </div>
+        <div class="job-subtitle">Software Engineer Intern</div>
+        <ul>
+            <li>Developed real-time recommendation system, boosting engagement by 25% <span class="citation">[PyTorch,
+                    Redis]</span></li>
+            <li>Reduced request latency by 120ms with distributed caching <span class="citation">[Kafka, Go]</span></li>
+        </ul>
+    </div>
+
+    <div class="experience-item">
+        <div class="job-title">
+            <span>Amazon Web Services</span>
+            <span>May 2020 - Aug 2020</span>
+        </div>
+        <div class="job-subtitle">Software Development Engineer Intern</div>
+        <ul>
+            <li>Built logging pipeline processing 500K events/second <span class="citation">[Kinesis, Lambda]</span>
+            </li>
+            <li>Reduced over-provisioning costs by 25% <span class="citation">[CloudWatch, Python]</span></li>
+        </ul>
+    </div>
+
+    <div class="section-header">Projects</div>
+    <div class="project">
+        <div class="project-title">
+            <span>Distributed Machine Learning Platform</span>
+            <span class="tech-stack">[Python, Kubernetes, TensorFlow]</span>
+        </div>
+        <div style="font-size: 9.5pt;">Scalable ML training platform reducing training time by 70% for large models.
+        </div>
+    </div>
+    <div class="project">
+        <div class="project-title">
+            <span>Real-time Stream Processing Engine</span>
+            <span class="tech-stack">[Go, Kafka, gRPC]</span>
+        </div>
+        <div style="font-size: 9.5pt;">High-performance engine handling 100K+ messages/second with sub-millisecond
+            latency.</div>
+    </div>
+
+    <div class="section-header">Achievements</div>
+    <ul>
+        <li>Published at NeurIPS 2022: "Efficient Large-Scale Distributed Training of Deep Neural Networks"</li>
+        <li>Best Paper Award at SOSP 2021 for distributed systems optimization</li>
+        <li>1st Place at Stanford Systems Competition 2021</li>
+    </ul>
+
+    <div class="section-header">Open Source</div>
+    <div class="project">
+        <div class="project-title">
+            <span>Kubernetes Contributor</span>
+            <span class="tech-stack">[Go]</span>
+        </div>
+        <div style="font-size: 9.5pt;">Improved scheduler throughput by 35% for large clusters.</div>
+    </div>
+    <div class="project">
+        <div class="project-title">
+            <span>TensorFlow Contributor</span>
+            <span class="tech-stack">[Python]</span>
+        </div>
+        <div style="font-size: 9.5pt;">Reduced memory usage by 40% for transformer models.</div>
+    </div>
+</div>

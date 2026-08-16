@@ -1,0 +1,221 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Lora', 'Georgia', serif;
+    font-size: 12pt;
+    line-height: 1.4;
+    color: #000;
+    background-color: #fff;
+    width: 100%;
+    min-height: 1047px;
+}
+
+.header {
+    margin-bottom: 22px;
+}
+
+.name {
+    font-size: 22pt;
+    margin-bottom: 12px;
+    border-bottom: 2px double #000;
+    padding-bottom: 6px;
+    font-weight: 600;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+    font-size: 11pt;
+}
+
+.section {
+    margin: 20px 0;
+}
+
+.section-title {
+    font-size: 14pt;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.section-title:after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background: #000;
+    margin-left: 12px;
+}
+
+.entry {
+    margin-bottom: 14px;
+    padding-left: 12px;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+    align-items: baseline;
+}
+
+.entry-title {
+    font-weight: 600;
+}
+
+.entry-institution {
+    font-style: italic;
+    font-size: 11.5pt;
+}
+
+.entry-date {
+    white-space: nowrap;
+    font-size: 11pt;
+}
+
+.entry-detail {
+    font-size: 11.5pt;
+    margin-top: 2px;
+}
+
+.publication {
+    margin-bottom: 12px;
+    padding-left: 20px;
+    text-indent: -20px;
+    font-size: 11.5pt;
+}
+
+.course {
+    margin-bottom: 12px;
+}
+
+.service-item {
+    margin-bottom: 10px;
+}
+
+ul {
+    margin-left: 18px;
+    margin-top: 5px;
+}
+
+li {
+    margin-bottom: 3px;
+    font-size: 11.5pt;
+}
+</style>
+
+<div class="header">
+    <div class="name">Professor Robert M. Wilson, Ph.D.</div>
+    <div class="contact-grid">
+        <div>
+            Department of History<br>
+            University of Example<br>
+            456 Scholar Hall
+        </div>
+        <div>
+            wilson@example.edu<br>
+            Tel: (617) 555-5678<br>
+            Website: wilson.example.edu
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Education and Training</div>
+    <div class="entry">
+        <div class="entry-header">
+            <span class="entry-title">Ph.D. in Modern European History</span>
+            <span class="entry-date">2005-2010</span>
+        </div>
+        <div class="entry-institution">Harvard University</div>
+        <div class="entry-detail">Dissertation: "The Social Impact of Industrialization in Victorian England"</div>
+    </div>
+
+    <div class="entry">
+        <div class="entry-header">
+            <span class="entry-title">M.A. in History</span>
+            <span class="entry-date">2003-2005</span>
+        </div>
+        <div class="entry-institution">Oxford University</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Books and Monographs</div>
+    <div class="publication">
+        Wilson, R.M. (2022). <i>Victorian Industry and Social Change.</i> Cambridge University Press.
+    </div>
+    <div class="publication">
+        Wilson, R.M. (2018). <i>The Industrial Revolution Reconsidered.</i> Oxford University Press.
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Peer-Reviewed Articles</div>
+    <div class="publication">
+        Wilson, R.M. (2023). "Social Mobility in Victorian Manchester." <i>Journal of British Studies</i>, 62(2), 234-256.
+    </div>
+    <div class="publication">
+        Wilson, R.M., & Smith, J. (2022). "Industrial Workers and Urban Culture." <i>Victorian Studies</i>, 65(1), 78-95.
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Teaching Experience</div>
+    <div class="course">
+        <div class="entry-header">
+            <span class="entry-title">Victorian Britain (HIST 301)</span>
+            <span class="entry-date">2015-Present</span>
+        </div>
+        <ul>
+            <li>Upper-level undergraduate seminar focusing on social and economic history</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Research Grants and Fellowships</div>
+    <div class="entry">
+        <div class="entry-header">
+            <span class="entry-title">National Endowment for the Humanities Fellowship</span>
+            <span class="entry-date">2021-2022</span>
+        </div>
+        <div class="entry-detail">"Industrial Cities and Social Reform in Victorian England"</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Professional Service</div>
+    <div class="service-item">
+        <div class="entry-header">
+            <span class="entry-title">Editor, Journal of Victorian Studies</span>
+            <span class="entry-date">2019-Present</span>
+        </div>
+    </div>
+    <div class="service-item">
+        <div class="entry-header">
+            <span class="entry-title">Chair, Department History Graduate Committee</span>
+            <span class="entry-date">2018-2021</span>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Languages</div>
+    <div class="entry">
+        French (Fluent), German (Research Proficiency)
+    </div>
+</div>
+
+</div>

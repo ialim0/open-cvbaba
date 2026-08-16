@@ -1,0 +1,174 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    line-height: 1.25;
+    color: #1a1a1a;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    padding: 25px;
+}
+
+h1 {
+    font-size: 32pt;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+h2 {
+    font-size: 12pt;
+    font-weight: 600;
+    margin: 14px 0 6px 0;
+    color: #007B8A;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 2px;
+}
+
+strong {
+    font-weight: 600;
+}
+
+p {
+    margin: 0 0 6px 0;
+}
+
+ul {
+    margin: 0 0 10px 0;
+    padding-left: 16px;
+}
+
+li {
+    margin-bottom: 3px;
+    padding-left: 3px;
+}
+
+.header {
+    background: #007B8A;
+    padding: 20px 25px;
+    margin: -25px -25px 12px -25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-info {
+    font-size: 10pt;
+    color: #ffffff;
+    text-align: right;
+    line-height: 1.2;
+}
+
+.section {
+    margin-bottom: 12px;
+}
+
+.job-meta,
+.education-meta {
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+.skill-category {
+    margin-bottom: 8px;
+}
+
+.skill-title {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+</style>
+
+<div class="header">
+    <div>
+        <h1>Shawn<br>Kelly</h1>
+    </div>
+    <div class="contact-info">
+        example@example.com<br>
+        555-555-5555<br>
+        Braintree, MA 02184
+    </div>
+</div>
+
+<div class="section">
+    <h2>Resume Objective</h2>
+    <p>Driven scribe assistant seeking a scribe position at Vista Community Clinic to leverage strong organizational and communication skills, as well as a solid understanding of medical terminology and procedures, to provide accurate and efficient documentation support to health care professionals.</p>
+</div>
+
+<div class="section">
+    <h2>Summary of Qualifications</h2>
+    <ul>
+        <li>Adept at efficiently managing tasks and resources to ensure timely completion of projects and responsibilities</li>
+        <li>Strong written and verbal communication abilities, honed through academic coursework and professional experience</li>
+        <li>Proficient in conducting research, gathering data and analyzing information to make informed decisions and recommendations</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Professional Skills</h2>
+    <div class="skill-category">
+        <p class="skill-title">Medical Terminology:</p>
+        <ul>
+            <li>Ensured accurate transcriptions of diagnoses, procedures and patient information</li>
+            <li>Controlled a library of medical reference materials and resources to ensure the accurate use of medical terminology in documentation</li>
+            <li>Participated in three training sessions with colleagues on the importance of precise medical terminology usage and its impact on patient care and billing processes</li>
+        </ul>
+    </div>
+    <div class="skill-category">
+        <p class="skill-title">Data Entry:</p>
+        <ul>
+            <li>Maintained high accuracy and attention to detail with an average typing speed of 65 WPM</li>
+            <li>Recorded and transcribed patient interactions with health care providers, maintaining an average of 98% accuracy in documentation</li>
+            <li>Compiled, sorted and indexed medical records, increasing accessibility and reducing retrieval time</li>
+        </ul>
+    </div>
+    <div class="skill-category">
+        <p class="skill-title">EMR Proficiency:</p>
+        <ul>
+            <li>Entered data into the EMR system, ensuring confidentiality and compliance with HIPAA regulations</li>
+            <li>Kept a well-organized filing system for medical records, reducing retrieval time by 25%</li>
+            <li>Assisted in preparing patient charts, ensuring all relevant information was up to date, resulting in a 20% reduction in errors</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Work History</h2>
+    <div class="job-meta"><strong>SCRIBE ASSISTANT</strong> | 11/2022 to Current<br>Legacy Health - Braintree, MA</div>
+    <div class="job-meta"><strong>MEDICAL RECORDS CLERK INTERNSHIP</strong> | 11/2021 to 11/2022<br>GoHealth Urgent Care - Weymouth, MA</div>
+</div>
+
+<div class="section">
+    <h2>Education</h2>
+    <div class="education-meta"><strong>Fisher College</strong> - Boston, MA<br>Bachelor of Science</div>
+    <p>Health Information Management, <strong>06/2021</strong></p>
+    <ul>
+        <li>Relevant coursework: Medical terminology, health data management, anatomy and physiology</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Certifications</h2>
+    <ul>
+        <li>CPR and Basic Life Support (BLS) Certification</li>
+    </ul>
+</div>
+</div>

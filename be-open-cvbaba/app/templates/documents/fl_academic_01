@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Recommendation Letter</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            font-size: 14px;
+        }
+        .letterhead {
+            border-bottom: 2px solid #003366;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .university-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #003366;
+        }
+        .department {
+            font-size: 16px;
+            color: #555;
+        }
+        .contact-info {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .date {
+            margin: 20px 0 15px 0;
+        }
+        .recipient {
+            margin-bottom: 15px;
+        }
+        .subject {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .greeting {
+            margin-bottom: 10px;
+        }
+        .content p {
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+        .closing {
+            margin-top: 20px;
+        }
+        .signature {
+            margin-top: 30px;
+        }
+        .signature-name {
+            font-weight: bold;
+        }
+        .signature-title {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="letterhead">
+        <div class="university-name">UNIVERSITY OF CAMBRIDGE</div>
+        <div class="department">Department of Theoretical Physics</div>
+        <div class="contact-info">
+            JJ Thomson Avenue, Cambridge CB3 0HE, United Kingdom<br>
+            Tel: +44 (0)1223 337733 | Email: physics.dept@cam.ac.uk
+        </div>
+    </div>
+
+    <div class="date">March 13, 2025</div>
+
+    <div class="recipient">
+        Graduate Admissions Committee<br>
+        Massachusetts Institute of Technology<br>
+        77 Massachusetts Avenue<br>
+        Cambridge, MA 02139<br>
+        United States
+    </div>
+
+    <div class="subject">RE: Letter of Recommendation for Emma Chen</div>
+
+    <div class="greeting">Dear Admissions Committee,</div>
+
+    <div class="content">
+        <p>I am writing to provide my strongest recommendation for Emma Chen, who is applying to your Doctoral Program in Theoretical Physics. I have known Emma for the past three years, first as a student in my Advanced Quantum Mechanics course, and subsequently as my research assistant investigating quantum field theories in curved spacetime.</p>
+        
+        <p>Emma ranks among the top 1% of students I have taught in my fifteen years at Cambridge. Her understanding of complex theoretical concepts is exceptional, as evidenced by her first-author paper in <i>Physical Review Letters</i> on symmetry breaking in non-equilibrium quantum systems. This work has already garnered significant attention in our field, with several research groups building upon her theoretical framework.</p>
+        
+        <p>Beyond her remarkable intellectual capabilities, Emma possesses the persistence and creativity essential for pioneering research. When faced with a particularly challenging mathematical problem in our work on quantum entanglement, she developed a novel computational approach that elegantly resolved the issue. This demonstrated not only technical proficiency but also the innovative thinking that characterizes the most successful theoretical physicists.</p>
+        
+        <p>Emma has also shown excellent communication abilities, presenting our research at three international conferences where her clarity and command of the material impressed senior colleagues. She has simultaneously mentored undergraduate students in our laboratory, displaying patience and an ability to explain complex concepts in accessible terms. These teaching skills will undoubtedly serve her well in an academic career.</p>
+        
+        <p>Emma's combination of exceptional analytical abilities, research creativity, and collaborative skills make her an ideal candidate for your program. I believe she has the potential to make significant contributions to theoretical physics, particularly in quantum information theory where your department has established leadership.</p>
+        
+        <p>In conclusion, I recommend Emma Chen without reservation. She is precisely the kind of brilliant, dedicated scholar who will thrive in a demanding doctoral program and subsequently advance the boundaries of our field. Please do not hesitate to contact me should you require any further information about her qualifications or character.</p>
+    </div>
+
+    <div class="closing">Sincerely,</div>
+
+    <div class="signature">
+        <div class="signature-name">Professor Jonathan Blackwell, D.Phil, FRS</div>
+        <div class="signature-title">Chair of Quantum Information Theory</div>
+        <div class="signature-title">Fellow of Trinity College</div>
+    </div>
+</body>
+</html>

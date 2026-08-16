@@ -1,0 +1,402 @@
+<div class="pdf-page">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+        .pdf-page {
+            box-sizing: border-box;
+            width: 794px;
+            height: 1123px;
+            padding: 0;
+            background: white;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            line-height: 1.3;
+            font-size: 10pt;
+            display: flex;
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Modern 02 Specific Styles */
+        .left-column {
+            width: 35%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        .right-column {
+            width: 65%;
+            padding: 30px 25px;
+            background-color: white;
+            height: 100%;
+        }
+
+        /* Left Column Styles */
+        .profile-circle {
+            width: 100px;
+            height: 100px;
+            background-color: #e2e8f0;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .name {
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .title {
+            font-size: 12px;
+            color: #bdc3c7;
+            text-align: center;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .left-section {
+            margin-bottom: 25px;
+        }
+
+        .left-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 11px;
+        }
+
+        .contact-item i {
+            width: 18px;
+            margin-right: 6px;
+            text-align: center;
+            color: #3498db;
+        }
+
+        .skill-item {
+            margin-bottom: 10px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+            font-size: 11px;
+        }
+
+        .skill-bar-bg {
+            width: 100%;
+            height: 5px;
+            background-color: #34495e;
+            border-radius: 2px;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            background-color: #3498db;
+            border-radius: 2px;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+
+        .interest-tag {
+            display: inline-block;
+            background-color: #34495e;
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+
+        /* Right Column Styles */
+        .right-section {
+            margin-bottom: 25px;
+        }
+
+        .right-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 3px;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .about-text {
+            font-size: 12px;
+            color: #444;
+            line-height: 1.4;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 8px;
+            height: 8px;
+            background-color: #3498db;
+            border-radius: 50%;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 3px;
+            top: 12px;
+            width: 2px;
+            height: calc(100% + 3px);
+            background-color: #f0f0f0;
+        }
+
+        .timeline-item:last-child .timeline-line {
+            display: none;
+        }
+
+        .job-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .company-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 1px;
+        }
+
+        .date-range {
+            font-size: 10px;
+            color: #7f8c8d;
+            margin-bottom: 6px;
+            font-style: italic;
+        }
+
+        .job-details {
+            font-size: 11.5px;
+            color: #444;
+            line-height: 1.4;
+        }
+
+        .job-details li {
+            margin-bottom: 2px;
+            list-style-type: disc;
+            margin-left: 12px;
+        }
+
+        .education-degree {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .education-school {
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+        }
+
+    </style>
+
+    <!-- Left Column -->
+    <div class="left-column">
+        <!-- Profile Section -->
+        <div class="profile-circle">YN</div>
+        <div class="name">Your Name</div>
+        <div class="title">Professional Title</div>
+
+        <!-- Contact Section -->
+        <div class="left-section">
+            <div class="left-section-title">Contact</div>
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>(123) 456-7890</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>your.email@example.com</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>City, State</span>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-linkedin"></i>
+                <span>linkedin.com/in/yourname</span>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="left-section">
+            <div class="left-section-title">Skills</div>
+            <div class="skill-item">
+                <div class="skill-header">
+                    <span>Web Development</span>
+                    <span>90%</span>
+                </div>
+                <div class="skill-bar-bg">
+                    <div class="skill-bar-fill" style="width: 90%;"></div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header">
+                    <span>UI/UX Design</span>
+                    <span>85%</span>
+                </div>
+                <div class="skill-bar-bg">
+                    <div class="skill-bar-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header">
+                    <span>Project Management</span>
+                    <span>80%</span>
+                </div>
+                <div class="skill-bar-bg">
+                    <div class="skill-bar-fill" style="width: 80%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Languages Section -->
+        <div class="left-section">
+            <div class="left-section-title">Languages</div>
+            <div class="language-item">
+                <span>English</span>
+                <span style="color: #bdc3c7;">Native</span>
+            </div>
+            <div class="language-item">
+                <span>Spanish</span>
+                <span style="color: #bdc3c7;">Fluent</span>
+            </div>
+        </div>
+
+        <!-- Interests Section -->
+        <div class="left-section">
+            <div class="left-section-title">Interests</div>
+            <div>
+                <span class="interest-tag">Photography</span>
+                <span class="interest-tag">Travel</span>
+                <span class="interest-tag">Reading</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-column">
+        <!-- About Me Section -->
+        <div class="right-section">
+            <div class="right-section-title">About Me</div>
+            <p class="about-text">
+                Dedicated and detail-oriented professional with [X] years of experience in [industry/field]. Skilled in [key skill], [key skill], and [key skill] with proven success in [significant achievement]. Passionate about [what drives you] and committed to [professional goal or value].
+            </p>
+        </div>
+
+        <!-- Work Experience Section -->
+        <div class="right-section">
+            <div class="right-section-title">Work Experience</div>
+            
+            <!-- Job 1 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-line"></div>
+                <div class="job-title">Job Position</div>
+                <div class="company-name">Company Name</div>
+                <div class="date-range">Month Year - Present</div>
+                <ul class="job-details">
+                    <li>Led [specific project] that resulted in [specific, quantifiable result]</li>
+                    <li>Managed a team of [X] members, overseeing [specific responsibility]</li>
+                    <li>Implemented [specific strategy] which improved [metric] by [percentage]</li>
+                </ul>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-line"></div>
+                <div class="job-title">Previous Position</div>
+                <div class="company-name">Previous Company</div>
+                <div class="date-range">Month Year - Month Year</div>
+                <ul class="job-details">
+                    <li>Developed [product/service] which increased revenue by [amount]</li>
+                    <li>Collaborated with cross-functional teams to deliver [project] on time</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="right-section">
+            <div class="right-section-title">Education</div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-line"></div>
+                <div class="education-degree">Degree Name</div>
+                <div class="education-school">University Name</div>
+                <div class="date-range">Year - Year</div>
+                <p class="about-text" style="margin-top: 3px;">GPA: X.XX/4.0</p>
+                <p class="about-text">Relevant coursework: [Course], [Course], [Course]</p>
+            </div>
+        </div>
+
+        <!-- Certifications Section -->
+        <div class="right-section">
+            <div class="right-section-title">Certifications</div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="education-degree">Certification Name</div>
+                <div class="education-school">Issuing Organization</div>
+                <div class="date-range">Year</div>
+            </div>
+        </div>
+    </div>
+</div>

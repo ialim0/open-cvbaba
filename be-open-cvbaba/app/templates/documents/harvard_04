@@ -1,0 +1,217 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Crimson Text', 'Palatino', serif;
+    font-size: 11pt;
+    line-height: 1.3;
+    color: #000;
+    background-color: #fff;
+    width: 100%;
+    min-height: 1047px;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.name {
+    font-size: 20pt;
+    font-weight: 400;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 4px;
+    display: inline-block;
+}
+
+.contact-info {
+    font-style: italic;
+    line-height: 1.4;
+    font-size: 10pt;
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    margin: 8px 0;
+}
+
+.section {
+    margin: 15px 0;
+}
+
+.section-title {
+    font-size: 12pt;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    display: inline-block;
+    border-bottom: 2px solid #000;
+    padding-right: 30px;
+    font-weight: 400;
+}
+
+.entry {
+    margin-bottom: 12px;
+}
+
+.entry-grid {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 8px;
+    margin-bottom: 2px;
+    align-items: baseline;
+}
+
+.entry-title {
+    font-weight: 600;
+    font-size: 11pt;
+}
+
+.entry-org {
+    font-style: italic;
+    font-size: 10.5pt;
+}
+
+.entry-date {
+    text-align: right;
+    font-style: italic;
+    font-size: 10pt;
+}
+
+.entry-role {
+    margin-bottom: 2px;
+    font-size: 10.5pt;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 16px;
+    margin-top: 4px;
+}
+
+li {
+    margin-bottom: 2px;
+    text-align: left;
+    font-size: 10.5pt;
+}
+
+.skills-table {
+    width: 100%;
+    margin-top: 6px;
+    border-collapse: collapse;
+}
+
+.skills-table td {
+    padding: 2px 10px 2px 0;
+    vertical-align: top;
+    font-size: 10.5pt;
+}
+
+.skills-table td:first-child {
+    font-weight: 600;
+    width: 120px;
+}
+</style>
+
+<div class="header">
+    <div class="name">William H. Thompson</div>
+    <div class="contact-info">
+        44 Harvard Law School · Cambridge, MA 02138<br>
+        (617) 555-7890 · william.thompson@harvard.edu<br>
+        linkedin.com/in/williamthompson
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Education</div>
+    <div class="entry">
+        <div class="entry-grid">
+            <div>
+                <span class="entry-title">Harvard Law School</span><span class="entry-org">, Cambridge, MA</span>
+            </div>
+            <div class="entry-date">May 2024</div>
+        </div>
+        <div class="entry-role">Juris Doctor Candidate</div>
+        <ul>
+            <li>Harvard Law Review, Executive Editor</li>
+            <li>Harvard Legal Aid Bureau, Student Attorney</li>
+            <li>GPA: 3.91/4.00; Dean's Scholar Prize in Constitutional Law</li>
+        </ul>
+    </div>
+
+    <div class="entry">
+        <div class="entry-grid">
+            <div>
+                <span class="entry-title">Princeton University</span><span class="entry-org">, Princeton, NJ</span>
+            </div>
+            <div class="entry-date">June 2020</div>
+        </div>
+        <div class="entry-role">A.B. in Politics, Certificate in Values & Public Life</div>
+        <ul>
+            <li>Summa Cum Laude; Phi Beta Kappa; Senior Thesis Prize</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Legal Experience</div>
+    <div class="entry">
+        <div class="entry-grid">
+            <div>
+                <span class="entry-title">U.S. Court of Appeals</span><span class="entry-org">, First Circuit</span>
+            </div>
+            <div class="entry-date">Summer 2023</div>
+        </div>
+        <div class="entry-role">Judicial Intern, Hon. Judge Martinez</div>
+        <ul>
+            <li>Drafted bench memoranda and opinions for civil and criminal cases</li>
+            <li>Conducted legal research on constitutional law and statutory interpretation</li>
+        </ul>
+    </div>
+
+    <div class="entry">
+        <div class="entry-grid">
+            <div>
+                <span class="entry-title">Davis Polk & Wardwell LLP</span><span class="entry-org">, New York, NY</span>
+            </div>
+            <div class="entry-date">Summer 2022</div>
+        </div>
+        <div class="entry-role">Summer Associate</div>
+        <ul>
+            <li>Worked on corporate transactions and regulatory compliance matters</li>
+            <li>Assisted with pro bono asylum cases and housing rights advocacy</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Skills & Qualifications</div>
+    <table class="skills-table">
+        <tr>
+            <td>Legal Research:</td>
+            <td>Westlaw, LexisNexis, Bloomberg Law</td>
+        </tr>
+        <tr>
+            <td>Certifications:</td>
+            <td>Certified in Legal Research & Writing</td>
+        </tr>
+        <tr>
+            <td>Languages:</td>
+            <td>English (Native), Spanish (Professional), German (Conversational)</td>
+        </tr>
+    </table>
+</div>
+
+</div>

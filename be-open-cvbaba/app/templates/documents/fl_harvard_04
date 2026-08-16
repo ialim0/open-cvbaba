@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cover Letter - Jane Smith</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      color: #333;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 26px;
+      margin: 0;
+      color: #2c3e50;
+    }
+    .header p {
+      font-size: 14px;
+      margin: 5px 0;
+      color: #7f8c8d;
+    }
+    .content {
+      margin: 20px 0;
+    }
+    .content p {
+      margin: 10px 0;
+    }
+    .signature {
+      margin-top: 30px;
+      font-style: italic;
+      color: #2c3e50;
+    }
+    .highlight {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Jane Smith</h1>
+    <p>456 Harvard Avenue, Cambridge, MA 02138</p>
+    <p>Email: jane.smith@example.com | Phone: (987) 654-3210</p>
+  </div>
+  <div class="content">
+    <p>October 10, 2023</p>
+    <p>Hiring Manager</p>
+    <p>InnovateTech Solutions</p>
+    <p>789 Tech Drive, Boston, MA 02110</p>
+    <br>
+    <p>Dear Hiring Manager,</p>
+    <p>I am excited to apply for the <span class="highlight">Product Manager</span> position at InnovateTech Solutions. As a recent Harvard graduate with a degree in Computer Science and a passion for driving innovation, I am eager to bring my technical expertise and leadership skills to your dynamic team.</p>
+    <p>During my internship at TechForward Inc., I led a team of developers to design and launch a mobile app that garnered over 100,000 downloads within the first three months. My ability to bridge the gap between technical teams and stakeholders ensured the project’s success and alignment with business goals.</p>
+    <p>What excites me most about InnovateTech Solutions is your focus on cutting-edge technologies and user-centric design. I am confident that my analytical mindset, combined with my experience in agile project management, will make a significant impact on your product development initiatives.</p>
+    <p>I would love the opportunity to discuss how my background and skills align with your needs. Please feel free to contact me at (987) 654-3210 or jane.smith@example.com to schedule a conversation.</p>
+    <p>Thank you for your time and consideration.</p>
+    <p>Sincerely,</p>
+    <p class="signature">Jane Smith</p>
+  </div>
+</body>
+</html>

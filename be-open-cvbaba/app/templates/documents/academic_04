@@ -1,0 +1,265 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12pt;
+    line-height: 1.4;
+    color: #2c3e50;
+    background-color: #fff;
+    width: 100%;
+    min-height: 1047px;
+}
+
+.header {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 14px;
+}
+
+.name {
+    font-size: 22pt;
+    color: #2c3e50;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.title {
+    color: #000;
+    font-size: 14pt;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+    font-size: 10.5pt;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.section {
+    margin: 18px 0;
+}
+
+.section-title {
+    font-size: 14pt;
+    color: #000;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.research-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.tag {
+    background: #f7f9fc;
+    border: 1px solid #000;
+    color: #000;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10.5pt;
+}
+
+.publication {
+    margin-bottom: 12px;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+
+.pub-title {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 11.5pt;
+}
+
+.pub-authors {
+    color: #666;
+    font-style: italic;
+    font-size: 10.5pt;
+}
+
+.pub-venue {
+    color: #000;
+    font-size: 10.5pt;
+}
+
+.metrics {
+    display: inline-block;
+    background: #f7f9fc;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10pt;
+    color: #666;
+    margin-left: 4px;
+}
+
+.experience-item {
+    margin-bottom: 14px;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+    align-items: baseline;
+}
+
+.institution {
+    font-weight: 600;
+    font-size: 12pt;
+}
+
+.date {
+    color: #666;
+    font-size: 11pt;
+    white-space: nowrap;
+}
+
+.position {
+    font-size: 11.5pt;
+    margin-bottom: 4px;
+}
+
+ul {
+    list-style-type: none;
+    margin-left: 14px;
+}
+
+li {
+    margin-bottom: 3px;
+    position: relative;
+    font-size: 11.5pt;
+}
+
+li::before {
+    content: "•";
+    color: #000;
+    position: absolute;
+    left: -14px;
+    font-weight: 700;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.skill-category {
+    background: #f7f9fc;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.skill-title {
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 11.5pt;
+}
+
+.skill-content {
+    font-size: 11pt;
+}
+</style>
+
+<div class="header">
+    <div class="name">Dr. Alex R. Zhang</div>
+    <div class="title">Senior Research Scientist - Machine Learning & AI</div>
+    <div class="contact-info">
+        <div class="contact-item"><i class="fas fa-envelope"></i> zhang.a@ailab.edu</div>
+        <div class="contact-item"><i class="fas fa-graduation-cap"></i> scholar.google.com/zhang</div>
+        <div class="contact-item"><i class="fab fa-github"></i> github.com/azhang</div>
+        <div class="contact-item"><i class="fas fa-building"></i> AI Research Lab, Berkeley</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Research Focus</div>
+    <div class="research-tags">
+        <span class="tag">Large Language Models</span>
+        <span class="tag">Multimodal Learning</span>
+        <span class="tag">AI Alignment</span>
+        <span class="tag">Reinforcement Learning</span>
+        <span class="tag">Transformer Models</span>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Selected Publications</div>
+    <div class="publication">
+        <div class="pub-title">"Scaling Laws in Large Language Models: A Multi-Modal Perspective"</div>
+        <div class="pub-authors">Zhang, A., Johnson, M., et al.</div>
+        <div class="pub-venue">NeurIPS 2023 <span class="metrics">Citations: 156</span></div>
+    </div>
+    <div class="publication">
+        <div class="pub-title">"Self-Aligning Language Models through Reinforcement Learning"</div>
+        <div class="pub-authors">Zhang, A., Smith, R., Brown, K.</div>
+        <div class="pub-venue">ICML 2023 <span class="metrics">Citations: 89</span></div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Research Experience</div>
+    <div class="experience-item">
+        <div class="experience-header">
+            <span class="institution">DeepMind</span>
+            <span class="date">2021 - Present</span>
+        </div>
+        <div class="position">Senior Research Scientist</div>
+        <ul>
+            <li>Lead researcher on large-scale language model alignment</li>
+            <li>Developed novel architecture for efficient training of multi-modal models</li>
+            <li>Published 8 papers in top-tier conferences (h-index: 15)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Technical Expertise</div>
+    <div class="skills-grid">
+        <div class="skill-category">
+            <div class="skill-title">Deep Learning</div>
+            <div class="skill-content">PyTorch, TensorFlow, JAX, Transformers</div>
+        </div>
+        <div class="skill-category">
+            <div class="skill-title">Languages</div>
+            <div class="skill-content">Python, C++, Julia</div>
+        </div>
+        <div class="skill-category">
+            <div class="skill-title">Tools & Platforms</div>
+            <div class="skill-content">Docker, Kubernetes, AWS</div>
+        </div>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,26 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+**/env/
+
+# Frontend dependencies and builds
+node_modules/
+.next/
+out/
+coverage/
+
+# Local and editor files
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/

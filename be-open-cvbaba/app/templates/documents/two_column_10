@@ -1,0 +1,190 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Times New Roman', serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #222;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    border: 1px solid #a0a0a0;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #5d5d5d;
+}
+
+.header h1 {
+    color: #5d5d5d;
+    margin: 0;
+    font-size: 22pt;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.header p {
+    margin: 4px 0;
+    font-size: 11pt;
+    font-weight: 500;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+    margin-top: 4px;
+}
+
+.contact-info a {
+    color: #5d5d5d;
+    text-decoration: none;
+    margin: 0 4px;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 15px;
+}
+
+.sidebar {
+    padding-right: 12px;
+    border-right: 1px solid #a0a0a0;
+}
+
+.sidebar h3, .main-section h3 {
+    color: #5d5d5d;
+    font-size: 11.5pt;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #5d5d5d;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.sidebar h3:first-child {
+    margin-top: 0;
+}
+
+.details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+    font-size: 9.5pt;
+}
+
+.details-list li {
+    margin-bottom: 4px;
+}
+
+.main-section {
+    padding-left: 12px;
+}
+
+.job-entry {
+    margin-bottom: 15px;
+}
+
+.job-title {
+    font-weight: 700;
+    font-size: 10.5pt;
+    display: block;
+    color: #5d5d5d;
+}
+
+.company-dates {
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+    font-size: 9.5pt;
+    color: #a0a0a0;
+    margin-bottom: 4px;
+}
+
+.description ul {
+    padding-left: 16px;
+    margin: 4px 0 0 0;
+    font-size: 9.5pt;
+}
+
+.description li {
+    margin-bottom: 3px;
+}
+</style>
+
+<div class="header">
+    <h1>ADA LOVELACE</h1>
+    <p>Analytical Mathematician</p>
+    <div class="contact-info">
+        <span>London, UK</span> | 
+        <a href="#">Publications</a> | 
+        <a href="#">Academic Profile</a>
+    </div>
+</div>
+
+<div class="main-content">
+    <section class="sidebar">
+        <h3>SUMMARY</h3>
+        <p style="font-size: 9.5pt; margin-bottom: 18px;">Academically distinguished mathematician recognized for seminal work on Charles Babbage's Analytical Engine. Considered the first computer programmer for creating the first algorithm intended to be processed by a machine.</p>
+
+        <h3>CORE AREAS</h3>
+        <ul class="details-list">
+            <li>Differential Calculus</li>
+            <li>Numerical Analysis</li>
+            <li>Mechanical Computation</li>
+            <li>Algorithmic Theory</li>
+            <li>Musical Mathematics</li>
+        </ul>
+
+        <h3>EDUCATION</h3>
+        <p><strong style="font-size: 10pt;">Private Tutelage and Self Study</strong></p>
+        <p style="margin-top: 2px; font-size: 9.5pt;">Learned from mentors including Augustus De Morgan, focusing on logic and calculus.</p>
+    </section>
+
+    <section class="main-section">
+        <h3>PROFESSIONAL CONTRIBUTIONS</h3>
+
+        <div class="job-entry">
+            <span class="job-title">Chief Contributor and Annotator</span>
+            <div class="company-dates">
+                <span>Analytical Engine Project</span>
+                <span>1842 - 1843</span>
+            </div>
+            <div class="description">
+                <ul>
+                    <li>Translated Luigi Menabrea's memoir on the Analytical Engine, adding extensive Notes that tripled the length of the original text.</li>
+                    <li>Wrote the first published algorithm (Note G) for the Engine, intended to compute Bernoulli numbers, demonstrating the machine's capabilities beyond mere calculation.</li>
+                    <li>Hypothesized the Engine could be used to manipulate symbols and musical notes, not just numbers, forecasting the modern computer age.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job-entry">
+            <span class="job-title">Mathematical Researcher</span>
+            <div class="company-dates">
+                <span>Various Academic Circles</span>
+                <span>1835 - 1842</span>
+            </div>
+            <div class="description">
+                <ul>
+                    <li>Collaborated with leading figures like Charles Babbage, assisting in refining his understanding of complex mechanical calculations.</li>
+                    <li>Developed a strong foundation in calculus and advanced algebra under the guidance of Augustus De Morgan.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+</div>

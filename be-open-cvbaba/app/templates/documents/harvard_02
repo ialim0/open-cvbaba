@@ -1,0 +1,221 @@
+<div class="pdf-page">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap');
+    
+    .pdf-page {
+        font-family: 'Crimson Text', serif;
+        font-size: 11pt;
+        line-height: 1.25;
+        color: #000;
+        padding: 20px;
+        box-sizing: border-box;
+        width: 794px;
+        height: 1123px;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .name {
+        font-size: 22pt;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    
+    .contact-info {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        font-size: 10pt;
+        margin-top: 8px;
+    }
+    
+    .section {
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .section-title {
+        font-size: 13pt;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .section-title::before,
+    .section-title::after {
+        content: "";
+        height: 1px;
+        background: #000;
+        flex: 1;
+        max-width: 35%;
+    }
+    
+    .entry {
+        margin-bottom: 10px;
+    }
+    
+    .entry-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1px;
+    }
+    
+    .entry-title {
+        font-weight: 700;
+        font-size: 11pt;
+    }
+    
+    .entry-org {
+        font-style: italic;
+        font-size: 11pt;
+    }
+    
+    .entry-date {
+        font-style: italic;
+        font-size: 10pt;
+    }
+    
+    .entry-role {
+        font-size: 10.5pt;
+        margin-bottom: 3px;
+    }
+    
+    ul {
+        margin: 3px 0 0 16px;
+        padding: 0;
+        list-style-position: outside;
+    }
+    
+    li {
+        margin-bottom: 2px;
+        padding-left: 6px;
+        font-size: 10.5pt;
+        text-align: left;
+    }
+    
+    .skills-section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        font-size: 10.5pt;
+    }
+    
+    .skill-category {
+        margin-bottom: 6px;
+    }
+    
+    .skill-category strong {
+        font-weight: 700;
+    }
+</style>
+
+<div class="header">
+    <div class="name">Michael Johnson</div>
+    <div class="contact-info">
+        <div>mjohnson@harvard.edu</div>
+        <div>(617) 555-0123</div>
+        <div>Cambridge, MA 02138</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Education</div>
+    <div class="entry">
+        <div class="entry-header">
+            <div>
+                <span class="entry-title">Harvard University</span><span class="entry-org">, Cambridge, MA</span>
+            </div>
+            <span class="entry-date">May 2024</span>
+        </div>
+        <div class="entry-role">Master of Public Policy Candidate, Harvard Kennedy School</div>
+        <ul>
+            <li>Concentration in Business and Government Policy</li>
+            <li>GPA: 3.95/4.00; Kennedy Scholar; Public Service Fellow</li>
+        </ul>
+    </div>
+    
+    <div class="entry">
+        <div class="entry-header">
+            <div>
+                <span class="entry-title">Yale University</span><span class="entry-org">, New Haven, CT</span>
+            </div>
+            <span class="entry-date">May 2020</span>
+        </div>
+        <div class="entry-role">Bachelor of Arts in Political Science, cum laude</div>
+        <ul>
+            <li>Minor in Economics; Thesis: "Impact of Digital Technologies on Public Policy"</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Professional Experience</div>
+    <div class="entry">
+        <div class="entry-header">
+            <div>
+                <span class="entry-title">U.S. Department of State</span><span class="entry-org">, Washington, D.C.</span>
+            </div>
+            <span class="entry-date">Summer 2023</span>
+        </div>
+        <div class="entry-role">Policy Intern, Bureau of Economic and Business Affairs</div>
+        <ul>
+            <li>Analyzed international economic policies and their impact on U.S. foreign relations</li>
+            <li>Drafted policy memos and briefing materials for senior leadership</li>
+            <li>Contributed to development of digital economy framework with key trading partners</li>
+        </ul>
+    </div>
+
+    <div class="entry">
+        <div class="entry-header">
+            <div>
+                <span class="entry-title">McKinsey & Company</span><span class="entry-org">, Boston, MA</span>
+            </div>
+            <span class="entry-date">2020 - 2022</span>
+        </div>
+        <div class="entry-role">Business Analyst</div>
+        <ul>
+            <li>Led analysis for public sector transformation projects across three state governments</li>
+            <li>Developed strategic recommendations for $500M government technology modernization</li>
+            <li>Created data-driven solutions for public health policy implementation</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Leadership & Research Experience</div>
+    <div class="entry">
+        <div class="entry-header">
+            <div>
+                <span class="entry-title">Harvard Kennedy School Digital Government Initiative</span>
+            </div>
+            <span class="entry-date">2022 - Present</span>
+        </div>
+        <div class="entry-role">Research Fellow</div>
+        <ul>
+            <li>Lead research project on digital transformation in government services</li>
+            <li>Published policy brief on AI implementation in public sector operations</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Skills & Interests</div>
+    <div class="skills-section">
+        <div class="skill-category">
+            <strong>Analysis:</strong> Policy Analysis, Economic Modeling, Data Analytics (Python, R)
+        </div>
+        <div class="skill-category">
+            <strong>Languages:</strong> English (Native), French (Professional), Arabic (Basic)
+        </div>
+    </div>
+</div>
+
+</div>

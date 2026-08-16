@@ -1,0 +1,224 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #555;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    padding: 25px;
+}
+
+.header {
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #007BFF;
+    margin-bottom: 15px;
+}
+
+.header h1 {
+    color: #333;
+    margin: 0 0 4px 0;
+    font-size: 22pt;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.header p {
+    margin: 0;
+    font-size: 11pt;
+    color: #333;
+    font-weight: 500;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+    color: #555;
+    margin-top: 6px;
+}
+
+.contact-info a {
+    color: #007BFF;
+    text-decoration: none;
+    margin: 0 4px;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    gap: 20px;
+}
+
+.sidebar {
+    padding-right: 12px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar h3 {
+    color: #007BFF;
+    font-size: 11pt;
+    font-weight: 600;
+    margin-top: 0;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 15px 0;
+}
+
+.skills-list li {
+    background-color: #e9f0ff;
+    margin-bottom: 3px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 9pt;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.main-section {
+    padding-left: 12px;
+}
+
+.main-section h3 {
+    color: #333;
+    font-size: 12pt;
+    font-weight: 600;
+    border-bottom: 2px solid #007BFF;
+    padding-bottom: 3px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.job-entry, .education-entry {
+    margin-bottom: 15px;
+}
+
+.job-title {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 1px;
+    font-size: 10.5pt;
+}
+
+.company-name, .school-name {
+    font-style: italic;
+    color: #007BFF;
+    font-size: 9.5pt;
+}
+
+.dates {
+    float: right;
+    font-size: 9pt;
+    color: #555;
+}
+
+.description ul {
+    padding-left: 16px;
+    margin: 4px 0 0 0;
+}
+
+.description li {
+    margin-bottom: 3px;
+    font-size: 9.5pt;
+}
+</style>
+
+<div class="header">
+    <h1>JANE DOE</h1>
+    <p>Senior Product Manager</p>
+    <div class="contact-info">
+        <span>(123) 456-7890</span> | 
+        <a href="mailto:jane.doe@email.com">jane.doe@email.com</a> | 
+        <a href="https://linkedin.com/in/janedoe">LinkedIn</a> | 
+        <a href="https://github.com/janedoe">GitHub</a>
+    </div>
+</div>
+
+<div class="main-content">
+    <section class="sidebar">
+        <h3>PROFILE</h3>
+        <p style="font-size: 9.5pt;">Highly driven Senior Product Manager with 8+ years of experience leading cross-functional teams to deliver innovative and scalable software solutions. Proven ability to translate market needs into successful product roadmaps.</p>
+
+        <h3>KEY SKILLS</h3>
+        <ul class="skills-list">
+            <li>Product Strategy</li>
+            <li>Agile/Scrum</li>
+            <li>UX/UI Design</li>
+            <li>Market Analysis</li>
+            <li>Roadmapping</li>
+            <li>SQL & Data Analysis</li>
+            <li>Python/R</li>
+        </ul>
+
+        <h3>EDUCATION</h3>
+        <div class="education-entry">
+            <span class="school-name">Stanford University</span>
+            <span class="dates">2008 - 2012</span>
+            <br>
+            <span class="job-title" style="font-weight: normal; font-size: 9.5pt;">B.S. Computer Science</span>
+        </div>
+        
+        <h3>LANGUAGES</h3>
+        <ul class="skills-list">
+            <li>English (Native)</li>
+            <li>Spanish (Fluent)</li>
+        </ul>
+    </section>
+
+    <section class="main-section">
+        <h3>PROFESSIONAL EXPERIENCE</h3>
+
+        <div class="job-entry">
+            <span class="dates">2020 - Present</span>
+            <span class="job-title">Senior Product Manager</span>
+            <span class="company-name">Tech Innovators Inc., San Francisco, CA</span>
+            <div class="description">
+                <ul>
+                    <li>Led the complete product lifecycle for a flagship B2B SaaS platform, resulting in a 30% increase in annual recurring revenue (ARR).</li>
+                    <li>Managed and mentored a team of 3 Junior PMs, fostering a data-driven and customer-centric product culture.</li>
+                    <li>Defined and executed the product roadmap using Agile/Scrum methodologies, collaborating with engineering, design, and marketing teams.</li>
+                    <li>Reduced customer churn by 15% within one year by implementing targeted feature updates based on deep user interviews and analytics.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job-entry">
+            <span class="dates">2015 - 2020</span>
+            <span class="job-title">Product Owner</span>
+            <span class="company-name">Digital Solutions Co., Seattle, WA</span>
+            <div class="description">
+                <ul>
+                    <li>Oversaw the development and launch of three new mobile app features, reaching 500k+ active users.</li>
+                    <li>Authored detailed user stories, acceptance criteria, and prioritized the backlog for two dedicated scrum teams.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h3>PROJECTS & CERTIFICATIONS</h3>
+        <div class="job-entry">
+            <span class="job-title">Certified Scrum Product Owner (CSPO)</span><br>
+            <span class="company-name">Scrum Alliance, 2015</span>
+        </div>
+        <div class="job-entry">
+            <span class="job-title">Personal Data Visualization Portfolio</span><br>
+            <span style="font-style: italic; font-size: 9pt;">(Available upon request, utilized Python/Pandas for complex data analysis)</span>
+        </div>
+    </section>
+</div>
+</div>

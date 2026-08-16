@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Computer Modern', Georgia, serif;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .contact-info {
+            font-size: 14px;
+        }
+
+        .section {
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #333;
+            border-bottom: 1px solid #666;
+        }
+
+        .entry {
+            margin-bottom: 15px;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .entry-content {
+            margin-left: 20px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-category {
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="name">JOHN DOE</div>
+        <div class="contact-info">
+            San Francisco Bay Area • (555) 123-4567 • john.doe@email.com<br>
+            Github: github.com/johndoe • LinkedIn: linkedin.com/in/johndoe
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Experience</div>
+        
+        <div class="entry">
+            <div class="entry-header">
+                <span>Senior Software Engineer, Big Tech Corp</span>
+                <span>Jan 2020 - Present</span>
+            </div>
+            <div class="entry-content">
+                <ul>
+                    <li>Led development of distributed caching system serving 1M+ QPS, reducing latency by 40% and improving availability to 99.99%</li>
+                    <li>Architected and implemented microservices migration strategy, breaking down monolithic application into 12 services</li>
+                    <li>Mentored 5 junior engineers and led technical interviews for engineering team growth</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="entry">
+            <div class="entry-header">
+                <span>Software Engineer, Tech Startup Inc</span>
+                <span>Jun 2017 - Dec 2019</span>
+            </div>
+            <div class="entry-content">
+                <ul>
+                    <li>Developed real-time analytics dashboard using React and GraphQL, processing 500K+ daily events</li>
+                    <li>Optimized PostgreSQL queries and implemented caching, reducing average API response time by 60%</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Education</div>
+        <div class="entry">
+            <div class="entry-header">
+                <span>M.S. Computer Science, Stanford University</span>
+                <span>2017</span>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="entry-header">
+                <span>B.S. Computer Science, UC Berkeley</span>
+                <span>2015</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Skills</div>
+        <div class="skills">
+            <div class="skill-category">
+                <strong>Languages:</strong> Python, Java, JavaScript/TypeScript, Go, SQL
+            </div>
+            <div class="skill-category">
+                <strong>Technologies:</strong> React, Node.js, Docker, Kubernetes, AWS, GraphQL, Redis, PostgreSQL
+            </div>
+            <div class="skill-category">
+                <strong>Concepts:</strong> Distributed Systems, System Design, Microservices, CI/CD, Agile Methodology
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Projects</div>
+        <div class="entry">
+            <div class="entry-header">
+                <span>Open-Source Distributed Cache Library</span>
+                <span>github.com/johndoe/opencache</span>
+            </div>
+            <div class="entry-content">
+                <ul>
+                    <li>Built high-performance caching library with 1000+ GitHub stars, used by 50+ companies</li>
+                    <li>Implemented consistent hashing and fault tolerance mechanisms with 99.9% availability</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

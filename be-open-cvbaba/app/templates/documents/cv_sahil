@@ -1,0 +1,255 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #333;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    padding: 25px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #000;
+}
+
+.name {
+    font-size: 22pt;
+    font-weight: 400;
+    margin: 0 0 6px 0;
+}
+
+.name strong {
+    font-weight: 600;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+    margin: 6px 0;
+}
+
+.contact-info a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.main-content {
+    display: flex;
+    gap: 15px;
+}
+
+.left-column, .right-column {
+    flex: 1;
+}
+
+.section-title {
+    font-size: 12pt;
+    font-weight: 600;
+    margin: 14px 0 8px 0;
+    text-transform: uppercase;
+    color: #000;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.subsection {
+    margin-bottom: 10px;
+}
+
+.subsection-title {
+    font-weight: 600;
+    margin: 8px 0 4px;
+    line-height: 1.2;
+    font-size: 10.5pt;
+}
+
+.experience-header {
+    margin-bottom: 3px;
+}
+
+.company {
+    color: #0366d6;
+    font-weight: 600;
+    font-size: 10.5pt;
+}
+
+.tech-stack {
+    font-weight: 600;
+    font-size: 9.5pt;
+}
+
+.position-info {
+    font-style: italic;
+    margin: 3px 0;
+    font-size: 9.5pt;
+}
+
+ul {
+    margin: 4px 0;
+    padding-left: 14px;
+}
+
+li {
+    margin-bottom: 3px;
+    font-size: 9.5pt;
+}
+
+.skills-section div {
+    margin-bottom: 6px;
+    font-size: 9.5pt;
+}
+
+.skills-category {
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.education-item {
+    margin-bottom: 8px;
+}
+
+.school-name {
+    font-weight: 600;
+    font-size: 10pt;
+}
+
+.degree, .grad-date {
+    margin: 2px 0;
+    font-size: 9.5pt;
+}
+
+.coursework-list, .interests-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 2px;
+}
+
+.coursework-list li, .interests-list li {
+    display: inline;
+    margin-right: 6px;
+    font-size: 9.5pt;
+}
+
+.coursework-list li:after, .interests-list li:after {
+    content: "•";
+    margin-left: 3px;
+}
+
+.coursework-list li:last-child:after, .interests-list li:last-child:after {
+    content: "";
+}
+</style>
+
+<div class="header">
+    <h1 class="name">Sahil <strong>Gaba</strong></h1>
+    <div class="contact-info">
+        XXX-XXX-XXXX | <a href="mailto:xxx@gmail.com">xxx@gmail.com</a> | <a href="https://linkedin.com/in/gabag26">linkedin.com/in/gabag26</a>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="left-column">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-section">
+            <div><span class="skills-category">BACK END:</span> Java • Python • Spring • Express • NodeJS</div>
+            <div><span class="skills-category">DATA PIPELINES:</span> Amazon Redshift • Amazon EFS • S3</div>
+            <div><span class="skills-category">MISC:</span> Amazon AWS • Recommendations • Machine learning • MongoDB</div>
+            <div><span class="skills-category">FRONT END:</span> ReactJS • Redux • JavaScript • HTML • CSS</div>
+            <div><span class="skills-category">SOFT:</span> Team player • Bias for action • Deliver results</div>
+        </div>
+
+        <h2 class="section-title">Experience</h2>
+        <div class="subsection">
+            <div class="experience-header">
+                <span class="company">AMAZON</span> |
+                <span class="tech-stack">Java, Spring, Python, AWS, Machine Learning</span>
+            </div>
+            <div class="position-info">Software Engineer | Jul 2019 – Present, Seattle, WA</div>
+            <div class="subsection-title">Amazon's Choice recommendations for incomplete missions</div>
+            <ul>
+                <li>Developed strategy to recommend Amazon's Choice items related to customer's incomplete missions.</li>
+                <li>Built data pipeline with Amazon Redshift and Amazon EFS to use offline data.</li>
+            </ul>
+            <div class="subsection-title">Personalized recommendations with Topic Modeling</div>
+            <ul>
+                <li>Implemented a recommendation feature in Java using topics and incomplete missions.</li>
+                <li>Built an extensible 'filters' module to remove Adult topics.</li>
+            </ul>
+            <div class="subsection-title">Complementary recommendations for Hardlines</div>
+            <ul>
+                <li>Developed algorithm using Collaborative Filtering to improve coverage of recommendations.</li>
+                <li>Created data pipeline using Amazon EFS, Amazon Distributed Data Service, and Amazon Distributed Job Service.</li>
+                <li>Implemented multiprocessing and LRU cache in Python to solve scalability challenges.</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <div class="experience-header">
+                <span class="company">FINTECH CORPORATION</span>
+            </div>
+            <div class="position-info">Software Engineer | Jan 2017 – Jun 2019, Chicago, IL</div>
+            <ul>
+                <li>Implemented Fidessa API for custom order management and execution.</li>
+                <li>Developed and tested regional solutions tailored for stock exchanges of Americas.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="right-column">
+        <h2 class="section-title">Education</h2>
+        <div class="education-item">
+            <div class="school-name">UNIVERSITY OF ILLINOIS – URBANA CHAMPAIGN (UIUC)</div>
+            <div class="degree">M.S., Mechanical Engineering</div>
+            <div class="grad-date">Dec 2016 | Urbana-Champaign, IL</div>
+        </div>
+
+        <div class="education-item">
+            <div class="school-name">INDIAN INSTITUTE OF TECHNOLOGY DELHI (IITD)</div>
+            <div class="degree">B.S., Mechanical Engineering</div>
+            <div class="grad-date">May 2014 | New Delhi, India</div>
+        </div>
+
+        <h2 class="section-title">Honors & Awards</h2>
+        <div class="subsection">
+            <div class="subsection-title">CHARPAK SCHOLARSHIP</div>
+            <div>For top exchange students from India | French Embassy | 2012</div>
+        </div>
+        <div class="subsection">
+            <div class="subsection-title">DIRECTORS MERIT AWARD</div>
+            <div>For top students | IIT Delhi | 2011</div>
+        </div>
+        <div class="subsection">
+            <div class="subsection-title">K. VASUDEVAN AWARD</div>
+            <div>For topping the institute | IIT Delhi | 2011</div>
+        </div>
+
+        <h2 class="section-title">Coursework</h2>
+        <ul class="coursework-list">
+            <li>Data Structures</li>
+            <li>Machine Learning</li>
+            <li>Data Mining</li>
+            <li>Statistics</li>
+        </ul>
+
+        <h2 class="section-title">Interests</h2>
+        <ul class="interests-list">
+            <li>Travelling</li>
+            <li>Fitness</li>
+            <li>Food</li>
+        </ul>
+    </div>
+</div>
+</div>

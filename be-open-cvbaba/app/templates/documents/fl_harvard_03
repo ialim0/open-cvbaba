@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cover Letter</title>
+    <style>
+        body { font-family: 'Georgia', serif; line-height: 1.8; }
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        .header, .footer { text-align: center; }
+        .content { margin-top: 20px; }
+        .signature { margin-top: 50px; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Alice Johnson</h2>
+            <p>789 Elm St, Anytown, USA</p>
+            <p>alice.johnson@example.com | (987) 654-3210</p>
+        </div>
+        <div class="content">
+            <p>October 1, 2023</p>
+            <p>Robert Brown</p>
+            <p>101 Corporate Blvd, Anytown, USA</p>
+            <p>Dear Brown,</p>
+            <p>I am excited to apply for the Marketing Specialist position at Creative Solutions LLC. With my extensive experience in marketing and communications, I am eager to bring my skills and passion to your esteemed organization.</p>
+            <p>During my tenure at Ad Masters Inc., I successfully managed successful marketing campaigns that increased sales by 20%. This experience has honed my abilities in strategic planning, content creation, and social media management, making me a strong candidate for this role.</p>
+            <p>What excites me about this opportunity is the opportunity to work on diverse and impactful projects. I am confident that my background and enthusiasm make me a strong fit for Creative Solutions LLC.</p>
+            <p>Thank you for considering my application. I look forward to the opportunity to further discuss how my background and skills would make me a strong fit for your team.</p>
+            <p>Sincerely,</p>
+        </div>
+        <div class="signature">
+            <p>Alice Johnson</p>
+        </div>
+        <div class="footer">
+            <p>Enclosure: Resume</p>
+        </div>
+    </div>
+</body>
+</html>

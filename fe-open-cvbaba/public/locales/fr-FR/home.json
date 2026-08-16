@@ -1,0 +1,68 @@
+{
+  "about": {
+    "title": "Qu'est-ce que open-cvbaba ?"
+  },
+  "activityForm": {
+    "profile": "Profil",
+    "translate": "Traduire",
+    "style": "Style",
+    "justify": "Justifier",
+    "image": "Photo"
+  },
+  "activity_chat": {
+    "user": "Utilisateur"
+  },
+  "blog_page": {
+    "title": "Conseils de Carrière & Astuces"
+  },
+  "categories": {
+    "title": "Catégories de Documents"
+  },
+  "common": {
+    "partnership": "En Partenariat Avec",
+    "loading": "Chargement..."
+  },
+  "faq_page": {
+    "title": "Questions Fréquentes"
+  },
+  "features": {
+    "title": "Fonctionnalités puissantes"
+  },
+  "feedbackModal": {
+    "title": "Envoyez-nous vos commentaires",
+    "errors": {
+      "submissionError": "Erreur : {{error}}"
+    }
+  },
+  "generalComponent": {
+    "title": "Paramètres"
+  },
+  "how_it_works": {
+    "title": "Comment ça marche"
+  },
+  "interactive": {
+    "title": "Voyez la magie opérer"
+  },
+  "loadingCVPage": "Chargement...",
+  "loadingSidebar": "Chargement de la barre latérale...",
+  "logout": {
+    "error": "Échec de la déconnexion"
+  },
+  "navigation": {
+    "pricing": "Tarifs"
+  },
+  "resetPasswordForm": {
+    "title": "Mot de passe oublié ?"
+  },
+  "settings": {
+    "profile": "Profil",
+    "general": "Général"
+  },
+  "sidebar": {
+    "language": "Langue",
+    "toggle": "Basculer la barre latérale"
+  },
+  "templates": {
+    "title": "35+ Modèles Professionnels"
+  }
+}

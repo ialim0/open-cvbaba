@@ -1,0 +1,451 @@
+<div class="pdf-page">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+        .pdf-page {
+            box-sizing: border-box;
+            width: 794px;
+            height: 1123px;
+            padding: 20px 25px;
+            background: white;
+            overflow: hidden;
+            font-family: 'Lato', sans-serif;
+            color: #2b2b2b;
+            line-height: 1.1;
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            color: #6A6A6A;
+        }
+
+        /* FAANG 02 Specific Styles */
+        header {
+            padding-bottom: 4px;
+            text-align: center;
+        }
+
+        .name-section {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            margin-bottom: 1px;
+        }
+
+        .first-name {
+            color: #aaaaaa;
+            font-weight: 300;
+            font-size: 20pt;
+            margin-right: 3px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .last-name {
+            color: #2b2b2b;
+            font-weight: 300;
+            font-size: 20pt;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .contact-info {
+            color: #6A6A6A;
+            font-size: 8pt;
+            text-align: center;
+            font-family: 'Raleway', sans-serif;
+            line-height: 1.2;
+        }
+
+        .contact-info a {
+            color: #6A6A6A;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #dedede;
+            margin: 4px 0 10px;
+            width: 100%;
+        }
+
+        .main-content {
+            display: flex;
+            width: 100%;
+            height: calc(100% - 40px);
+        }
+
+        .left-column {
+            width: 35%;
+            padding-right: 8px;
+        }
+
+        .right-column {
+            width: 65%;
+            padding-left: 8px;
+        }
+
+        h2 {
+            color: #6A6A6A;
+            font-size: 10pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .section {
+            margin-bottom: 8px;
+        }
+
+        .education-item, .experience-item, .project-item, .research-item {
+            margin-bottom: 6px;
+        }
+
+        .school-name, .company-name, .project-name, .lab-name {
+            font-weight: 700;
+            color: #333333;
+            font-size: 9pt;
+            text-transform: uppercase;
+            font-family: 'Lato', sans-serif;
+            display: inline-block;
+        }
+
+        .degree, .job-title {
+            font-family: 'Raleway', sans-serif;
+            color: #333333;
+            font-size: 8.5pt;
+            font-weight: 500;
+            font-style: italic;
+            display: inline-block;
+        }
+
+        .time-period, .location {
+            color: #6A6A6A;
+            font-size: 7.5pt;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 500;
+            display: block;
+        }
+
+        .description {
+            margin-top: 1px;
+            font-size: 8pt;
+            color: #444;
+            line-height: 1.15;
+        }
+
+        .description ul {
+            padding-left: 8px;
+            list-style-type: disc;
+        }
+
+        .description li {
+            margin-bottom: 0;
+        }
+
+        .links a {
+            display: block;
+            margin-bottom: 1px;
+            color: #2b2b2b;
+            font-size: 8pt;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        .links a b {
+            font-weight: 700;
+        }
+
+        .subsection-title {
+            font-size: 8.5pt;
+            color: #555;
+            margin-bottom: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            margin-top: 3px;
+        }
+        
+        .subsection-title:first-child {
+            margin-top: 0;
+        }
+
+        .courses-list, .skills-list {
+            list-style-type: none;
+            font-size: 8pt;
+            color: #444;
+            margin-bottom: 3px;
+            line-height: 1.15;
+        }
+        
+        .courses-list li {
+             margin-bottom: 0;
+        }
+
+        .awards-table {
+            width: 100%;
+            border-spacing: 0;
+            font-size: 8pt;
+            border-collapse: collapse;
+        }
+
+        .awards-table td {
+            padding: 0;
+            vertical-align: top;
+        }
+
+        .awards-table td:first-child {
+            width: 25px;
+            font-weight: 700;
+            color: #555;
+        }
+
+        .awards-table td:nth-child(2) {
+            width: 50px;
+            color: #666;
+            font-size: 7.5pt;
+        }
+
+        .awards-table td:nth-child(3) {
+            color: #333;
+        }
+
+        .bullet {
+            display: inline-block;
+            margin: 0 1px;
+            color: #aaa;
+            font-size: 7pt;
+        }
+
+        .skills-category {
+            margin-top: 2px;
+            color: #666;
+            font-family: 'Raleway', sans-serif;
+            font-size: 7.5pt;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .title-line {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        
+        .publication-item {
+            margin-bottom: 3px;
+            font-size: 8pt;
+            line-height: 1.15;
+        }
+        
+        .publication-title i {
+            font-style: italic;
+        }
+
+    </style>
+
+    <header>
+        <div class="name-section">
+            <div class="first-name">Debarghya</div>
+            <div class="last-name">Das</div>
+        </div>
+        <div class="contact-info">
+            <a href="#">debarghyadas.com</a> | 
+            <a href="#">fb.co/dd</a> | 
+            <a href="mailto:deedy@fb.com">deedy@fb.com</a> | 
+            607.379.5733 | 
+            <a href="mailto:dd367@cornell.edu">dd367@cornell.edu</a>
+        </div>
+    </header>
+    
+    <div class="divider"></div>
+    
+    <div class="main-content">
+        <div class="left-column">
+            <div class="section">
+                <h2>Education</h2>
+                
+                <div class="education-item">
+                    <div class="school-name">Cornell University</div>
+                    <div class="degree">MEng in Computer Science</div>
+                    <div class="time-period">Dec 2014 | Ithaca, NY</div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="school-name">Cornell University</div>
+                    <div class="degree">BS in Computer Science</div>
+                    <div class="time-period">May 2014 | Ithaca, NY</div>
+                    <div class="description">
+                        Magna Cum Laude, Cum. GPA: 3.83 / 4.0, Major GPA: 3.9 / 4.0
+                    </div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="school-name">La Martiniere for Boys</div>
+                    <div class="time-period">Grad. May 2011 | Kolkata, India</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Links</h2>
+                <div class="links">
+                    <a href="#">Facebook:// <b>dd</b></a>
+                    <a href="#">Github:// <b>deedydas</b></a>
+                    <a href="#">LinkedIn:// <b>debarghyadas</b></a>
+                    <a href="#">Twitter:// <b>@debarghya_das</b></a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Coursework</h2>
+                <div class="subsection-title">Graduate</div>
+                <ul class="courses-list">
+                    <li>Advanced Machine Learning</li>
+                    <li>Open Source Software Engineering</li>
+                    <li>Advanced Interactive Graphics</li>
+                    <li>Compilers</li>
+                    <li>Cloud Computing</li>
+                </ul>
+                
+                <div class="subsection-title">Undergraduate</div>
+                <ul class="courses-list">
+                    <li>Information Retrieval</li>
+                    <li>Operating Systems</li>
+                    <li>Artificial Intelligence</li>
+                    <li>Functional Programming</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>Skills</h2>
+                <div class="subsection-title">Programming</div>
+                <div class="skills-category">Experienced:</div>
+                <div class="skills-list">
+                    Java <span class="bullet">•</span> Shell <span class="bullet">•</span> Python <span class="bullet">•</span> Javascript<br>
+                    OCaml <span class="bullet">•</span> Matlab <span class="bullet">•</span> Rails <span class="bullet">•</span> LaTeX
+                </div>
+                
+                <div class="skills-category">Familiar:</div>
+                <div class="skills-list">
+                    C <span class="bullet">•</span> C++ <span class="bullet">•</span> CSS <span class="bullet">•</span> PHP <span class="bullet">•</span> Assembly
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-column">
+            <div class="section">
+                <h2>Experience</h2>
+                
+                <div class="experience-item">
+                    <div class="title-line">
+                        <div class="company-name">Facebook</div>
+                        <div class="job-title">&nbsp;| Software Engineer</div>
+                    </div>
+                    <div class="time-period">Jan 2015 - Present | New York, NY</div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="title-line">
+                        <div class="company-name">Coursera</div>
+                        <div class="job-title">&nbsp;| KPCB Fellow + Software Engineering Intern</div>
+                    </div>
+                    <div class="time-period">June 2014 – Sep 2014 | Mountain View, CA</div>
+                    <div class="description">
+                        <ul>
+                            <li>Selected as KPCB Fellow 2014 (52/2500 applicants).</li>
+                            <li>Led and shipped Yoda - the admin interface for the new Phoenix platform.</li>
+                            <li>Full-stack developer using JS (Backbone, Jade, Stylus, Require) and Scala (Play).</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="title-line">
+                        <div class="company-name">Google</div>
+                        <div class="job-title">&nbsp;| Software Engineering Intern</div>
+                    </div>
+                    <div class="time-period">May 2013 – Aug 2013 | Mountain View, CA</div>
+                    <div class="description">
+                        <ul>
+                            <li>Worked on YouTube Captions, in Javascript and Python.</li>
+                            <li>Designed, developed, and shipped full stack features to add and edit Automatic Speech Recognition captions.</li>
+                            <li>Created a backbone.js-like framework for the Captions editor.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Research</h2>
+                
+                <div class="research-item">
+                    <div class="title-line">
+                        <div class="lab-name">Cornell Robot Learning Lab</div>
+                        <div class="job-title">&nbsp;| Researcher</div>
+                    </div>
+                    <div class="time-period">Jan 2014 – Jan 2015 | Ithaca, NY</div>
+                    <div class="description">
+                        Created <b>PlanIt</b>, a tool that learns from large-scale user preference feedback to plan robot trajectories in human environments.
+                    </div>
+                </div>
+                
+                <div class="research-item">
+                    <div class="title-line">
+                        <div class="lab-name">Cornell Phonetics Lab</div>
+                        <div class="job-title">&nbsp;| Head Undergraduate Researcher</div>
+                    </div>
+                    <div class="time-period">Mar 2012 – May 2013 | Ithaca, NY</div>
+                    <div class="description">
+                        Led the development of <b>QuickTongue</b>, the first tongue-controlled game to aid in Linguistics research.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Awards</h2>
+                <table class="awards-table">
+                    <tbody><tr>
+                        <td>2014</td>
+                        <td>top 52/2500</td>
+                        <td>KPCB Engineering Fellow</td>
+                    </tr>
+                    <tr>
+                        <td>2014</td>
+                        <td>1<sup>st</sup>/50</td>
+                        <td>Microsoft Coding Competition</td>
+                    </tr>
+                    <tr>
+                        <td>2013</td>
+                        <td>National</td>
+                        <td>Jump Trading Challenge Finalist</td>
+                    </tr>
+                    <tr>
+                        <td>2011</td>
+                        <td>National</td>
+                        <td>Indian National Mathematics Olympiad Finalist</td>
+                    </tr>
+                </tbody></table>
+            </div>
+            
+            <div class="section">
+                <h2>Publications</h2>
+                <div class="publication-item">
+                    <div class="publication-title">
+                        A. Jain, D. Das, et al., "PlanIt: A crowdsourcing approach to interactive trajectory planning for mobile robots", <i>ICRA</i>, May 2015.
+                    </div>
+                </div>
+                <div class="publication-item">
+                    <div class="publication-title">
+                        S. Tilsen, D. Das, et al., "Real-time articulatory biofeedback for speech sound disorders using ultrasound and electropalatography: QuickTongue", <i>Linguistics Vanguard</i>, Oct. 2015.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+from __future__ import annotations
+
+import asyncio
+import base64
+import io
+import json
+import logging
+from typing import AsyncIterator
+
+from fastapi import APIRouter, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
+
+from app.config import settings
+
+logger = logging.getLogger(__name__)
+router = APIRouter()
+
+
+def _client():
+    from mistralai import Mistral
+    return Mistral(api_key=settings.MISTRAL_API_KEY)
+
+
+def _require_key() -> None:
+    if not settings.MISTRAL_API_KEY:
+        raise HTTPException(status_code=503, detail="MISTRAL_API_KEY is not configured")
+
+
+@router.post("/extract_text")
+async def extract_text(file: UploadFile = File(...)):
+    """Extract text from a PDF or image using Mistral OCR."""
+    _require_key()
+    content = await file.read()
+    if not content:
+        raise HTTPException(status_code=400, detail="The uploaded file is empty")
+    mime = (file.content_type or "application/octet-stream").lower()
+    if mime == "application/pdf" or (file.filename or "").lower().endswith(".pdf"):
+        document = {"type": "document_url", "document_url": f"data:application/pdf;base64,{base64.b64encode(content).decode()}"}
+    elif mime.startswith("image/"):
+        document = {"type": "image_url", "image_url": f"data:{mime};base64,{base64.b64encode(content).decode()}"}
+    else:
+        raise HTTPException(status_code=415, detail="Only PDF and image files are supported")
+    try:
+        response = await asyncio.to_thread(
+            _client().ocr.process,
+            model=settings.MISTRAL_OCR_MODEL,
+            document=document,
+            table_format="html",
+            include_image_base64=False,
+        )
+        pages = getattr(response, "pages", None)
+        if pages is None:
+            pages = response.get("pages", []) if isinstance(response, dict) else []
+        def page_markdown(page):
+            return getattr(page, "markdown", None) or (page.get("markdown", "") if isinstance(page, dict) else "")
+        text = "\n\n".join(page_markdown(page) for page in pages)
+        return {"extracted_text": text, "pages": len(pages), "model": settings.MISTRAL_OCR_MODEL}
+    except Exception as exc:
+        logger.exception("Mistral OCR failed")
+        raise HTTPException(status_code=502, detail="Mistral OCR failed") from exc
+
+
+async def _audio_chunks(websocket: WebSocket) -> AsyncIterator[bytes]:
+    while True:
+        yield await websocket.receive_bytes()
+
+
+@router.websocket("/ws/transcribe/{language}")
+async def realtime_transcription(websocket: WebSocket, language: str = "en-US"):
+    """Stream 16-bit mono PCM audio to Mistral Voxtral realtime transcription."""
+    await websocket.accept()
+    if not settings.MISTRAL_API_KEY:
+        await websocket.send_json({"type": "error", "text": "MISTRAL_API_KEY is not configured", "is_final": True})
+        await websocket.close(code=1011)
+        return
+    try:
+        from mistralai.client.models import AudioFormat
+        client = _client()
+        partial_text = ""
+        async for event in client.audio.realtime.transcribe_stream(
+            audio_stream=_audio_chunks(websocket),
+            model=settings.MISTRAL_REALTIME_MODEL,
+            audio_format=AudioFormat(encoding="pcm_s16le", sample_rate=16000),
+        ):
+            text = getattr(event, "text", None)
+            if text:
+                partial_text += text
+                await websocket.send_json({"type": "partial", "text": partial_text, "is_final": False})
+            if event.__class__.__name__ == "TranscriptionStreamDone":
+                await websocket.send_json({"type": "transcription", "text": partial_text.strip(), "is_final": True})
+    except WebSocketDisconnect:
+        logger.debug("Realtime transcription client disconnected")
+    except Exception as exc:
+        logger.exception("Mistral realtime transcription failed")
+        try:
+            await websocket.send_json({"type": "error", "text": "Mistral realtime transcription failed", "is_final": True})
+            await websocket.close(code=1011)
+        except Exception:
+            pass

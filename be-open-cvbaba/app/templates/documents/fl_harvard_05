@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harvard Application Cover Letter</title>
+    <style>
+        body {
+            font-family: 'Garamond', 'Times New Roman', serif;
+            line-height: 1.4;
+            color: #333;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 0.8in;
+        }
+        .header {
+            margin-bottom: 1.5em;
+        }
+        .letterhead {
+            text-align: center;
+            margin-bottom: 0.3em;
+        }
+        .contact-info {
+            text-align: center;
+            font-size: 0.9em;
+            margin-bottom: 1.5em;
+            color: #444;
+        }
+        .date {
+            margin-bottom: 1.5em;
+        }
+        .recipient {
+            margin-bottom: 1.5em;
+            line-height: 1.3;
+        }
+        .salutation {
+            margin-bottom: 1em;
+        }
+        .body {
+            text-align: justify;
+            margin-bottom: 1.5em;
+        }
+        .body p {
+            margin-bottom: 0.8em;
+        }
+        .closing {
+            margin-bottom: 2em;
+        }
+        .signature {
+            margin-bottom: 0.3em;
+        }
+        .name {
+            font-weight: bold;
+        }
+        h1 {
+            font-size: 1.2em;
+            font-weight: normal;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="letterhead">
+            <h1><span class="name">Alexandra J. Morgan</span></h1>
+        </div>
+        <div class="contact-info">
+            123 Academic Drive • Boston, MA 02115 • (617) 555-1234 • amorgan@email.com
+        </div>
+    </div>
+    
+    <div class="date">
+        March 13, 2025
+    </div>
+    
+    <div class="recipient">
+        Dr. Jonathan Fitzgerald<br>
+        Director of Admissions<br>
+        Graduate School of Arts and Sciences<br>
+        Harvard University<br>
+        Cambridge, MA 02138
+    </div>
+    
+    <div class="salutation">
+        Dear Dr. Fitzgerald,
+    </div>
+    
+    <div class="body">
+        <p>I am writing to express my strong interest in the Doctoral Program in Molecular and Cellular Biology at Harvard University. As a Research Associate at the Boston Medical Institute with expertise in cellular adaptation to environmental stress, I am eager to contribute to Harvard's tradition of excellence in scientific discovery.</p>
+        
+        <p>My background in Biochemistry from Stanford University, combined with my development of a novel approach to studying mitochondrial stress responses that reduced analysis time by 40%, has prepared me well for this opportunity. These experiences have sharpened my skills in bioinformatics, experimental design, and cross-disciplinary collaboration.</p>
+        
+        <p>Harvard's interdisciplinary approach and Dr. Sarah Chen's groundbreaking work on cellular stress responses particularly draw me to your program. I believe my expertise in high-throughput screening methods and computational modeling aligns perfectly with the department's growing focus on computational approaches to biological questions.</p>
+        
+        <p>Beyond research, I have demonstrated commitment to scientific outreach by founding a program connecting underrepresented minority students with research mentors. I welcome the opportunity to discuss how my background would benefit Harvard's Molecular and Cellular Biology program and look forward to the possibility of joining your distinguished community.</p>
+    </div>
+    
+    <div class="closing">
+        Sincerely,
+    </div>
+    
+    <div class="signature">
+        [Signature]
+    </div>
+    
+    <div class="name">
+        Alexandra J. Morgan
+    </div>
+</body>
+</html>

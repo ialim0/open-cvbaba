@@ -1,0 +1,1200 @@
+{
+  "activityForm": {
+    "profile": "Profile",
+    "translate": "Translate",
+    "style": "Style",
+    "justify": "Justify",
+    "image": "Photo"
+  },
+  "activity_chat": {
+    "user": "User"
+  },
+  "common": {
+    "partnership": "In Partnership With"
+  },
+  "feedbackModal": {
+    "title": "Send us feedback",
+    "errors": {
+      "submissionError": "Error: {{error}}"
+    }
+  },
+  "generalComponent": {
+    "title": "Settings"
+  },
+  "landing": {
+    "languageSelector": {
+      "chooseLanguage": "Choose Your Language"
+    },
+    "loginForm": {
+      "termsText": "By continuing, you agree to our",
+      "termsLink": "Terms of Service",
+      "and": "and",
+      "privacyLink": "Privacy Policy",
+      "buttonLabels": {
+        "google": "Continue with Google"
+      },
+      "welcomeMessage": "Welcome Back!",
+      "accountExistsTitle": "Account Found",
+      "accountExistsMessage": "You already have an account. Continue below to login.",
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "John Doe",
+      "emailPlaceholder": "you@example.com",
+      "signInButton": "Sign In",
+      "noAccountYet": "Don't have an account?",
+      "createAccountForFree": "Create one for free",
+      "errors": {
+        "default": "Unable to login. Please check your credentials and try again.",
+        "unexpected": "An unexpected error occurred. Please try again.",
+        "socialLogin": "Unable to login with {provider}. Please try again or choose another option."
+      },
+      "magicLink": {
+        "emailLabel": "Email address",
+        "emailSent": "Verification code sent to your email",
+        "codeLabel": "Verification Code",
+        "codeHint": "Enter the 6-digit code sent to your email",
+        "continueButton": "Continue",
+        "resendCode": "Resend Code",
+        "backToEmail": "Back to email",
+        "loginSuccess": "Login successful!",
+        "errors": {
+          "invalidCode": "Invalid or expired code. Please try again."
+        }
+      }
+    },
+    "registerForm": {
+      "welcomeMessage": "Create your account",
+      "buttonLabels": {
+        "google": "Sign up with Google"
+      },
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "John Doe",
+      "noAccountTitle": "No account found",
+      "noAccountMessage": "It looks like you don't have an account yet. Please create one.",
+      "alreadyHaveAccountPrompt": "Already have an account?",
+      "errors": {
+        "default": "An error occurred during registration",
+        "unexpected": "An unexpected error occurred",
+        "socialRegister": "An error occurred with {provider} registration"
+      }
+    },
+    "resetPasswordForm": {
+      "title": "Forgot your password?",
+      "backToLogin": "Back to login",
+      "instructions": "No worries, we'll send you reset instructions",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "sendButton": "Get reset link",
+      "successMessage": "Check your email!",
+      "checkEmail": "We've sent the reset instructions to",
+      "rememberPassword": "Remember your password?",
+      "errors": {
+        "default": "Unable to process your request. Please try again.",
+        "unexpected": "An unexpected error occurred. Please try again."
+      }
+    },
+    "legal_pages": {
+      "common": {
+        "last_updated": "Last updated: {{date}}",
+        "related_documents": "Related Documents:",
+        "contact_us": "Contact Us",
+        "email_label": "Email",
+        "contact_support": "Contact Support",
+        "or_email_at": "or email us at"
+      },
+      "privacy": {
+        "title": "Privacy Policy",
+        "intro": "At open-cvbaba, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our service. Please read this privacy policy carefully.",
+        "sections": {
+          "1": {
+            "title": "1. Information We Collect",
+            "personal_info": {
+              "title": "Personal Information",
+              "text": "When you create an account, we collect:",
+              "items": [
+                "Name and email address",
+                "Account credentials (encrypted passwords)",
+                "Payment information (processed securely through our payment provider)"
+              ]
+            },
+            "document_content": {
+              "title": "Document Content",
+              "text": "We store the content you create and upload to provide our service. This includes CVs, cover letters, and other documents you generate or upload. This content is encrypted and only accessible to you."
+            },
+            "usage_info": {
+              "title": "Usage Information",
+              "text": "We automatically collect certain information when you use open-cvbaba:",
+              "items": [
+                "Device information (browser type, operating system)",
+                "IP address and location data",
+                "Usage patterns and feature interactions",
+                "Cookies and similar tracking technologies"
+              ]
+            }
+          },
+          "2": {
+            "title": "2. How We Use Your Information",
+            "text": "We use the information we collect to:",
+            "items": [
+              "Provide, maintain, and improve our services",
+              "Process your transactions and manage your account",
+              "Send you technical notices, updates, and support messages",
+              "Respond to your comments, questions, and customer service requests",
+              "Analyze usage patterns to improve user experience",
+              "Detect, prevent, and address technical issues and security threats",
+              "Comply with legal obligations"
+            ]
+          },
+          "3": {
+            "title": "3. Information Sharing and Disclosure",
+            "no_sell": {
+              "title": "We Do Not Sell Your Data",
+              "text": "We do not sell, trade, or rent your personal information to third parties."
+            },
+            "service_providers": {
+              "title": "Service Providers",
+              "text": "We may share your information with trusted third-party service providers who assist us in:",
+              "items": [
+                "Payment processing (Stripe)",
+                "Cloud hosting and storage",
+                "Analytics and performance monitoring",
+                "Email delivery services"
+              ],
+              "text_2": "These providers are contractually obligated to protect your information and use it only for the purposes we specify."
+            },
+            "legal": {
+              "title": "Legal Requirements",
+              "text": "We may disclose your information if required by law or in response to valid legal requests (such as court orders or subpoenas)."
+            }
+          },
+          "4": {
+            "title": "4. Data Security",
+            "text": "We implement industry-standard security measures to protect your information:",
+            "items": [
+              "End-to-end encryption for data transmission",
+              "Encrypted storage of sensitive information",
+              "Regular security audits and updates",
+              "Secure authentication protocols",
+              "Access controls and monitoring"
+            ],
+            "text_2": "However, no method of transmission over the Internet is 100% secure. While we strive to protect your information, we cannot guarantee absolute security."
+          },
+          "5": {
+            "title": "5. Your Rights and Choices",
+            "access": {
+              "title": "Access and Update",
+              "text": "You can access and update your account information at any time through your account settings."
+            },
+            "deletion": {
+              "title": "Data Deletion",
+              "text": "You can request deletion of your account and associated data at any time. We will delete your information within 30 days, except where we are required to retain it by law."
+            },
+            "marketing": {
+              "title": "Marketing Communications",
+              "text": "You can opt out of marketing emails by clicking the \"unsubscribe\" link in any marketing email or by updating your preferences in your account settings."
+            },
+            "cookies": {
+              "title": "Cookies",
+              "text": "You can control cookies through your browser settings. Note that disabling cookies may affect the functionality of our service."
+            }
+          },
+          "6": {
+            "title": "6. Data Retention",
+            "text": "We retain your information for as long as your account is active or as needed to provide you services. We will delete your information within 30 days of account deletion, except where we must retain it to comply with legal obligations, resolve disputes, or enforce our agreements."
+          },
+          "7": {
+            "title": "7. International Data Transfers",
+            "text": "Your information may be transferred to and processed in countries other than your country of residence. We ensure that such transfers comply with applicable data protection laws and that your information receives adequate protection."
+          },
+          "8": {
+            "title": "8. Children's Privacy",
+            "text": "Our service is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you believe we have collected information from a child under 13, please contact us immediately."
+          },
+          "9": {
+            "title": "9. Changes to This Privacy Policy",
+            "text": "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last updated\" date. We encourage you to review this Privacy Policy periodically."
+          },
+          "10": {
+            "title": "10. Contact Us",
+            "text": "If you have any questions about this Privacy Policy or our privacy practices, please contact us:"
+          }
+        }
+      },
+      "terms": {
+        "title": "Terms of Service",
+        "intro": "Please read these Terms of Service (\"Terms\") carefully before using the open-cvbaba website and services operated by open-cvbaba (\"us\", \"we\", or \"our\"). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms.",
+        "sections": {
+          "1": {
+            "title": "1. Accounts and Registration",
+            "text": "When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.",
+            "items": [
+              "You are responsible for safeguarding the password that you use to access the Service.",
+              "You agree not to disclose your password to any third party.",
+              "You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account."
+            ]
+          },
+          "2": {
+            "title": "2. Acceptable Use",
+            "text": "You agree not to use the Service:",
+            "items": [
+              "In any way that violates any applicable national or international law or regulation.",
+              "For the purpose of exploiting, harming, or attempting to exploit or harm minors in any way.",
+              "To transmit, or procure the sending of, any advertising or promotional material, including any \"junk mail\", \"chain letter,\" \"spam,\" or any other similar solicitation.",
+              "To impersonate or attempt to impersonate open-cvbaba, a open-cvbaba employee, another user, or any other person or entity.",
+              "To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the Service, or which, as determined by us, may harm open-cvbaba or users of the Service or expose them to liability."
+            ]
+          },
+          "3": {
+            "title": "3. Content",
+            "text_1": "Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material (\"Content\"). You are responsible for the Content that you post to the Service, including its legality, reliability, and appropriateness.",
+            "text_2": "By posting Content to the Service, you grant us the right and license to use, modify, publicly perform, publicly display, reproduce, and distribute such Content on and through the Service. You retain any and all of your rights to any Content you submit, post or display on or through the Service and you are responsible for protecting those rights."
+          },
+          "4": {
+            "title": "4. Intellectual Property",
+            "text": "The Service and its original content (excluding Content provided by users), features and functionality are and will remain the exclusive property of open-cvbaba and its licensors. The Service is protected by copyright, trademark, and other laws of both the United States and foreign countries. Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of open-cvbaba."
+          },
+          "5": {
+            "title": "5. Termination",
+            "text_1": "We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.",
+            "text_2": "Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, you may simply discontinue using the Service."
+          },
+          "6": {
+            "title": "6. Limitation of Liability",
+            "text": "In no event shall open-cvbaba, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Service; (ii) any conduct or content of any third party on the Service; (iii) any content obtained from the Service; and (iv) unauthorized access, use or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence) or any other legal theory, whether or not we have been informed of the possibility of such damage, and even if a remedy set forth herein is found to have failed of its essential purpose."
+          },
+          "7": {
+            "title": "7. Disclaimer",
+            "text_1": "Your use of the Service is at your sole risk. The Service is provided on an \"AS IS\" and \"AS AVAILABLE\" basis. The Service is provided without warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or course of performance.",
+            "text_2": "open-cvbaba does not warrant that a) the Service will function uninterrupted, secure or available at any particular time or location; b) any errors or defects will be corrected; c) the Service is free of viruses or other harmful components; or d) the results of using the Service will meet your requirements."
+          },
+          "8": {
+            "title": "8. Governing Law",
+            "text_1": "These Terms shall be governed and construed in accordance with the laws of United States, without regard to its conflict of law provisions.",
+            "text_2": "Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service."
+          },
+          "9": {
+            "title": "9. Changes",
+            "text_1": "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.",
+            "text_2": "By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service."
+          },
+          "10": {
+            "title": "10. Contact Us",
+            "text": "If you have any questions about these Terms, please contact us:"
+          }
+        }
+      },
+      "cookies": {
+        "title": "Cookie Policy",
+        "intro": "This Cookie Policy explains how open-cvbaba (\"we\", \"us\", and \"our\") uses cookies and similar technologies to recognize you when you visit our website. It explains what these technologies are and why we use them, as well as your rights to control our use of them.",
+        "summary": [
+          {
+            "title": "Essential Cookies",
+            "description": "Required for the site to function optimally and securely."
+          },
+          {
+            "title": "Your Preferences",
+            "description": "Remember your settings like language and login state."
+          },
+          {
+            "title": "Analytics",
+            "description": "Help us understand how you use our site to improve it."
+          }
+        ],
+        "sections": {
+          "1": {
+            "title": "1. What are cookies?",
+            "text_1": "Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners in order to make their websites work, or to work more efficiently, as well as to provide reporting information.",
+            "text_2": "Cookies set by the website owner (in this case, open-cvbaba) are called \"first-party cookies\". Cookies set by parties other than the website owner are called \"third-party cookies\". Third-party cookies enable third-party features or functionality to be provided on or through the website (e.g., advertising, interactive content, and analytics)."
+          },
+          "2": {
+            "title": "2. Why do we use cookies?",
+            "text": "We use first-party and third-party cookies for several reasons. Some cookies are required for technical reasons in order for our Website to operate, and we refer to these as \"essential\" or \"strictly necessary\" cookies. Other cookies also enable us to track and target the interests of our users to enhance the experience on our Online Properties.",
+            "types": [
+              {
+                "title": "Essential Cookies",
+                "description": "These cookies are strictly necessary to provide you with services available through our website and to use some of its features, such as access to secure areas."
+              },
+              {
+                "title": "Performance & Functionality Cookies",
+                "description": "These cookies are used to enhance the performance and functionality of our website but are non-essential to their use. However, without these cookies, certain functionality (like videos) may become unavailable."
+              },
+              {
+                "title": "Analytics & Customization Cookies",
+                "description": "These cookies collect information that is used either in aggregate form to help us understand how our website is being used or how effective our marketing campaigns are, or to help us customize our website for you."
+              }
+            ]
+          },
+          "3": {
+            "title": "3. How can I control cookies?",
+            "text_1": "You have the right to decide whether to accept or reject cookies. You can exercise your cookie rights by setting your preferences in the Cookie Consent Manager. The Cookie Consent Manager allows you to select which categories of cookies you accept or reject. Essential cookies cannot be rejected as they are strictly necessary to provide you with services.",
+            "text_2": "The Cookie Consent Manager can be found in the notification banner and on our website. If you choose to reject cookies, you may still use our website though your access to some functionality and areas of our website may be restricted.",
+            "browser_controls": {
+              "title": "Browser Controls",
+              "text": "Most web browsers allow you to control cookies through their settings preferences. To find out more about cookies, including how to see what cookies have been set and how to manage and delete them, visit <1>www.aboutcookies.org</1> or <2>www.allaboutcookies.org</2>."
+            }
+          },
+          "4": {
+            "title": "4. Other tracking technologies",
+            "text": "Cookies are not the only way to recognize or track visitors to a website. We may use other, similar technologies from time to time, like web beacons (sometimes called \"tracking pixels\" or \"clear gifs\"). These are tiny graphics files that contain a unique identifier that enable us to recognize when someone has visited our website or opened an email including them. This allows us, for example, to monitor the traffic patterns of users from one page within a website to another, to deliver or communicate with cookies, to understand whether you have come to the website from an online advertisement displayed on a third-party website, to improve site performance, and to measure the success of e-mail marketing campaigns. In many instances, these technologies are reliant on cookies to function properly, and so declining cookies will impair their functioning."
+          },
+          "5": {
+            "title": "5. Updates to this policy",
+            "text_1": "We may update this Cookie Policy from time to time in order to reflect, for example, changes to the cookies we use or for other operational, legal, or regulatory reasons. Please therefore re-visit this Cookie Policy regularly to stay informed about our use of cookies and related technologies.",
+            "text_2": "The date at the top of this Cookie Policy indicates when it was last updated."
+          },
+          "6": {
+            "title": "6. Contact Us",
+            "text": "If you have any questions about our use of cookies or other technologies, please email us at:"
+          }
+        }
+      }
+    },
+    "faq_page": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find answers to common questions about open-cvbaba. Can't find what you're looking for?",
+      "contact_link_text": "Contact us",
+      "search_placeholder": "Search questions...",
+      "no_results": "No questions found. Try a different search or category.",
+      "items": [
+        {
+          "category": "pricing",
+          "question": "How many credits does each document cost?",
+          "answer": "Every document costs 3 credits, including CVs, cover letters, SOPs, reports, recommendation letters, and essays. This consistent pricing makes it easy to plan your usage."
+        },
+        {
+          "category": "pricing",
+          "question": "Which plan should I choose?",
+          "answer": "Choose Credit Packs if you create 1 to 3 documents per month. Choose VIP if you create documents more regularly and want to save up to 60% per document with monthly credits."
+        },
+        {
+          "category": "pricing",
+          "question": "Do credits expire?",
+          "answer": "Credits are valid for 1 year from the date of purchase. For VIP plans, monthly credits roll over to your next billing cycle automatically, so you never lose what you have paid for within the year."
+        },
+        {
+          "category": "pricing",
+          "question": "Can I change plans anytime?",
+          "answer": "Yes, absolutely! You can upgrade or downgrade anytime. Unused credits roll over to your next billing cycle, so you never lose value."
+        },
+        {
+          "category": "pricing",
+          "question": "What if I run out of credits?",
+          "answer": "You can buy more credit packs anytime, or upgrade to a VIP monthly plan for better rates and automatic monthly credits."
+        },
+        {
+          "category": "pricing",
+          "question": "Is there a free trial?",
+          "answer": "Yes! Every new user gets 1 free document (5 free credits) to try open-cvbaba before making any payment. No credit card required to start."
+        },
+        {
+          "category": "pricing",
+          "question": "Can I get a team or enterprise discount?",
+          "answer": "Yes. We offer custom volume pricing for teams, universities, and agencies. Contact us at pricing@open-cvbaba.com for a quote."
+        },
+        {
+          "category": "pricing",
+          "question": "Do you offer refunds?",
+          "answer": "Credit pack purchases are non refundable since credits remain valid for a full year. VIP subscriptions can be cancelled anytime, and your remaining credits roll into the next month until used within their 1 year validity period."
+        },
+        {
+          "category": "getting_started",
+          "question": "How do I create my first document?",
+          "answer": "Simply sign up for a free account, describe what you want in plain language (like \"create a CV for a software engineer position\"), and open-cvbaba will generate a professionally formatted document in seconds."
+        },
+        {
+          "category": "getting_started",
+          "question": "Do I need design skills to use open-cvbaba?",
+          "answer": "Not at all! open-cvbaba automatically handles all formatting, layout, and design. You just provide the content in your own words, and we make it look professional."
+        },
+        {
+          "category": "getting_started",
+          "question": "What types of documents can I create?",
+          "answer": "You can create CVs/resumes, cover letters, statements of purpose (SOPs), personal statements, recommendation letters, business reports, and proposals."
+        },
+        {
+          "category": "getting_started",
+          "question": "Can I upload my existing CV or resume?",
+          "answer": "Yes! You can upload your existing document, and open-cvbaba will help you update, improve, or reformat it. You can also translate it or tailor it for specific jobs."
+        },
+        {
+          "category": "features",
+          "question": "Can I customize the templates?",
+          "answer": "Yes! Choose from 35+ professional templates, and customize colors, fonts, and layouts. You can also switch templates anytime without losing your content."
+        },
+        {
+          "category": "features",
+          "question": "What file formats can I export?",
+          "answer": "You can export your documents as PDF (recommended for applications) or Word (.docx) for further editing. Both formats maintain professional formatting."
+        },
+        {
+          "category": "features",
+          "question": "Can I translate my documents?",
+          "answer": "Yes! open-cvbaba supports translation to 50+ languages while maintaining professional formatting. Perfect for international job applications."
+        },
+        {
+          "category": "features",
+          "question": "How does the AI optimization work?",
+          "answer": "Our AI analyzes job descriptions and suggests improvements to your CV or cover letter, helping you highlight relevant skills and experience that match the position."
+        },
+        {
+          "category": "features",
+          "question": "Can I save multiple versions of my documents?",
+          "answer": "Yes! Save unlimited versions and variations. This is perfect for tailoring your CV or cover letter for different job applications."
+        },
+        {
+          "category": "account",
+          "question": "Is my data secure?",
+          "answer": "Absolutely. We use industry-standard encryption to protect your data. Your documents are private and never shared with third parties. You can delete your data anytime."
+        },
+        {
+          "category": "account",
+          "question": "Can I delete my account?",
+          "answer": "Yes, you can delete your account anytime from your settings. This will permanently remove all your data from our servers."
+        },
+        {
+          "category": "account",
+          "question": "How do I reset my password?",
+          "answer": "Click \"Forgot Password\" on the login page, enter your email, and we'll send you a secure link to reset your password."
+        },
+        {
+          "category": "support",
+          "question": "How can I get help if I'm stuck?",
+          "answer": "You can contact our support team via the contact form, email us at support@open-cvbaba.com, or check our help center for guides and tutorials."
+        },
+        {
+          "category": "support",
+          "question": "What are your support hours?",
+          "answer": "Our support team is available 24/7. We are always here to help you, no matter the time or time zone."
+        },
+        {
+          "category": "support",
+          "question": "Do you offer live chat support?",
+          "answer": "Currently, we offer email support with fast response times. Live chat is coming soon for VIP subscribers."
+        }
+      ],
+      "cta": {
+        "title": "Still Have Questions?",
+        "subtitle": "Our support team is here to help you get the most out of open-cvbaba.",
+        "contact_support": "Contact Support",
+        "email_us": "Email Us"
+      }
+    },
+    "footer": {
+      "description": "Professional documents made simple. Design CVs, letters, and reports in seconds.",
+      "resources": "Resources",
+      "legal": "Legal",
+      "links": {
+        "pricing": "Pricing",
+        "blog": "Blog",
+        "help_center": "Help Center",
+        "contact": "Contact",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "cookie": "Cookie Policy"
+      },
+      "rights_reserved": "© {{year}} open-cvbaba. All rights reserved."
+    },
+    "live_preview": {
+      "headline": "See It In Action",
+      "subheadline": "Watch how open-cvbaba transforms your ideas into professionally formatted documents in seconds.",
+      "scenarios": {
+        "cv": {
+          "prompt": "Create a software engineer resume for someone with 3 years of experience at tech startups",
+          "loading": "Creating your professional CV...",
+          "badge": "CV",
+          "name": "Sarah Chen",
+          "phone": "+1 (555) 123-4567",
+          "email": "sarah.chen@email.com",
+          "university": "Stanford University",
+          "location": "Stanford, CA",
+          "education_degree": "B.S. in Computer Science",
+          "education_dates": "Sep 2018 - Jun 2022",
+          "education_details": "GPA: 3.8/4.0 • Dean's List • Relevant Coursework: Data Structures, Algorithms, Machine Learning",
+          "sections": {
+            "education": "Education",
+            "experience": "Experience",
+            "projects": "Projects",
+            "skills": "Technical Skills"
+          },
+          "experience_items": [
+            {
+              "title": "Software Engineer",
+              "company": "TechFlow Inc.",
+              "location": "San Francisco, CA",
+              "dates": "Jul 2022 - Present",
+              "achievements": [
+                "Built microservices architecture serving 2M+ daily active users",
+                "Reduced API latency by 40% through Redis caching implementation",
+                "Led migration from monolith to Kubernetes, improving deployment speed by 3x"
+              ]
+            },
+            {
+              "title": "Software Engineering Intern",
+              "company": "DataStream Labs",
+              "location": "Palo Alto, CA",
+              "dates": "Jun 2021 - Aug 2021",
+              "achievements": [
+                "Developed real-time analytics dashboard using React and D3.js",
+                "Implemented automated testing suite, increasing code coverage to 85%"
+              ]
+            }
+          ],
+          "project_title": "AI-Powered Code Review Tool",
+          "project_date": "2023",
+          "project_tech": "Python, FastAPI, OpenAI API, PostgreSQL",
+          "project_achievements": [
+            "Developed ML model to analyze code quality and suggest improvements",
+            "Processed 10,000+ pull requests with 92% accuracy in issue detection"
+          ],
+          "skills": {
+            "languages": "Languages: Python, TypeScript, Go, Java, SQL",
+            "frameworks": "Frameworks: React, Node.js, FastAPI, Django, Kubernetes",
+            "tools": "Tools: AWS, Docker, PostgreSQL, Redis, Git, CI/CD"
+          }
+        },
+        "sop": {
+          "prompt": "Write a statement of purpose for a Master's in Data Science at MIT",
+          "loading": "Crafting your statement of purpose...",
+          "badge": "SOP",
+          "title": "Statement of Purpose",
+          "paragraphs": [
+            "My journey into data science began during my undergraduate research, where I discovered the transformative power of machine learning in solving complex real-world problems. This passion has driven me to pursue a Master's degree at MIT, where I aim to push the boundaries of AI research.",
+            "During my time at Stanford, I led a research project analyzing climate data patterns, resulting in a publication at NeurIPS. This experience taught me the importance of rigorous methodology and creative problem-solving.",
+            "At MIT, I am particularly drawn to Professor Johnson's work on interpretable ML systems. I believe my background in both software engineering and research positions me uniquely to contribute to this cutting-edge field."
+          ],
+          "closing": "I am confident that MIT's collaborative environment and world-class faculty will provide the ideal platform for me to achieve my research goals and make meaningful contributions to the field of data science."
+        },
+        "cover_letter": {
+          "prompt": "Write a cover letter for a Product Manager position at Google",
+          "loading": "Writing your cover letter...",
+          "badge": "Cover Letter",
+          "date": "January 5, 2026",
+          "header": {
+            "name": "Sarah Chen",
+            "email": "sarah.chen@email.com",
+            "phone": "+1 (555) 123-4567"
+          },
+          "recipient": {
+            "position": "Hiring Manager",
+            "company": "Google LLC",
+            "address": "1600 Amphitheatre Parkway, Mountain View, CA"
+          },
+          "greeting": "Dear Hiring Manager,",
+          "paragraphs": [
+            "I am writing to express my strong interest in the Product Manager position at Google. With three years of experience building and scaling products at fast-paced startups, I am excited about the opportunity to drive innovation at a company that shapes how billions of people interact with technology.",
+            "At TechFlow, I led the development of a microservices platform that now serves over 2 million daily active users. I collaborated closely with engineering, design, and data science teams to define product strategy, prioritize features, and deliver measurable improvements to user engagement.",
+            "I am particularly drawn to Google's commitment to building products that are accessible and beneficial to everyone. I would love the opportunity to bring my technical background and user-centric approach to your team."
+          ],
+          "closing": "Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to Google's mission.",
+          "signature": "Sincerely,\nSarah Chen"
+        }
+      }
+    },
+    "pricing": {
+      "headline": "Simple, Transparent Pricing",
+      "subheadline": "Start free with 5 credits. No subscriptions required — buy credits when you need them.",
+      "toggle": {
+        "on_demand": "Credit Packs",
+        "vip": "VIP Monthly"
+      },
+      "on_demand": {
+        "tiers": {
+          "starter": {
+            "name": "Starter",
+            "price": "$9",
+            "credits": "9 credits",
+            "docs": "3 documents",
+            "features": [
+              "All document types",
+              "35+ professional templates",
+              "PDF & Word export",
+              "Credits valid for 1 year"
+            ]
+          },
+          "essential": {
+            "name": "Essential",
+            "price": "$24",
+            "credits": "30 credits",
+            "docs": "10 documents",
+            "label": "Best Value",
+            "features": [
+              "Everything in Starter",
+              "Save 20% per credit",
+              "Priority support",
+              "Bulk document generation"
+            ]
+          },
+          "growth": {
+            "name": "Growth",
+            "price": "$49",
+            "credits": "75 credits",
+            "docs": "25 documents",
+            "features": [
+              "Everything in Essential",
+              "Save 35% per credit",
+              "API access",
+              "Custom branding"
+            ]
+          }
+        }
+      },
+      "vip": {
+        "tiers": {
+          "basic": {
+            "name": "Basic",
+            "price": "$7/mo",
+            "credits": "15 credits/month",
+            "docs": "5 documents/month",
+            "features": [
+              "All document types",
+              "35+ professional templates",
+              "Credits roll over",
+              "Cancel anytime"
+            ]
+          },
+          "starter": {
+            "name": "Starter",
+            "price": "$14/mo",
+            "credits": "36 credits/month",
+            "docs": "12 documents/month",
+            "features": [
+              "Everything in Basic",
+              "Save 40% per credit",
+              "Priority support",
+              "Bulk document generation"
+            ]
+          },
+          "professional": {
+            "name": "Professional",
+            "price": "$29/mo",
+            "credits": "90 credits/month",
+            "docs": "30 documents/month",
+            "label": "Best Value",
+            "features": [
+              "Everything in Starter",
+              "Save 60% per credit",
+              "API access",
+              "Custom branding",
+              "Dedicated account manager"
+            ]
+          }
+        }
+      },
+      "common": {
+        "buy_now": "Get Started"
+      },
+      "features_list": {
+        "free_start": "Start free with 5 credits",
+        "no_expiry": "Credits valid for 1 year",
+        "rollover": "Unused credits roll over",
+        "all_types": "All document types included"
+      },
+      "faq": {
+        "headline": "Frequently Asked Questions",
+        "items": [
+          {
+            "question": "How many credits does each document cost?",
+            "answer": "Every document costs 3 credits, regardless of type — CVs, cover letters, SOPs, reports, and more. This consistent pricing makes it easy to plan your usage."
+          },
+          {
+            "question": "Do credits expire?",
+            "answer": "Credits are valid for 1 year from purchase. For VIP plans, unused monthly credits roll over to your next billing cycle, so you never lose what you've paid for."
+          },
+          {
+            "question": "Can I cancel my VIP subscription anytime?",
+            "answer": "Yes! You can cancel anytime with no penalties. Your remaining credits stay valid until their expiration date."
+          },
+          {
+            "question": "Is there a free trial?",
+            "answer": "Every new user gets 5 free credits (enough for 1 document) to try open-cvbaba. No credit card required."
+          }
+        ]
+      }
+    }
+  },
+  "loadingCVPage": "Loading...",
+  "loadingSidebar": "Loading sidebar...",
+  "logout": {
+    "error": "Failed to logout"
+  },
+  "navigation": {
+    "pricing": "Pricing"
+  },
+  "pdfPreview": {
+    "active": "Active"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "general": "General"
+  },
+  "settingsModal": {
+    "title": "Settings"
+  },
+  "sidebar": {
+    "language": "Language",
+    "toggle": "Toggle sidebar"
+  },
+  "templateSelector": {
+    "pro": "PRO",
+    "free": "Free",
+    "next": "Next"
+  },
+  "templates": {
+    "title": "Our Templates",
+    "templates": [
+      {
+        "id": "academic_01",
+        "name": "CV Academic 01",
+        "image": "/templates/academic_01.png",
+        "description": "A classic and elegant template for academic resumes.",
+        "category": "Academic",
+        "type": "CV",
+        "characteristics": [
+          "Classic",
+          "Elegant",
+          "Simple"
+        ],
+        "isNew": true,
+        "hasComponent": true
+      },
+      {
+        "id": "academic_02",
+        "name": "CV Academic 02",
+        "image": "/templates/academic_02.png",
+        "description": "A professional and well-structured template for academics.",
+        "category": "Academic",
+        "type": "CV",
+        "characteristics": [
+          "Professional",
+          "Structured",
+          "Formal"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "academic_03",
+        "name": "CV Academic 03",
+        "image": "/templates/academic_03.png",
+        "description": "A clean and modern template for academic applications.",
+        "category": "Academic",
+        "type": "CV",
+        "characteristics": [
+          "Clean",
+          "Modern",
+          "Minimalist"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "academic_04",
+        "name": "CV Academic 04",
+        "image": "/templates/academic_04.png",
+        "description": "A creative and stylish template for academic portfolios.",
+        "category": "Academic",
+        "type": "CV",
+        "characteristics": [
+          "Creative",
+          "Stylish",
+          "Unique"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "academic_05",
+        "name": "CV Academic 05",
+        "image": "/templates/academic_05.png",
+        "description": "A simple and straightforward template for academic CVs.",
+        "category": "Academic",
+        "type": "CV",
+        "characteristics": [
+          "Simple",
+          "Clear",
+          "Concise"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "faang_01",
+        "name": "CV FAANG 01",
+        "image": "/templates/faang_01.png",
+        "description": "A template designed for FAANG companies, focusing on impact and results.",
+        "category": "FAANG",
+        "type": "CV",
+        "characteristics": [
+          "Impactful",
+          "Results-oriented",
+          "Professional"
+        ],
+        "isNew": true,
+        "hasComponent": true
+      },
+      {
+        "id": "faang_02",
+        "name": "CV FAANG 02",
+        "image": "/templates/faang_02.png",
+        "description": "A modern and clean template for tech industry professionals.",
+        "category": "FAANG",
+        "type": "CV",
+        "characteristics": [
+          "Modern",
+          "Clean",
+          "Tech-focused"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "faang_03",
+        "name": "CV FAANG 03",
+        "image": "/templates/faang_03.png",
+        "description": "A bold and confident template for aspiring FAANG candidates.",
+        "category": "FAANG",
+        "type": "CV",
+        "characteristics": [
+          "Bold",
+          "Confident",
+          "Professional"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "faang_04",
+        "name": "CV FAANG 04",
+        "image": "/templates/faang_04.png",
+        "description": "A minimalist and elegant template for FAANG software engineers.",
+        "category": "FAANG",
+        "type": "CV",
+        "characteristics": [
+          "Minimalist",
+          "Elegant",
+          "Technical"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "faang_05",
+        "name": "CV FAANG 05",
+        "image": "/templates/faang_05.png",
+        "description": "A data-driven template for FAANG product managers.",
+        "category": "FAANG",
+        "type": "CV",
+        "characteristics": [
+          "Data-driven",
+          "Strategic",
+          "Product-focused"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "faang_06",
+        "name": "CV FAANG 06",
+        "image": "/templates/faang_06.png",
+        "description": "A creative and visually appealing template for FAANG designers.",
+        "category": "FAANG",
+        "type": "CV",
+        "characteristics": [
+          "Creative",
+          "Visual",
+          "Design-oriented"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "fl_academic_01",
+        "name": "CV FL Academic 01",
+        "image": "/templates/fl_academic_01.png",
+        "description": "A full-length academic template with a focus on publications.",
+        "category": "Academic",
+        "type": "Letter",
+        "characteristics": [
+          "Full-length",
+          "Publications",
+          "Academic"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "fl_academic_02",
+        "name": "CV FL Academic 02",
+        "image": "/templates/fl_academic_02.png",
+        "description": "A comprehensive academic template for detailed research history.",
+        "category": "Academic",
+        "type": "Letter",
+        "characteristics": [
+          "Comprehensive",
+          "Detailed",
+          "Research-focused"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "fl_academic_03",
+        "name": "CV FL Academic 03",
+        "image": "/templates/fl_academic_03.png",
+        "description": "A professional full-length template for senior academics.",
+        "category": "Academic",
+        "type": "Letter",
+        "characteristics": [
+          "Professional",
+          "Senior-level",
+          "Academic"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "fl_harvard_01",
+        "name": "CV FL Harvard 01",
+        "image": "/templates/fl_harvard_01.png",
+        "description": "A Harvard-style full-length template for academic applications.",
+        "category": "Harvard",
+        "type": "Letter",
+        "characteristics": [
+          "Harvard-style",
+          "Full-length",
+          "Academic"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "fl_harvard_02",
+        "name": "CV FL Harvard 02",
+        "image": "/templates/fl_harvard_02.png",
+        "description": "A classic Harvard-style template for professional resumes.",
+        "category": "Harvard",
+        "type": "Letter",
+        "characteristics": [
+          "Classic",
+          "Professional",
+          "Harvard-style"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "fl_harvard_03",
+        "name": "CV FL Harvard 03",
+        "image": "/templates/fl_harvard_03.png",
+        "description": "A modern take on the Harvard-style template.",
+        "category": "Harvard",
+        "type": "Letter",
+        "characteristics": [
+          "Modern",
+          "Harvard-style",
+          "Professional"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "fl_harvard_04",
+        "name": "CV FL Harvard 04",
+        "image": "/templates/fl_harvard_04.png",
+        "description": "A clean and minimalist Harvard-style template.",
+        "category": "Harvard",
+        "type": "Letter",
+        "characteristics": [
+          "Clean",
+          "Minimalist",
+          "Harvard-style"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "fl_harvard_05",
+        "name": "CV FL Harvard 05",
+        "image": "/templates/fl_harvard_05.png",
+        "description": "A bold and confident Harvard-style template.",
+        "category": "Harvard",
+        "type": "Letter",
+        "characteristics": [
+          "Bold",
+          "Confident",
+          "Harvard-style"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "harvard_01",
+        "name": "CV Harvard 01",
+        "image": "/templates/harvard_01.png",
+        "description": "The classic Harvard resume template.",
+        "category": "Harvard",
+        "type": "CV",
+        "characteristics": [
+          "Classic",
+          "Professional",
+          "Timeless"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "harvard_02",
+        "name": "CV Harvard 02",
+        "image": "/templates/harvard_02.png",
+        "description": "A two-column version of the Harvard template.",
+        "category": "Harvard",
+        "type": "CV",
+        "characteristics": [
+          "Two-column",
+          "Organized",
+          "Professional"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "harvard_03",
+        "name": "CV Harvard 03",
+        "image": "/templates/harvard_03.png",
+        "description": "A Harvard template with a modern twist.",
+        "category": "Harvard",
+        "type": "CV",
+        "characteristics": [
+          "Modern",
+          "Clean",
+          "Professional"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "harvard_04",
+        "name": "CV Harvard 04",
+        "image": "/templates/harvard_04.png",
+        "description": "A minimalist version of the Harvard template.",
+        "category": "Harvard",
+        "type": "CV",
+        "characteristics": [
+          "Minimalist",
+          "Simple",
+          "Elegant"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "jake",
+        "name": "CV Jake",
+        "image": "/templates/jake.png",
+        "description": "A unique and creative template for personal branding.",
+        "category": "Creative",
+        "type": "CV",
+        "characteristics": [
+          "Creative",
+          "Unique",
+          "Personal"
+        ],
+        "hasComponent": true
+      },
+      {
+        "id": "modern_01",
+        "name": "CV Modern 01",
+        "image": "/templates/modern_01.png",
+        "description": "A stylish and modern template for creative professionals.",
+        "category": "Modern",
+        "type": "CV",
+        "characteristics": [
+          "Stylish",
+          "Modern",
+          "Creative"
+        ],
+        "isNew": true,
+        "hasComponent": false
+      },
+      {
+        "id": "modern_02",
+        "name": "CV Modern 02",
+        "image": "/templates/modern_02.png",
+        "description": "A clean and minimalist modern template.",
+        "category": "Modern",
+        "type": "CV",
+        "characteristics": [
+          "Clean",
+          "Minimalist",
+          "Modern"
+        ],
+        "hasComponent": false
+      },
+      {
+        "id": "modern_03",
+        "name": "CV Modern 03",
+        "image": "/templates/modern_03.png",
+        "description": "A bold and colorful modern template.",
+        "category": "Modern",
+        "type": "CV",
+        "characteristics": [
+          "Bold",
+          "Colorful",
+          "Modern"
+        ],
+        "hasComponent": false
+      },
+      {
+        "id": "modern_04",
+        "name": "CV Modern 04",
+        "image": "/templates/modern_04.png",
+        "description": "A professional and elegant modern template.",
+        "category": "Modern",
+        "type": "CV",
+        "characteristics": [
+          "Professional",
+          "Elegant",
+          "Modern"
+        ],
+        "hasComponent": false
+      },
+      {
+        "id": "modern_05",
+        "name": "CV Modern 05",
+        "image": "/templates/modern_05.png",
+        "description": "A modern template with a focus on typography.",
+        "category": "Modern",
+        "type": "CV",
+        "characteristics": [
+          "Typography",
+          "Modern",
+          "Stylish"
+        ],
+        "hasComponent": false
+      },
+      {
+        "id": "modern_06",
+        "name": "CV Modern 06",
+        "image": "/templates/modern_06.png",
+        "description": "A dark and sophisticated modern template.",
+        "category": "Modern",
+        "type": "CV",
+        "characteristics": [
+          "Dark",
+          "Sophisticated",
+          "Modern"
+        ],
+        "hasComponent": false
+      },
+      {
+        "id": "modern_07",
+        "name": "CV Modern 07",
+        "image": "/templates/modern_07.png",
+        "description": "A light and airy modern template.",
+        "category": "Modern",
+        "type": "CV",
+        "characteristics": [
+          "Light",
+          "Airy",
+          "Modern"
+        ],
+        "hasComponent": false
+      },
+      {
+        "id": "modern_08",
+        "name": "CV Modern 08",
+        "image": "/templates/modern_08.png",
+        "description": "A modern template with a unique layout.",
+        "category": "Modern",
+        "type": "CV",
+        "characteristics": [
+          "Unique",
+          "Layout",
+          "Modern"
+        ],
+        "hasComponent": false
+      }
+    ]
+  }
+}

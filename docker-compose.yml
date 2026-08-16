@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: open-cvbaba
+      POSTGRES_USER: open-cvbaba
+      POSTGRES_PASSWORD: open-cvbaba
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U open-cvbaba -d open-cvbaba"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ./be-open-cvbaba
+    environment:
+      DATABASE_URL: postgresql://open-cvbaba:open-cvbaba@postgres:5432/open-cvbaba
+      CORS_ORIGINS: '["http://localhost:3000"]'
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
+      MISTRAL_MODEL: ${MISTRAL_MODEL:-mistral-large-latest}
+      MISTRAL_TRANSCRIPTION_MODEL: ${MISTRAL_TRANSCRIPTION_MODEL:-voxtral-mini-latest}
+      MISTRAL_REALTIME_MODEL: ${MISTRAL_REALTIME_MODEL:-voxtral-mini-transcribe-realtime-2602}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./fe-open-cvbaba
+      args:
+        NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:

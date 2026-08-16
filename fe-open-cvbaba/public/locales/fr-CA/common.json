@@ -1,0 +1,28 @@
+{
+    "partnership": "In Partnership With",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "buttons": {
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "save": "Save",
+        "close": "Close",
+        "delete": "Delete",
+        "edit": "Edit",
+        "next": "Next",
+        "previous": "Previous",
+        "back": "Back",
+        "continue": "Continue",
+        "confirm": "Confirm",
+        "retry": "Retry"
+    },
+    "navigation": {
+        "pricing": "Pricing"
+    },
+    "languageSelector": {
+        "chooseLanguage": "Choose Your Language"
+    },
+    "logout": {
+        "error": "Failed to logout"
+    }
+}

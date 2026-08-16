@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Sabbatical Request Letter</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.4;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 5px;
+            color: #333;
+            font-size: 13px;
+        }
+        .letterhead {
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #8a1538;
+        }
+        .university-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8a1538;
+        }
+        .department {
+            font-size: 13px;
+            margin-top: 2px;
+        }
+        .contact-info {
+            font-size: 11px;
+            margin-top: 3px;
+        }
+        .date {
+            text-align: right;
+            margin: 5px 0;
+        }
+        .recipient, .subject, .greeting, .closing, .signature, .attachments {
+            margin: 5px 0;
+        }
+        .subject {
+            font-weight: bold;
+            text-align: center;
+            text-decoration: underline;
+            font-size: 13px;
+        }
+        .content p {
+            text-align: justify;
+            margin-bottom: 5px;
+        }
+        .sabbatical-plan {
+            margin: 10px 0;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .sabbatical-plan h3 {
+            margin-top: 0;
+            color: #8a1538;
+            border-bottom: 1px dotted #8a1538;
+            padding-bottom: 3px;
+            font-size: 14px;
+        }
+        .timeline {
+            margin-left: 10px;
+        }
+        .timeline li {
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        .signature-name {
+            font-weight: bold;
+        }
+        .attachments {
+            font-size: 11px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="letterhead">
+        <div class="university-name">BOSTON UNIVERSITY</div>
+        <div class="department">Department of Comparative Literature</div>
+        <div class="contact-info">
+            685 Commonwealth Avenue, Boston, MA 02215<br>
+            Tel: (617) 555-3426 | Email: complit@bu.edu
+        </div>
+    </div>
+
+    <div class="date">March 13, 2025</div>
+
+    <div class="recipient">
+        Professor Richard Martinez<br>
+        Chair, Department of Comparative Literature<br>
+        Boston University<br>
+        685 Commonwealth Avenue<br>
+        Boston, MA 02215
+    </div>
+
+    <div class="subject">REQUEST FOR SABBATICAL LEAVE: ACADEMIC YEAR 2025-2026</div>
+
+    <div class="greeting">Dear Professor Martinez,</div>
+
+    <div class="content">
+        <p>I am writing to formally request a sabbatical leave for the Fall semester of the 2025-2026 academic year. Having served as a faculty member for the past seven years, I am eligible for this sabbatical. This leave would significantly enhance my academic contribution to the department and the field.</p>
+
+        <p>During my sabbatical, I plan to complete my book manuscript, "<em>Borders in Translation: Literary Migrations Across the Global South</em>," which examines cross-cultural identity formation. This builds upon research supported by the university's Faculty Research Grant (2023) and a fellowship (2024).</p>
+
+        <div class="sabbatical-plan">
+            <h3>Sabbatical Research Plan</h3>
+            <p>My sabbatical project will involve:</p>
+            <ol class="timeline">
+                <li><strong>Manuscript Completion:</strong> Finalizing three chapters of my book manuscript, solicited by Duke University Press.</li>
+                <li><strong>Archival Research:</strong> Conducting a research visit to the National Library of Brazil.</li>
+                <li><strong>International Collaboration:</strong> Working with colleagues at the University of São Paulo on our digital humanities project.</li>
+            </ol>
+
+            <p>This will contribute to our department's emphasis on global literary movements and enhance graduate course offerings upon my return.</p>
+        </div>
+
+        <p>Professor Anna Kim has agreed to serve as interim advisor to my doctoral students, and Professor James Wong will cover my World Literature seminar (CL301). I will complete committee work before departure and remain available virtually.</p>
+
+        <p>Upon my return, I will offer a new graduate seminar, "Literary Border-Crossings in the Global South," and plan to organize a symposium to foster international scholarly exchange.</p>
+
+        <p>Thank you for considering this request. I am happy to provide any additional information.</p>
+    </div>
+
+    <div class="closing">Respectfully submitted,</div>
+
+    <div class="signature">
+        <div class="signature-name">Dr. Elena Fernandez, Ph.D.</div>
+        <div class="signature-title">Associate Professor of Comparative Literature</div>
+        <div class="contact-info">
+            Office: CAS 507 | Email: efernandez@bu.edu | Phone: (617) 555-9831
+        </div>
+    </div>
+
+    <div class="attachments">
+        Attachments:<br>
+        - Detailed sabbatical research plan<br>
+        - Publication schedule from Duke University Press<br>
+        - Letter of invitation from University of São Paulo<br>
+        - Teaching coverage plan approved by relevant faculty<br>
+        - Current CV
+    </div>
+</body>
+</html>

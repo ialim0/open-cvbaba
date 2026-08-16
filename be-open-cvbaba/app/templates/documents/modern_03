@@ -1,0 +1,417 @@
+<div class="pdf-page">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+        .pdf-page {
+            box-sizing: border-box;
+            width: 794px;
+            height: 1123px;
+            padding: 30px;
+            background: white;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            color: #2d3748;
+            line-height: 1.3;
+            font-size: 10pt;
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Modern 03 Specific Styles */
+        .header {
+            margin-bottom: 20px;
+            position: relative;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-bg-accent {
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            background-color: #fbcfe8;
+            border-bottom-left-radius: 100%;
+            z-index: 0;
+        }
+
+        .profile-container {
+            width: 85px;
+            height: 85px;
+            border-radius: 12px;
+            background-color: #fbcfe8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #ec4899;
+            margin-right: 25px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 3px;
+            line-height: 1.1;
+        }
+
+        .title {
+            font-size: 14px;
+            color: #ec4899;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: #4a5568;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-item i {
+            color: #ec4899;
+        }
+
+        /* Main Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        /* Full Width Section */
+        .full-width-section {
+            grid-column: 1 / -1;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            position: relative;
+            padding-top: 15px;
+            border-top: 3px solid #ec4899;
+        }
+
+        .section-icon {
+            width: 28px;
+            height: 28px;
+            background-color: #fbcfe8;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: #ec4899;
+            font-size: 12px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .summary-text {
+            color: #4a5568;
+            line-height: 1.4;
+            font-size: 10pt;
+        }
+
+        /* Columns */
+        .left-col,
+        .right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            position: relative;
+            padding-top: 15px;
+            border-top: 3px solid #ec4899;
+        }
+
+        .job-item,
+        .edu-item {
+            margin-bottom: 12px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 10.5pt;
+        }
+
+        .item-date {
+            font-size: 9.5pt;
+            color: #ec4899;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .item-subtitle {
+            color: #4a5568;
+            font-size: 10pt;
+            margin-bottom: 4px;
+        }
+
+        .item-details {
+            color: #4a5568;
+            font-size: 9.5pt;
+            line-height: 1.4;
+        }
+
+        .item-details ul {
+            padding-left: 15px;
+            list-style-type: disc;
+        }
+
+        .skill-item {
+            background-color: #fdf2f8;
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .skill-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #fbcfe8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ec4899;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .skill-content {
+            flex: 1;
+        }
+
+        .skill-name {
+            font-size: 9.5pt;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .skill-bar-bg {
+            height: 3px;
+            background-color: #e2e8f0;
+            border-radius: 2px;
+            width: 100%;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            background-color: #ec4899;
+            border-radius: 2px;
+        }
+
+        .language-tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: #fdf2f8;
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 9.5pt;
+            gap: 6px;
+        }
+
+        .lang-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #ec4899;
+            border-radius: 50%;
+        }
+    </style>
+
+    <div class="header">
+        <div class="header-bg-accent"></div>
+        <div class="profile-container">YN</div>
+        <div class="header-content">
+            <div class="name">Your Name</div>
+            <div class="title">Professional Title</div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(123) 456-7890</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>your.email@example.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-grid">
+        <!-- Full Width Summary -->
+        <div class="full-width-section">
+            <div class="section-header">
+                <div class="section-icon"><i class="fas fa-info-circle"></i></div>
+                <div class="section-title">Professional Summary</div>
+            </div>
+            <div class="summary-text">
+                Innovative and results-oriented professional with a proven track record of success in [your field].
+                Skilled in strategic planning and execution with a focus on delivering high-quality results.
+            </div>
+        </div>
+
+        <!-- Left Column -->
+        <div class="left-col">
+            <div class="card">
+                <div class="section-header" style="border-top: none; padding-top: 0; margin-bottom: 12px;">
+                    <div class="section-icon"><i class="fas fa-briefcase"></i></div>
+                    <div class="section-title">Work Experience</div>
+                </div>
+
+                <div class="job-item">
+                    <div class="item-header">
+                        <div class="item-title">Senior Position Title</div>
+                        <div class="item-date">2018 - 2023</div>
+                    </div>
+                    <div class="item-subtitle">Company Name</div>
+                    <div class="item-details">
+                        <ul>
+                            <li>Led team of 12 professionals, improving productivity by 30%.</li>
+                            <li>Implemented new strategies that increased revenue by 15%.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job-item">
+                    <div class="item-header">
+                        <div class="item-title">Junior Position Title</div>
+                        <div class="item-date">2015 - 2018</div>
+                    </div>
+                    <div class="item-subtitle">Previous Company</div>
+                    <div class="item-details">
+                        <ul>
+                            <li>Collaborated with cross-functional teams to deliver projects.</li>
+                            <li>Assisted in the development of marketing campaigns.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-header" style="border-top: none; padding-top: 0; margin-bottom: 12px;">
+                    <div class="section-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="section-title">Education</div>
+                </div>
+
+                <div class="edu-item">
+                    <div class="item-header">
+                        <div class="item-title">Degree Name</div>
+                        <div class="item-date">2010 - 2014</div>
+                    </div>
+                    <div class="item-subtitle">University Name</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-col">
+            <div class="card">
+                <div class="section-header" style="border-top: none; padding-top: 0; margin-bottom: 12px;">
+                    <div class="section-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="section-title">Skills</div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <div class="skill-content">
+                        <div class="skill-name">Programming</div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-icon"><i class="fas fa-pen-nib"></i></div>
+                    <div class="skill-content">
+                        <div class="skill-name">Design</div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="skill-content">
+                        <div class="skill-name">Management</div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-header" style="border-top: none; padding-top: 0; margin-bottom: 12px;">
+                    <div class="section-icon"><i class="fas fa-language"></i></div>
+                    <div class="section-title">Languages</div>
+                </div>
+
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <div class="language-tag">
+                        <div class="lang-dot"></div>
+                        <span>English (Native)</span>
+                    </div>
+                    <div class="language-tag">
+                        <div class="lang-dot"></div>
+                        <span>Spanish (Fluent)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

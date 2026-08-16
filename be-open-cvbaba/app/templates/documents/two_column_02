@@ -1,0 +1,227 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #1a1a1a;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    padding: 25px;
+}
+
+.header {
+    text-align: left;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+}
+
+h1 {
+    font-size: 22pt;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+}
+
+.main-content {
+    display: flex;
+}
+
+.left-column {
+    width: 60%;
+    padding-right: 15px;
+}
+
+.right-column {
+    width: 40%;
+    padding-left: 15px;
+}
+
+h2 {
+    font-size: 12pt;
+    font-weight: 600;
+    margin: 14px 0 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 3px;
+}
+
+.job-title {
+    font-size: 10.5pt;
+    font-weight: 600;
+    margin: 12px 0 2px 0;
+}
+
+.job-meta {
+    font-size: 9.5pt;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+ul {
+    padding-left: 16px;
+    margin: 0 0 10px 0;
+}
+
+li {
+    margin-bottom: 3px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+strong {
+    font-weight: 600;
+}
+
+.skill {
+    margin-bottom: 8px;
+}
+
+.skill p {
+    margin-bottom: 3px;
+}
+
+.skill-bar {
+    display: flex;
+}
+
+.skill-bar span {
+    height: 6px;
+    width: 20px;
+    margin-right: 3px;
+}
+
+.skill-bar .filled {
+    background-color: #1a1a1a;
+}
+
+.skill-bar .empty {
+    background-color: #e0e0e0;
+}
+</style>
+
+<div class="header">
+    <h1>Aiko Kim</h1>
+    <div class="contact-info">
+        (555)555-5555 | aiko@example.com | Chicago, IL 60610
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="left-column">
+        <div>
+            <h2>RESUME OBJECTIVE</h2>
+            <p>Experienced customer service expert adept in CRM, increasing client satisfaction, and proven track record in service improvement.</p>
+        </div>
+        <div>
+            <h2>WORK HISTORY</h2>
+            <div class="job-title">Customer Service Representative</div>
+            <div class="job-meta">BrightWave Solutions, September 2024-September 2025<br>Chicago, IL</div>
+            <ul>
+                <li>Handled 50+ customer queries daily</li>
+                <li>Reduced response time by 30%</li>
+                <li>Improved customer satisfaction by 25%</li>
+            </ul>
+            <div class="job-title">Client Relations Specialist</div>
+            <div class="job-meta">Sunset Solutions, September 2023-August 2024<br>Chicago, IL</div>
+            <ul>
+                <li>Managed client accounts worth $100k</li>
+                <li>Increased client retention rate by 20%</li>
+                <li>Implemented new CRM tools for efficiency</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="right-column">
+        <div>
+            <h2>EDUCATION</h2>
+            <p><strong>Master's Degree</strong><br>Business Administration, Boston University, Springfield IL, August 2023</p>
+            <p><strong>Bachelor's Degree</strong><br>Marketing, Northeastern University, Springfield IL, August 2021</p>
+        </div>
+        <div class="skills-section">
+            <h2>SKILLS</h2>
+            <div class="skill">
+                <p>Effective communication</p>
+                <div class="skill-bar">
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="empty"></span>
+                    <span class="empty"></span>
+                    <span class="empty"></span>
+                </div>
+            </div>
+            <div class="skill">
+                <p>Client retention strategies</p>
+                <div class="skill-bar">
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="empty"></span>
+                    <span class="empty"></span>
+                    <span class="empty"></span>
+                </div>
+            </div>
+            <div class="skill">
+                <p>Customer support expertise</p>
+                <div class="skill-bar">
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="empty"></span>
+                    <span class="empty"></span>
+                </div>
+            </div>
+            <div class="skill">
+                <p>Conflict resolution</p>
+                <div class="skill-bar">
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="empty"></span>
+                </div>
+            </div>
+            <div class="skill">
+                <p>CRM proficiency</p>
+                <div class="skill-bar">
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                    <span class="filled"></span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2>ACCOMPLISHMENTS</h2>
+            <ul>
+                <li>Developed a new client onboarding process</li>
+                <li>Led a team to improve service delivery</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>

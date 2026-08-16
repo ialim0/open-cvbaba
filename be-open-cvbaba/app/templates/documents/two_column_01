@@ -1,0 +1,276 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #1a1a1a;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    padding: 25px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header h1 {
+    font-size: 42pt;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0;
+    color: #222;
+}
+
+.header .title {
+    font-size: 12pt;
+    font-weight: 300;
+    letter-spacing: 4px;
+    color: #555;
+    margin: 6px 0 0 0;
+}
+
+.profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 20px 0;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-column {
+    width: 35%;
+    padding-right: 15px;
+}
+
+.left-column > div:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.right-column {
+    width: 65%;
+    padding-left: 15px;
+    border-left: 1px solid #e0e0e0;
+}
+
+h2 {
+    font-size: 12pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    margin-top: 0;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 9.5pt;
+}
+
+.contact-item .icon {
+    width: 16px;
+    margin-right: 8px;
+    text-align: center;
+    color: #555;
+}
+
+.skills-list, .education-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skills-list li {
+    margin-bottom: 6px;
+    font-size: 9.5pt;
+}
+
+.skills-list li::before {
+    content: '•';
+    color: #333;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.education-item {
+    margin-bottom: 15px;
+}
+
+.education-item h3 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    margin: 0 0 3px 0;
+}
+
+.summary-section p {
+    margin-top: 0;
+    font-size: 10pt;
+}
+
+.experience-item {
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 16px;
+}
+
+.experience-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 6px;
+    height: 6px;
+    background-color: #333;
+    border-radius: 50%;
+}
+
+.experience-item h3 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    margin: 0 0 3px 0;
+}
+
+.experience-item .company {
+    font-size: 9.5pt;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.experience-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.experience-item li {
+    margin-bottom: 4px;
+    font-size: 9.5pt;
+}
+
+.experience-item li::before {
+    content: '•';
+    color: #333;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+</style>
+
+<div class="header">
+    <div>
+        <h1>CONNOR<br>HAMILTON</h1>
+        <p class="title">CREATIVE DIRECTOR</p>
+    </div>
+    <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Connor Hamilton" class="profile-pic">
+</div>
+<div class="divider"></div>
+<div class="main-content">
+    <div class="left-column">
+        <div class="contact-section">
+            <h2>CONTACT</h2>
+            <div class="contact-item">
+                <i class="fas fa-phone icon"></i>
+                <span>+123-456-7890</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope icon"></i>
+                <span>hello@reallygreatsite.com</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt icon"></i>
+                <span>123 Anywhere St., Any City</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-globe icon"></i>
+                <span>reallygreatsite.com</span>
+            </div>
+        </div>
+        <div class="skills-section">
+            <h2>SKILLS</h2>
+            <h3>PROFESSIONAL</h3>
+            <ul class="skills-list">
+                <li>Art Directors</li>
+                <li>Client Relationship Management</li>
+                <li>Delegation</li>
+                <li>Creativity</li>
+                <li>Time Management</li>
+                <li>Interpersonal Skills</li>
+                <li>Effective Communication</li>
+            </ul>
+        </div>
+        <div class="education-section">
+            <h2>EDUCATION</h2>
+            <div class="education-item">
+                <h3>BORCELLE SCHOOL</h3>
+                <p>Really Great High School<br>2010 - 2014</p>
+            </div>
+            <div class="education-item">
+                <h3>LICERIA OF TECHNOLOGY</h3>
+                <p>Really Great University<br>2014 - 2016</p>
+            </div>
+        </div>
+    </div>
+    <div class="right-column">
+        <div class="summary-section">
+            <h2>SUMMARY</h2>
+            <p>An inventive creative director with over 7 years of experience building a new team of designers, copywriters and online marketing talent and growing a team with over $15 million in lead accounts, and $5 million+ annually. Passionate to apply proven experience in Arowwai Industries.</p>
+        </div>
+        <div class="experience-section">
+            <h2>WORKING EXPERIENCE</h2>
+            <div class="experience-item">
+                <h3>CREATIVE DIRECTOR</h3>
+                <p class="company">Really Great Company | 2016 - Present</p>
+                <ul>
+                    <li>Expert at maintaining relations with corporate clients</li>
+                    <li>Responsible for key accounts worth</li>
+                    <li>Managed multi-platform regional and national campaigns</li>
+                </ul>
+            </div>
+            <div class="experience-item">
+                <h3>CREATIVE DIRECTOR</h3>
+                <p class="company">Really Great Company | 2014 - 2016</p>
+                <ul>
+                    <li>Expert at maintaining relations with corporate clients</li>
+                    <li>Responsible for key accounts worth</li>
+                    <li>Managed multi-platform regional and national campaigns</li>
+                </ul>
+            </div>
+            <div class="experience-item">
+                <h3>ASSISTANT CREATIVE DIRECTOR</h3>
+                <p class="company">Really Great Company | 2010 - 2014</p>
+                <ul>
+                    <li>Expert at maintaining relations with corporate clients</li>
+                    <li>Together with the creative director, manage a team of design and marketing professionals</li>
+                    <li>Managed multi-platform regional and national campaigns</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Collaboration Proposal</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            font-size: 14px;
+        }
+        .letterhead {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 10px;
+        }
+        .university-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #003366;
+        }
+        .department {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .contact-info {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #555;
+        }
+        .date {
+            text-align: right;
+            margin: 15px 0;
+        }
+        .recipient {
+            margin-bottom: 15px;
+        }
+        .greeting {
+            margin-bottom: 10px;
+        }
+        .content p {
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+        .content ul {
+            margin-bottom: 10px;
+            padding-left: 20px;
+        }
+        .closing {
+            margin-top: 20px;
+        }
+        .signature {
+            margin-top: 30px;
+        }
+        .signature-name {
+            font-weight: bold;
+        }
+        .signature-title {
+            font-style: italic;
+        }
+        .attachments {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="letterhead">
+        <div class="university-name">HARVARD UNIVERSITY</div>
+        <div class="department">Department of Molecular and Cellular Biology</div>
+        <div class="contact-info">
+            16 Divinity Avenue, Cambridge, MA 02138<br>
+            Tel: (617) 555-1234 | Email: mcb@harvard.edu
+        </div>
+    </div>
+
+    <div class="date">March 13, 2025</div>
+
+    <div class="recipient">
+        Dr. Emily Carter<br>
+        Professor of Biochemistry<br>
+        Massachusetts Institute of Technology<br>
+        77 Massachusetts Avenue<br>
+        Cambridge, MA 02139
+    </div>
+
+    <div class="greeting">Dear Dr. Carter,</div>
+
+    <div class="content">
+        <p>I am writing to propose a collaborative research initiative between our laboratories to investigate the molecular mechanisms of protein folding in neurodegenerative diseases. Your groundbreaking work on protein misfolding and aggregation has inspired our team, and we believe that combining our expertise in cellular biology with your biochemical approaches could lead to significant advancements in this field.</p>
+        
+        <p>Our laboratory has recently developed a novel live-cell imaging technique that allows real-time observation of protein folding dynamics in neuronal cells. This method, combined with your innovative biochemical assays, could provide unprecedented insights into the early stages of protein misfolding and its role in diseases such as Alzheimer's and Parkinson's.</p>
+        
+        <p>I propose the following framework for collaboration:</p>
+        
+        <ul>
+            <li>Joint development of experimental protocols to study protein folding in live cells.</li>
+            <li>Exchange of research materials, including cell lines and biochemical reagents.</li>
+            <li>Co-authorship of research papers and joint grant applications to funding agencies such as the NIH and NSF.</li>
+        </ul>
+        
+        <p>Our department has allocated resources to support initial collaborative experiments, and I would be happy to discuss specific details at your convenience. I have attached a draft research plan and preliminary data for your review.</p>
+        
+        <p>I believe this collaboration has the potential to make significant contributions to our understanding of neurodegenerative diseases and would be delighted to discuss this proposal further. Please let me know if you are available for a meeting or video conference in the coming weeks.</p>
+    </div>
+
+    <div class="closing">Sincerely,</div>
+
+    <div class="signature">
+        <div class="signature-name">Dr. Michael Thompson, Ph.D.</div>
+        <div class="signature-title">Associate Professor of Molecular Biology</div>
+        <div class="signature-title">Director, Cellular Dynamics Laboratory</div>
+    </div>
+
+    <div class="attachments">
+        Attachments:<br>
+        - Draft research plan<br>
+        - Preliminary data from live-cell imaging experiments<br>
+        - Current CV
+    </div>
+</body>
+</html>

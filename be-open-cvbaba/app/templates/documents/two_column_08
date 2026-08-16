@@ -1,0 +1,209 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Lato', sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #444;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+    background-color: #f8f8f8;
+    padding: 20px 25px;
+    text-align: center;
+    border-bottom: 2px solid #673ab7;
+}
+
+.header h1 {
+    color: #673ab7;
+    margin: 0 0 4px 0;
+    font-size: 22pt;
+    font-weight: 700;
+}
+
+.header p {
+    font-size: 11pt;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+    color: #444;
+}
+
+.contact-info a {
+    color: #444;
+    text-decoration: none;
+    margin: 0 6px;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    padding: 15px 0;
+}
+
+.sidebar {
+    padding: 0 12px 0 25px;
+    border-right: 1px solid #e0e0e0;
+}
+
+.sidebar h3 {
+    color: #444;
+    font-size: 11.5pt;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #673ab7;
+    padding-bottom: 2px;
+    font-weight: 700;
+}
+
+.sidebar h3:first-child {
+    margin-top: 0;
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+    font-size: 9.5pt;
+}
+
+.skills-list li {
+    margin-bottom: 3px;
+}
+
+.main-section {
+    padding: 0 25px 0 20px;
+}
+
+.main-section h3 {
+    color: #673ab7;
+    font-size: 12.5pt;
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.job-entry {
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.job-entry:last-of-type {
+    border-bottom: none;
+}
+
+.job-title {
+    font-weight: 700;
+    color: #444;
+    font-size: 10.5pt;
+    margin-bottom: 1px;
+}
+
+.company-dates {
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+    font-size: 9.5pt;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.description ul {
+    padding-left: 16px;
+    margin: 4px 0 0 0;
+    font-size: 9.5pt;
+}
+
+.description li {
+    margin-bottom: 3px;
+}
+
+.description strong {
+    font-weight: 700;
+}
+</style>
+
+<div class="header">
+    <h1>NIKOLA TESLA</h1>
+    <p>Electrical Engineer & Inventor</p>
+    <div class="contact-info">
+        <span>New York, NY</span> | 
+        <a href="mailto:nikola.tesla@example.com">nikola.tesla@example.com</a> | 
+        <span>(555) 123-4567</span>
+    </div>
+</div>
+
+<div class="main-content">
+    <section class="sidebar">
+        <h3>SUMMARY</h3>
+        <p style="font-size: 9.5pt;">Visionary electrical engineer credited with developing the alternating current (AC) electrical system. Focused on innovation in wireless technology, power transmission, and robotics.</p>
+
+        <h3>TECHNICAL SKILLS</h3>
+        <ul class="skills-list">
+            <li>AC & DC Power Systems</li>
+            <li>Electromagnetism</li>
+            <li>Wireless Telegraphy</li>
+            <li>High-Frequency Currents</li>
+            <li>Turbine Design</li>
+            <li>Patent Development</li>
+        </ul>
+
+        <h3>EDUCATION</h3>
+        <div style="font-size: 9.5pt;">
+            <p style="margin-bottom: 4px;"><strong>Polytechnic Institute</strong><br>Graz, Austria (Attended 1875 - 1878)</p>
+            <p><strong>University of Prague</strong><br>Prague, Czechia (Attended 1880 - 1881)</p>
+        </div>
+    </section>
+
+    <section class="main-section">
+        <h3>PROFESSIONAL CHRONOLOGY</h3>
+
+        <div class="job-entry">
+            <span class="job-title">Independent Researcher & Inventor</span>
+            <div class="company-dates">
+                <span>Tesla Electric Company, Various Laboratories</span>
+                <span>1886 - 1943</span>
+            </div>
+            <div class="description">
+                <ul>
+                    <li>Designed and constructed the <strong>Tesla Coil</strong>, an air-core, high-frequency, resonant transformer used in radio and high-voltage electricity experiments.</li>
+                    <li>Patented over 300 inventions, including systems for wireless power transmission and remote control devices.</li>
+                    <li>Conceptualized and initiated construction of the <strong>Wardenclyffe Tower</strong>, a prototype wireless transmission station.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job-entry">
+            <span class="job-title">Chief Engineer, AC Development</span>
+            <div class="company-dates">
+                <span>Westinghouse Electric & Manufacturing Co.</span>
+                <span>1888 - 1890</span>
+            </div>
+            <div class="description">
+                <ul>
+                    <li>Collaborated on the successful development and commercialization of the polyphase <strong>Alternating Current (AC) system</strong>, leading to the electrification of the United States.</li>
+                    <li>Designed the hydroelectric power plant at Niagara Falls, utilizing my <strong>AC induction motor and generator</strong> designs.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+</div>

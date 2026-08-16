@@ -1,0 +1,206 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #5f6368;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    padding: 25px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    text-align: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #1a73e8;
+}
+
+.header h1 {
+    color: #202124;
+    margin: 0 0 4px 0;
+    font-size: 22pt;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.header p {
+    font-size: 11pt;
+    color: #1a73e8;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+    color: #5f6368;
+}
+
+.contact-info a {
+    color: #5f6368;
+    text-decoration: none;
+    margin: 0 6px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section h3 {
+    color: #202124;
+    font-size: 12pt;
+    margin-top: 0;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #dadce0;
+    padding-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 700;
+}
+
+.item-entry {
+    margin-bottom: 12px;
+}
+
+.item-title {
+    font-weight: 700;
+    color: #202124;
+    display: inline;
+    font-size: 10.5pt;
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5pt;
+    margin-bottom: 2px;
+}
+
+.company-name {
+    font-style: italic;
+    color: #1a73e8;
+    font-weight: 500;
+    font-size: 9.5pt;
+}
+
+.dates {
+    color: #5f6368;
+    font-size: 9.5pt;
+}
+
+.description ul {
+    padding-left: 16px;
+    margin: 4px 0 0 0;
+    font-size: 9.5pt;
+}
+
+.description li {
+    margin-bottom: 3px;
+}
+
+.skills-content {
+    font-size: 9.5pt;
+}
+
+.skills-content strong {
+    color: #202124;
+    margin-right: 4px;
+}
+
+.skills-content p {
+    margin-bottom: 6px;
+}
+</style>
+
+<div class="header">
+    <h1>ROSALIND FRANKLIN</h1>
+    <p>X-ray Crystallographer | Molecular Biologist</p>
+    <div class="contact-info">
+        <span>London, UK</span> | 
+        <a href="mailto:r.franklin@example.com">r.franklin@example.com</a> | 
+        <a href="#">(020) 1234 5678</a> | 
+        <a href="#">Google Scholar Profile</a>
+    </div>
+</div>
+
+<section class="section">
+    <h3>SUMMARY</h3>
+    <p style="font-size: 9.5pt;">Highly rigorous and pioneering molecular biologist and biophysicist with expertise in X-ray diffraction techniques. Credited with producing <strong>Photo 51</strong>, crucial evidence detailing the helical structure of DNA, RNA, and viruses.</p>
+</section>
+
+<section class="section">
+    <h3>PROFESSIONAL EXPERIENCE</h3>
+
+    <div class="item-entry">
+        <div class="item-details">
+            <span class="item-title">Biophysicist & Research Fellow</span>
+            <span class="dates">1953 - 1958</span>
+        </div>
+        <span class="company-name">Birkbeck College, London, UK</span>
+        <div class="description">
+            <ul>
+                <li>Led research on the molecular structure of the tobacco mosaic virus (TMV) and polio virus, providing key evidence of their helix structures.</li>
+                <li>Successfully published several papers demonstrating that RNA in TMV is a single-strand helix, contradicting prevailing theories.</li>
+                <li>Secured independent funding for research into coal, coke, and graphite.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="item-entry">
+        <div class="item-details">
+            <span class="item-title">Research Associate (DNA Studies)</span>
+            <span class="dates">1951 - 1953</span>
+        </div>
+        <span class="company-name">King's College London, UK</span>
+        <div class="description">
+            <ul>
+                <li>Developed advanced X-ray diffraction techniques, resulting in the high-quality images of DNA, including the famous <strong>Photo 51</strong>.</li>
+                <li>Identified key metrics suggesting two forms of the DNA helix, providing critical data for the later model of the double helix.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h3>TECHNICAL SKILLS</h3>
+    <div class="skills-content">
+        <p>
+            <strong>Advanced Techniques:</strong> X-ray Crystallography, Diffraction Pattern Analysis, Vacuum Chamber Technology, Microscopy.
+        </p>
+        <p>
+            <strong>Core Disciplines:</strong> Molecular Biology, Structural Chemistry, Biophysics, Viral Epidemiology, Statistical Analysis.
+        </p>
+    </div>
+</section>
+
+<section class="section" style="margin-bottom: 0;">
+    <h3>EDUCATION</h3>
+
+    <div class="item-entry">
+        <div class="item-details">
+            <span class="item-title">PhD in Physical Chemistry</span>
+            <span class="dates">1945</span>
+        </div>
+        <span class="company-name">University of Cambridge, UK</span>
+    </div>
+    
+    <div class="item-entry">
+        <div class="item-details">
+            <span class="item-title">B.A. in Natural Sciences</span>
+            <span class="dates">1941</span>
+        </div>
+        <span class="company-name">Newnham College, Cambridge, UK</span>
+    </div>
+</section>
+</div>

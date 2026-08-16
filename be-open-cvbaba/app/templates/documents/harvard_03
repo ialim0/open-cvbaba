@@ -1,0 +1,220 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'EB Garamond', 'Baskerville', serif;
+    font-size: 11pt;
+    line-height: 1.3;
+    color: #1a1a1a;
+    background-color: #fff;
+    width: 100%;
+    min-height: 1047px;
+    padding: 20px;
+}
+
+.header {
+    border-bottom: 3px double #1a1a1a;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.name {
+    font-size: 22pt;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.contact-grid {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9pt;
+    text-align: center;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.contact-grid span {
+    flex: 1 1 auto;
+    min-width: 120px;
+}
+
+.section {
+    margin: 15px 0;
+}
+
+.section-title {
+    font-size: 12pt;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.section-title:after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background: #1a1a1a;
+    margin-left: 10px;
+}
+
+.entry {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2px;
+    align-items: baseline;
+}
+
+.entry-title {
+    font-weight: 600;
+    font-size: 11pt;
+}
+
+.entry-org {
+    font-style: italic;
+    margin-bottom: 1px;
+    font-size: 10.5pt;
+}
+
+.entry-date {
+    font-style: normal;
+    font-size: 10pt;
+    white-space: nowrap;
+}
+
+.entry-location {
+    font-style: italic;
+    color: #444;
+    font-size: 10pt;
+    margin-bottom: 2px;
+}
+
+ul {
+    list-style-type: square;
+    margin-left: 14px;
+    margin-top: 4px;
+}
+
+li {
+    margin-bottom: 2px;
+    line-height: 1.3;
+    font-size: 10.5pt;
+}
+
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 6px;
+    padding-left: 10px;
+    font-size: 10.5pt;
+}
+
+.skill-category {
+    font-style: italic;
+    font-weight: 500;
+}
+</style>
+
+<div class="header">
+    <div class="name">ALEXANDRA CHEN</div>
+    <div class="contact-grid">
+        <span>chen.alexandra@harvard.edu</span>
+        <span>+1 (617) 555-9876</span>
+        <span>linkedin.com/in/alexandrachen</span>
+        <span>Cambridge, MA 02138</span>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Education</div>
+    <div class="entry">
+        <div class="entry-header">
+            <span class="entry-title">Harvard Business School</span>
+            <span class="entry-date">Expected May 2025</span>
+        </div>
+        <div class="entry-org">Master of Business Administration</div>
+        <ul>
+            <li>Selected as Baker Scholar (top 5% of class); Leadership & Ethics Fellow</li>
+            <li>Co-President, Technology & Innovation Club; VP of Operations, Women in Business</li>
+        </ul>
+    </div>
+
+    <div class="entry">
+        <div class="entry-header">
+            <span class="entry-title">Stanford University</span>
+            <span class="entry-date">May 2020</span>
+        </div>
+        <div class="entry-org">B.S. in Computer Science, Minor in Economics</div>
+        <ul>
+            <li>GPA: 3.94/4.00; Phi Beta Kappa; Department Honors</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Experience</div>
+    <div class="entry">
+        <div class="entry-header">
+            <span class="entry-title">Microsoft</span>
+            <span class="entry-date">2020 - 2023</span>
+        </div>
+        <div class="entry-org">Product Manager, Azure AI</div>
+        <div class="entry-location">Redmond, WA</div>
+        <ul>
+            <li>Led development and launch of new AI service generating $50M in first-year revenue</li>
+            <li>Managed cross-functional team of 15 engineers, designers, and data scientists</li>
+            <li>Created product strategy and roadmap for enterprise AI solutions</li>
+        </ul>
+    </div>
+
+    <div class="entry">
+        <div class="entry-header">
+            <span class="entry-title">Apple</span>
+            <span class="entry-date">Summer 2019</span>
+        </div>
+        <div class="entry-org">Product Management Intern</div>
+        <div class="entry-location">Cupertino, CA</div>
+        <ul>
+            <li>Developed feature recommendations for iOS privacy settings used by 100M+ users</li>
+            <li>Conducted user research and competitive analysis for new security features</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Skills & Interests</div>
+    <div class="skills-container">
+        <div>
+            <span class="skill-category">Technical:</span><br>
+            Python, SQL, AWS, Azure
+        </div>
+        <div>
+            <span class="skill-category">Business:</span><br>
+            Product Strategy, Analytics
+        </div>
+        <div>
+            <span class="skill-category">Languages:</span><br>
+            English, Mandarin (native)
+        </div>
+    </div>
+</div>
+
+</div>

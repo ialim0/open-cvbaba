@@ -1,0 +1,301 @@
+<div class="pdf-page">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+        .pdf-page {
+            box-sizing: border-box;
+            width: 794px;
+            height: 1123px;
+            padding: 30px;
+            background: white;
+            overflow: hidden;
+            font-family: 'Merriweather', serif;
+            color: #000;
+            line-height: 1.2;
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        /* FAANG Specific Styles Adapted */
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 20pt;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 9pt;
+            gap: 6px;
+        }
+
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            border-bottom: 1px solid #000;
+            margin: 12px 0 6px 0;
+            font-size: 11pt;
+            text-transform: uppercase;
+            padding-bottom: 1px;
+        }
+
+        .item {
+            margin-bottom: 6px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 10pt;
+        }
+
+        .item-title {
+            font-style: italic;
+            font-size: 10pt;
+            margin-bottom: 1px;
+        }
+
+        .item-content {
+            font-size: 9.5pt;
+            line-height: 1.3;
+        }
+
+        .item-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .item-content li {
+            margin-bottom: 1px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .item-content li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-size: 10px;
+        }
+
+        /* Skills Grid/List */
+        .skills-list {
+            font-size: 9.5pt;
+        }
+
+        .skills-row {
+            display: flex;
+            margin-bottom: 3px;
+        }
+
+        .skills-category {
+            font-weight: 700;
+            width: 150px;
+            flex-shrink: 0;
+        }
+
+        /* Coursework Grid */
+        .coursework-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            font-size: 9.5pt;
+        }
+
+        .coursework-grid ul {
+            list-style: none;
+        }
+    </style>
+
+    <div class="header">
+        <h1>First Last</h1>
+        <div class="contact-info">
+            <span>123 Street Name, Town, State 12345</span>
+            <span>|</span>
+            <span><i class="fas fa-phone"></i> (123) 456-7890</span>
+            <span>|</span>
+            <span><i class="fas fa-envelope"></i> email@email.com</span>
+            <span>|</span>
+            <span><i class="fab fa-linkedin"></i> linkedin.com/in/username</span>
+            <span>|</span>
+            <span><i class="fab fa-github"></i> github.com/username</span>
+        </div>
+    </div>
+
+    <div class="education">
+        <div class="section-title">Education</div>
+        <div class="item">
+            <div class="item-header">
+                <span>State University</span>
+                <span>Sep. 2017 - May 2021</span>
+            </div>
+            <div class="item-title">Bachelor of Science in Computer Science</div>
+        </div>
+    </div>
+
+    <div class="relevant-coursework">
+        <div class="section-title">Relevant Coursework</div>
+        <div class="coursework-grid">
+            <ul>
+                <li>Data Structures</li>
+                <li>Operating Systems</li>
+            </ul>
+            <ul>
+                <li>Algorithms Analysis</li>
+                <li>Database Management</li>
+            </ul>
+            <ul>
+                <li>Artificial Intelligence</li>
+                <li>Computer Technology</li>
+            </ul>
+            <ul>
+                <li>Systems Programming</li>
+                <li>Software Engineering</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="experience">
+        <div class="section-title">Experience</div>
+
+        <div class="item">
+            <div class="item-header">
+                <span>Electronic Company</span>
+                <span>May 2020 - August 2020</span>
+            </div>
+            <div class="item-title">Software Engineering Intern</div>
+            <div class="item-content">
+                <ul>
+                    <li>Developed a service to automatically perform a set of unit tests daily on a product in
+                        development in order to decrease debugging time and identify errors</li>
+                    <li>Implemented a daily testing program which utilizes Python and a bash file to locate a file on an
+                        expected filepath and test the latest build code onto the hardware</li>
+                    <li>Created a repository accessible by all developers on the team to automate the entire process of
+                        testing the latest build, executing test cases, validating the latest build</li>
+                    <li>Used the team's version control and send a daily report of test results to team members using
+                        HTML, Javascript, and CSS</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span>Startup, Inc</span>
+                <span>January 2019 - May 2019</span>
+            </div>
+            <div class="item-title">Software Engineering Intern</div>
+            <div class="item-content">
+                <ul>
+                    <li>Assisted in development of the front end of a mobile application for iOS/Android using Dart and
+                        the Flutter Framework</li>
+                    <li>Worked with frontend developer and designer to test weekly iterations of development building
+                        with other interns</li>
+                    <li>Implemented a responsive design with designers to ensure app performed and appeared consistently
+                        across iOS and Android</li>
+                    <li>Utilized Android Studio as a development environment in order to visualize the application in
+                        both iOS and Android</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="projects">
+        <div class="section-title">Projects</div>
+
+        <div class="item">
+            <div class="item-header">
+                <span>Gym Reservation Web Application</span>
+                <span>September 2020 - January 2021</span>
+            </div>
+            <div class="item-content">
+                <ul>
+                    <li>Developed an automated bot using Python and Google Cloud Console to register yourself for a
+                        channel at my school gym</li>
+                    <li>Implemented functions to extract users' credentials and match them with the current day booking
+                        slots</li>
+                    <li>Deployed a web-based platform using MERN stack such that the program is able to run everyday
+                        from a server instead</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="item-header">
+                <span>Price Calculator for Gym, Local, Enterprises</span>
+                <span>September 2019 - December 2019</span>
+            </div>
+            <div class="item-content">
+                <ul>
+                    <li>Created an Android application using Java and Android Studio to calculate ticket prices for
+                        trips to numerous gyms</li>
+                    <li>Featured user inputted information as the basis of trip cost and various conditions were based
+                        on the ticket source</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="skills">
+        <div class="section-title">Technical Skills</div>
+        <div class="skills-list">
+            <div class="skills-row">
+                <div class="skills-category">Languages:</div>
+                <div>Python, Java, C, HTML/CSS, JavaScript, SQL</div>
+            </div>
+            <div class="skills-row">
+                <div class="skills-category">Technologies:</div>
+                <div>React, Flutter, Node.js, Android Studio</div>
+            </div>
+            <div class="skills-row">
+                <div class="skills-category">Tools:</div>
+                <div>Linux, JetBrains, GitHub, Figma, WordPress</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="leadership">
+        <div class="section-title">Leadership / Extracurricular</div>
+
+        <div class="item">
+            <div class="item-header">
+                <span>Alpha Sigma Alpha Fraternity Inc</span>
+                <span>Spring 2020 - Present</span>
+            </div>
+            <div class="item-content">
+                <ul>
+                    <li>Achieved a 4 star fraternity ranking by the Office of Fraternity and Sorority Affairs (highest
+                        possible ranking)</li>
+                    <li>Managed executive board of 5 members who weekly organize to ensure successful event planning as
+                        part of the chapter</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

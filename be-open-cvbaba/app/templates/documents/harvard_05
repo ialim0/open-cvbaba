@@ -1,0 +1,305 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Libre Baskerville', 'Garamond', serif;
+    font-size: 11pt;
+    line-height: 1.3;
+    color: #1a1a1a;
+    background-color: #fff;
+    width: 100%;
+    min-height: 1047px;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #1a1a1a;
+    margin-bottom: 18px;
+}
+
+.name {
+    font-size: 20pt;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.contact-line {
+    font-size: 9.5pt;
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.contact-line span {
+    display: inline-block;
+}
+
+.contact-line span:not(:last-child)::after {
+    content: "•";
+    margin-left: 16px;
+    color: #666;
+}
+
+.section {
+    margin: 18px 0;
+}
+
+.section-title {
+    font-size: 12pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 10px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.entry {
+    margin-bottom: 14px;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+
+.entry-left {
+    flex: 1;
+}
+
+.entry-institution {
+    font-weight: 700;
+    font-size: 11pt;
+}
+
+.entry-location {
+    font-style: italic;
+    font-size: 10pt;
+    color: #333;
+}
+
+.entry-date {
+    font-size: 10pt;
+    white-space: nowrap;
+    margin-left: 12px;
+    text-align: right;
+}
+
+.entry-degree {
+    font-style: italic;
+    margin-bottom: 1px;
+    font-size: 10.5pt;
+}
+
+.entry-position {
+    font-weight: 700;
+    margin-bottom: 1px;
+    font-size: 10.5pt;
+}
+
+.entry-company {
+    font-style: italic;
+    margin-bottom: 3px;
+    font-size: 10.5pt;
+}
+
+ul {
+    list-style-type: none;
+    margin-left: 0;
+    margin-top: 4px;
+}
+
+li {
+    margin-bottom: 3px;
+    line-height: 1.35;
+    padding-left: 14px;
+    position: relative;
+    font-size: 10.5pt;
+}
+
+li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.skill-item {
+    display: flex;
+    gap: 6px;
+}
+
+.skill-label {
+    font-weight: 700;
+    min-width: 80px;
+    font-size: 10.5pt;
+}
+
+.skill-content {
+    flex: 1;
+    font-size: 10.5pt;
+}
+
+.honors-section {
+    margin-top: 6px;
+}
+
+.honor-item {
+    margin-bottom: 6px;
+    font-size: 10.5pt;
+}
+
+.honor-title {
+    font-weight: 700;
+}
+
+.honor-detail {
+    font-style: italic;
+    color: #333;
+}
+</style>
+
+<div class="header">
+    <div class="name">Jonathan R. Mitchell</div>
+    <div class="contact-line">
+        <span>jonathan.mitchell@college.harvard.edu</span>
+        <span>+1 (617) 555-4321</span>
+        <span>linkedin.com/in/jonathanmitchell</span>
+        <span>Cambridge, MA 02138</span>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Education</div>
+    
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">
+                <div class="entry-institution">Harvard University</div>
+                <div class="entry-location">Cambridge, MA</div>
+            </div>
+            <div class="entry-date">Expected May 2025</div>
+        </div>
+        <div class="entry-degree">Bachelor of Arts in Economics, Minor in Computer Science</div>
+        <ul>
+            <li>GPA: 3.92/4.00; Dean's List all semesters; John Harvard Scholar</li>
+            <li>Honors Thesis: "Algorithmic Trading and Market Efficiency in Cryptocurrency Markets"</li>
+            <li>Relevant Coursework: Econometrics, Machine Learning, Corporate Finance, Game Theory</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Experience</div>
+    
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">
+                <div class="entry-institution">Goldman Sachs</div>
+                <div class="entry-location">New York, NY</div>
+            </div>
+            <div class="entry-date">June 2024 – August 2024</div>
+        </div>
+        <div class="entry-position">Summer Analyst, Investment Banking Division</div>
+        <ul>
+            <li>Executed financial modeling and valuation analysis for M&A transactions totaling $2.5B in enterprise value across technology and healthcare sectors</li>
+            <li>Prepared pitch books and management presentations for client meetings with C-suite executives</li>
+            <li>Conducted industry research and competitive analysis to support deal origination efforts</li>
+        </ul>
+    </div>
+    
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">
+                <div class="entry-institution">Harvard Business Analytics Program</div>
+                <div class="entry-location">Cambridge, MA</div>
+            </div>
+            <div class="entry-date">September 2023 – May 2024</div>
+        </div>
+        <div class="entry-position">Research Assistant</div>
+        <ul>
+            <li>Analyzed large datasets using Python and R to identify trends in consumer behavior for Fortune 500 clients</li>
+            <li>Developed predictive models achieving 87% accuracy in forecasting quarterly sales performance</li>
+            <li>Co-authored research paper on machine learning applications in retail analytics</li>
+        </ul>
+    </div>
+    
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">
+                <div class="entry-institution">Harvard Investment Association</div>
+                <div class="entry-location">Cambridge, MA</div>
+            </div>
+            <div class="entry-date">January 2023 – Present</div>
+        </div>
+        <div class="entry-position">Portfolio Manager, Technology Sector</div>
+        <ul>
+            <li>Manage $50,000 portfolio focused on high-growth technology companies, achieving 18% annual return</li>
+            <li>Lead team of 5 analysts in performing fundamental analysis and investment recommendations</li>
+            <li>Present quarterly investment theses to board of directors and external fund advisors</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Leadership & Activities</div>
+    
+    <div class="entry">
+        <div class="honor-item">
+            <span class="honor-title">Harvard Financial Analysts Club</span> – Vice President of Operations (2023-2024)
+        </div>
+        <div class="honor-item">
+            <span class="honor-title">Harvard Varsity Rowing</span> – Team Captain, Eastern Sprints Finalist
+        </div>
+        <div class="honor-item">
+            <span class="honor-title">Crimson Education Consulting</span> – Pro-bono college counseling for underserved students
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Skills & Certifications</div>
+    
+    <div class="skills-grid">
+        <div class="skill-item">
+            <div class="skill-label">Technical:</div>
+            <div class="skill-content">Python, R, SQL, Excel (VBA), Bloomberg Terminal</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-label">Financial:</div>
+            <div class="skill-content">DCF Modeling, LBO Analysis, Comparable Analysis</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-label">Languages:</div>
+            <div class="skill-content">English (Native), Spanish (Fluent), Mandarin (Basic)</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-label">Certifications:</div>
+            <div class="skill-content">CFA Level I Candidate, Series 7 & 63 (in progress)</div>
+        </div>
+    </div>
+</div>
+
+</div>

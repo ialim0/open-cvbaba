@@ -1,0 +1,211 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #333;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    background-color: #e53935;
+    color: #fff;
+    padding: 20px 25px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0 0 3px 0;
+    font-size: 22pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.header p {
+    font-size: 11pt;
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+}
+
+.contact-info a {
+    color: #ffffff;
+    text-decoration: underline;
+    margin: 0 6px;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1.2fr 2.5fr;
+    min-height: calc(1123px - 80px);
+}
+
+.sidebar {
+    background-color: #f7f7f7;
+    padding: 25px 20px;
+}
+
+.sidebar h3 {
+    color: #e53935;
+    font-size: 11.5pt;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 3px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.sidebar h3:first-child {
+    margin-top: 0;
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+}
+
+.skills-list li {
+    margin-bottom: 5px;
+    font-size: 9.5pt;
+}
+
+.main-section {
+    padding: 25px;
+}
+
+.main-section h3 {
+    color: #4a4a4a;
+    font-size: 12.5pt;
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.job-entry {
+    margin-bottom: 20px;
+}
+
+.job-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+}
+
+.title-company {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #e53935;
+}
+
+.dates {
+    font-size: 9.5pt;
+    color: #777;
+    font-style: italic;
+}
+
+.description {
+    padding-left: 8px;
+    border-left: 2px solid #f7f7f7;
+}
+
+.description ul {
+    padding-left: 14px;
+    margin: 4px 0 0 0;
+    font-size: 9.5pt;
+}
+
+.description li {
+    margin-bottom: 3px;
+}
+</style>
+
+<div class="header">
+    <h1>CHLOE FISHER</h1>
+    <p>Digital Marketing Specialist</p>
+    <div class="contact-info">
+        <a href="tel:+11234567890">123-456-7890</a> | 
+        <a href="mailto:chloe.fisher@email.com">chloe.fisher@email.com</a> | 
+        <a href="https://linkedin.com/in/chloefisher">LinkedIn Profile</a>
+    </div>
+</div>
+
+<div class="main-content">
+    <section class="sidebar">
+        <h3>SUMMARY</h3>
+        <p style="font-size: 9.5pt; margin-bottom: 18px; color: #777;">Results-driven digital marketing professional specializing in SEO, content strategy, and PPC advertising. Proven track record of improving website traffic and conversion rates by over 40%.</p>
+
+        <h3>CORE COMPETENCIES</h3>
+        <ul class="skills-list">
+            <li>SEO/SEM Strategy</li>
+            <li>Google Analytics & Ads</li>
+            <li>Content Creation</li>
+            <li>HubSpot/CRM</li>
+            <li>A/B Testing</li>
+            <li>Social Media Management</li>
+        </ul>
+
+        <h3>EDUCATION</h3>
+        <div class="job-entry" style="margin-bottom: 12px;">
+            <span class="title-company" style="color: #333; font-weight: normal; font-size: 10pt;">M.A. Digital Communications</span>
+            <div class="dates">Boston University, 2014</div>
+        </div>
+
+        <h3>INTERESTS</h3>
+        <ul class="skills-list">
+            <li>Photography</li>
+            <li>Trail Running</li>
+            <li>Data Visualization</li>
+        </ul>
+    </section>
+
+    <section class="main-section">
+        <h3>MARKETING EXPERIENCE</h3>
+
+        <div class="job-entry">
+            <div class="job-details">
+                <span class="title-company">Senior Digital Strategist at Ascent Agency</span>
+                <span class="dates">2018 - Present</span>
+            </div>
+            <div class="description">
+                <ul>
+                    <li>Managed $500k annual advertising budget across Google Ads and paid social platforms, achieving a 5x return on ad spend (ROAS).</li>
+                    <li>Oversaw SEO performance for 12 key client sites, driving organic search traffic increases averaging 45% year-over-year.</li>
+                    <li>Led client workshops on content mapping and keyword research, consistently translating marketing goals into tactical execution plans.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job-entry">
+            <div class="job-details">
+                <span class="title-company">Marketing Coordinator at Software Solutions Co.</span>
+                <span class="dates">2014 - 2018</span>
+            </div>
+            <div class="description">
+                <ul>
+                    <li>Designed and executed email campaigns resulting in a 25% increase in lead generation across key product lines.</li>
+                    <li>Managed the company blog, coordinating 10+ external contributors and maintaining a regular publishing schedule.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+</div>

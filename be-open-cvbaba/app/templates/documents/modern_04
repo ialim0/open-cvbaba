@@ -1,0 +1,157 @@
+<div class="pdf-page">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pdf-page {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #1a1a1a;
+    background: #ffffff;
+    width: 794px;
+    height: 1123px;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 12px;
+}
+
+h1 {
+    font-size: 20pt;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+}
+
+h2 {
+    font-size: 12pt;
+    font-weight: 600;
+    margin: 14px 0 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 3px;
+}
+
+.job-title {
+    font-size: 10.5pt;
+    font-weight: 600;
+    margin: 12px 0 2px 0;
+}
+
+.job-meta {
+    font-size: 9.5pt;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+ul {
+    padding-left: 16px;
+    margin: 0 0 10px 0;
+}
+
+li {
+    margin-bottom: 3px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+strong {
+    font-weight: 600;
+}
+
+.section {
+    margin-bottom: 12px;
+}
+</style>
+
+<div class="header">
+    <h1>Aaron Howard</h1>
+    <div class="contact-info">
+        Pikesville, MD 21208  •  (555) 555-5555  •  example@example.com
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="section">
+        <h2>Professional Summary</h2>
+        <p>Experienced senior technical project manager with a proven track record of successfully leading cross-functional teams to deliver complex projects on time and within budget. Proficient at overseeing diverse teams of developers, analysts and quality professionals engaged in complex projects with budgets of up to $10 million. Solid understanding of project management tools. Project Management Professional and certified in Agile methodology.</p>
+    </div>
+
+    <div class="section">
+        <h2>Work History</h2>
+        <div class="job-title">Senior Technical Project Manager, 07/2017 - Current</div>
+        <div class="job-meta">National Security Agency - Baltimore, MD</div>
+        <ul>
+            <li>Lead a team of 10 engineers and developers in the execution of multiple software development projects, managing the project life cycle from initiation to closure</li>
+            <li>Maintain a 95% client satisfaction rate through effective communication and stakeholder management</li>
+            <li>Create and maintain detailed project plans, budgets and risk assessments</li>
+        </ul>
+
+        <div class="job-title">Technical Program Manager, 03/2013 - 07/2017</div>
+        <div class="job-meta">Tech Solutions Inc. - Parkville, MD</div>
+        <ul>
+            <li>Oversaw a portfolio of 15 technical projects, coordinating the efforts of multiple project teams and ensuring alignment with the company's strategic goals</li>
+            <li>Achieved a 10% increase in project efficiency by implementing Agile methodologies and streamlining workflows</li>
+            <li>Reduced project costs by 12% by optimizing resource allocation and procurement processes</li>
+        </ul>
+
+        <div class="job-title">Project Manager, 05/2009 - 03/2013</div>
+        <div class="job-meta">GlobalTech Innovations - Baltimore, MD</div>
+        <ul>
+            <li>Created project plans with established timelines, assigned to appropriate teams and managed workflow throughout construction</li>
+            <li>Built and established strong partnerships with teams, vendors and contractors</li>
+            <li>Successfully secured and managed high-profile projects resulting in $5 million in additional revenue</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Education</h2>
+        <p><strong>MBA: Business Administration</strong><br>Carey Business School - Baltimore, MD</p>
+        <p><strong>Bachelor of Science: Computer Engineering</strong><br>University Of Maryland - Baltimore, MD</p>
+    </div>
+
+    <div class="section">
+        <h2>Certifications</h2>
+        <ul>
+            <li>Project Management Professional (PMP) - Project Management Institute (PMI)</li>
+            <li>Certified ScrumMaster (CSM) - Scrum Alliance</li>
+            <li>ITIL Foundation - Information Technology Infrastructure Library (ITIL)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Skills</h2>
+        <ul>
+            <li>Leadership and team development</li>
+            <li>Strategic planning and execution</li>
+            <li>Agile and Scrum</li>
+            <li>Budget and cost management</li>
+            <li>Stakeholder communication</li>
+            <li>Waterfall methodologies</li>
+            <li>Resource allocation</li>
+            <li>Complex problem-solving</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Languages</h2>
+        <p><strong>English:</strong> First Language</p>
+        <p><strong>Spanish:</strong> Upper Intermediate</p>
+    </div>
+</div>
+</div>
