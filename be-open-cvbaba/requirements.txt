@@ -23,7 +23,6 @@ databases[postgresql]
 mangum
 asyncpg
 psycopg2-binary 
-psycopg2
 python-docx
 pypdf2
 pillow
