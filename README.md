@@ -83,10 +83,23 @@ Open http://localhost:3000. The API is available at http://localhost:8000.
 - Editable HTML as the intermediate document format.
 - No authentication subsystem in the local open-source edition.
 
+ ## Author and maintainer
+
+open-cvbaba was created and is maintained by [ialim0](https://github.com/ialim0). The project is intentionally open so anyone can study it, run it locally, improve it, and build on the research.
+
 ## Contributing
 
-Issues, documentation improvements, templates, evaluation datasets, rendering fixes, and provider-independent workflows are welcome. Keep changes focused, document behavior changes, and validate backend compilation and Docker Compose configuration before opening a pull request.
+Everyone is welcome to contribute. You do not need permission or an invitation to get started:
+
+1. Fork the repository.
+2. Create a focused branch for your change.
+3. Run the project locally with Docker Compose.
+4. Make the smallest clear change that solves the problem.
+5. Validate backend compilation and Docker Compose configuration.
+6. Open a pull request describing the problem, solution, and testing performed.
+
+Useful contributions include bug fixes, documentation, templates, accessibility improvements, evaluation datasets, rendering fixes, translations, and provider-independent document workflows. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request and follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
-See the repository license file.
+open-cvbaba is released under the [MIT License](LICENSE).
