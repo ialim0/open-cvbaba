@@ -27,7 +27,7 @@ const MiniChatHistoryItems: React.FC = () => {
           return;
         }
 
-        const response = await axios.get(`${apiBaseUrl}/chats`, {
+        const response = await axios.get(`${apiBaseUrl}/api/chat/`, {
           withCredentials: true,
           params: {
             skip: 0,
@@ -35,8 +35,9 @@ const MiniChatHistoryItems: React.FC = () => {
           }
         });
 
-        if (response.data && Array.isArray(response.data.chats)) {
-          setChats(response.data.chats.map((chat: any) => ({
+        const chatItems = response.data?.items;
+        if (Array.isArray(chatItems)) {
+          setChats(chatItems.map((chat: any) => ({
             slug: chat.slug,
             title: chat.title,
             date: chat.date,

@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str = ""
     DATABASE_URL: str = "postgresql://open-cvbaba:open-cvbaba@localhost:5432/open-cvbaba"
     CORS_ORIGINS: List[str] = ["http://localhost:3000"]
-    CORS_ALLOW_CREDENTIALS: bool = False
+    CORS_ALLOW_CREDENTIALS: bool = True
     CORS_ALLOW_METHODS: List[str] = ["*"]
     CORS_ALLOW_HEADERS: List[str] = ["*"]
     # Local Object Storage (MinIO / S3 compatible)

@@ -37,6 +37,7 @@ services:
     environment:
       DATABASE_URL: postgresql://open-cvbaba:open-cvbaba@postgres:5432/open-cvbaba
       CORS_ORIGINS: '["http://localhost:3000"]'
+      CORS_ALLOW_CREDENTIALS: 'true'
       MINIO_ENDPOINT: http://minio:9000
       MINIO_PUBLIC_URL: http://localhost:9000
       MINIO_ROOT_USER: minioadmin
