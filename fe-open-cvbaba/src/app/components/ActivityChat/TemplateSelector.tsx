@@ -126,6 +126,15 @@ const TemplateSelector = ({
         ref={(el) => {
           cardRefs.current[template.id] = el;
         }}
+        onClick={(e) => !isLocked && handleTemplateClick(template, e)}
+        onKeyDown={(e) => {
+          if (!isLocked && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            handleTemplateClick(template, e as unknown as React.MouseEvent<HTMLDivElement>);
+          }
+        }}
+        role="button"
+        tabIndex={isLocked ? -1 : 0}
         className={`relative flex-shrink-0 transition-all duration-300 ease-in-out
           ${isSelected ? 'ring-2 ring-blue-600 dark:ring-blue-500 shadow-xl scale-105' : 'hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-700 hover:shadow-xl hover:scale-102'}
           ${isLocked ? 'opacity-75 cursor-not-allowed' : 'cursor-pointer'}
@@ -140,26 +149,32 @@ const TemplateSelector = ({
             <div
               role="button"
               className="relative h-full w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900"
-              onClick={(e) => !isLocked && handleTemplateClick(template, e)}
-              onKeyDown={(e) => !isLocked && e.key === 'Enter' && handleTemplateClick(template, e as any)}
-              tabIndex={isLocked ? -1 : 0}
-              aria-label={"Selecttemplate"}
+              aria-hidden="true"
             >
               <div className="absolute inset-0 bg-[url('/images/paper-texture.png')] opacity-5" />
 
               {isHovered && !isLocked && (
                 <>
                   {!isSelected && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none z-10 backdrop-blur-sm">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10 backdrop-blur-sm">
                       <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-lg border border-gray-200 dark:border-gray-700">
-                        {"Usethistemplate"}
+                        <button
+                          type="button"
+                          className="rounded-full px-4 py-2 font-medium text-gray-900 dark:text-gray-100"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onSelectTemplate(template.id);
+                          }}
+                        >
+                          Use this template
+                        </button>
                       </div>
                     </div>
                   )}
                   {isSelected && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none z-10 backdrop-blur-sm">
                       <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-lg border border-gray-200 dark:border-gray-700">
-                        {"Click to unselect"}
+                        <span>Click to unselect</span>
                       </div>
                     </div>
                   )}
@@ -169,7 +184,7 @@ const TemplateSelector = ({
               {isHovered && isLocked && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none z-10">
                   <div className="bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-md">
-                    {"Upgradetouse"}
+                    Upgrade to use
                   </div>
                 </div>
               )}
@@ -190,7 +205,7 @@ const TemplateSelector = ({
               ) : (
                 <img
                   src={template.imageUrl}
-                  alt={"Templatealt"}
+                  alt="Template preview"
                   className="object-contain w-full h-full p-1 sm:p-2"
                   loading="lazy"
                   onError={(e) => {
@@ -248,7 +263,7 @@ const TemplateSelector = ({
           <div
             className="flex space-x-2 sm:space-x-4 p-1 sm:p-2 pb-4 scroll-smooth"
             role="list"
-            aria-label={"Availabletemplates"}
+            aria-label="Available templates"
           >
             {templates.map((template) => (
               <div key={template.id} role="listitem" className="flex-shrink-0">
@@ -307,8 +322,8 @@ const TemplateSelector = ({
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none z-10">
                   <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-md border border-gray-200 dark:border-gray-700">
                     {previewTemplate.id === selectedTemplateId
-                      ? "Alreadyselected"
-                      : "Usethistemplate"}
+                      ? "Already selected"
+                      : "Use this template"}
                   </div>
                 </div>
               )}
@@ -328,7 +343,7 @@ const TemplateSelector = ({
                   ) : (
                     <img
                       src={previewTemplate.imageUrl}
-                      alt={"Templatealt"}
+                      alt="Template preview"
                       className="object-contain w-full h-full rounded-md"
                       onError={(e) => {
                         e.currentTarget.src = '/images/open-cvbaba-logo.png';
