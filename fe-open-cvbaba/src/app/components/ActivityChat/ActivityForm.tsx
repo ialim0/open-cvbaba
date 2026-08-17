@@ -1,7 +1,7 @@
 // ActivityForm.tsx
 import React, { useState, useCallback, ChangeEvent, useEffect, useRef } from 'react';
 import { useAnimatedPlaceholder } from '@/app/hooks/useAnimatedPlaceholder';
-import { Loader2, ArrowRight, Camera, ChevronDown, Type, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Globe, Layers, Paperclip, Link2, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
+import { Loader2, ArrowRight, Camera, ChevronDown, Type, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Layers, Paperclip, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
 import Label from '../ui/Label';
 import Textarea from '../ui/Textarea';
 import { AutoResizeTextarea } from '../ui/AutoResizeTextarea';
@@ -16,6 +16,8 @@ import { languageOptions, getLanguageShortName } from '@/app/config/languages';
 import type { ActivityFormData, UserProfile } from '@/app/types/form';
 import { useSpeechToText } from '@/app/hooks/useSpeechToText';
 import { useUserImages } from '@/app/hooks/useUserImages';
+import TemplateSelector from './TemplateSelector';
+import { templates } from './data/templates';
 
 interface ActivityFormProps {
   formData: ActivityFormData;
@@ -39,10 +41,6 @@ interface ActivityFormProps {
   // Attachment props (supports multiple)
   attachedFiles: File[];
   setAttachedFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  youtubeUrls: string[];
-  setYoutubeUrls: React.Dispatch<React.SetStateAction<string[]>>;
-  webpageUrls: string[];
-  setWebpageUrls: React.Dispatch<React.SetStateAction<string[]>>;
   onViewComments?: (pageIndex: number) => void;
   // Selected image for page editing
   selectedImageUrl?: string | null;
@@ -93,10 +91,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   // Attachment props (multiple)
   attachedFiles,
   setAttachedFiles,
-  youtubeUrls,
-  setYoutubeUrls,
-  webpageUrls,
-  setWebpageUrls,
   onViewComments,
   // Selected image
   selectedImageUrl: selectedImageUrlProp,
@@ -120,7 +114,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   const [isSketchModalOpen, setIsSketchModalOpen] = useState(false);
 
   // Multimodal attachment state
-  const [isLinkInputVisible, setIsLinkInputVisible] = useState(false);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
 
   // User images list for page editing
@@ -525,6 +518,27 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
           onSubmit={handleSubmitForm}
           className={hasExistingChat ? "w-full space-y-4" : "space-y-6 w-full max-w-2xl mx-auto dark:text-gray-100"}
         >
+          {!hasExistingChat && (
+            <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="mb-4">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Choose a CV template</h2>
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  Optional. Start from a template or leave this blank for a custom layout.
+                </p>
+              </div>
+              <TemplateSelector
+                templates={templates}
+                selectedTemplateId={formData.selectedTemplateId}
+                onSelectTemplate={(templateId) =>
+                  setFormData((previous) => ({
+                    ...previous,
+                    selectedTemplateId: previous.selectedTemplateId === templateId ? '' : templateId,
+                  }))
+                }
+              />
+            </section>
+          )}
+
           {/* Page Tools - Only show for existing documents */}
           {hasExistingChat && selectedPageIndex !== null && selectedPageIndex !== undefined && (
             <div className="space-y-3">
@@ -934,36 +948,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                   </div>
                 ))}
 
-                {/* YouTube URLs chips */}
-                {youtubeUrls.map((url, idx) => (
-                  <div key={`yt-${idx}`} className="flex items-center gap-2 px-3 py-1.5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm">
-                    <Link2 className="w-4 h-4 text-red-600 dark:text-red-400" />
-                    <span className="text-red-700 dark:text-red-300 max-w-[120px] truncate">{url}</span>
-                    <button
-                      type="button"
-                      onClick={() => setYoutubeUrls(prev => prev.filter((_, i) => i !== idx))}
-                      className="p-0.5 hover:bg-red-100 dark:hover:bg-red-800 rounded"
-                    >
-                      <X className="w-3.5 h-3.5 text-red-500" />
-                    </button>
-                  </div>
-                ))}
-
-                {/* Webpage URLs chips */}
-                {webpageUrls.map((url, idx) => (
-                  <div key={`web-${idx}`} className="flex items-center gap-2 px-3 py-1.5 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-sm">
-                    <Globe className="w-4 h-4 text-green-600 dark:text-green-400" />
-                    <span className="text-green-700 dark:text-green-300 max-w-[120px] truncate">{url}</span>
-                    <button
-                      type="button"
-                      onClick={() => setWebpageUrls(prev => prev.filter((_, i) => i !== idx))}
-                      className="p-0.5 hover:bg-green-100 dark:hover:bg-green-800 rounded"
-                    >
-                      <X className="w-3.5 h-3.5 text-green-500" />
-                    </button>
-                  </div>
-                ))}
-
                 {/* Sketch / Wireframe chip */}
                 {formData.layoutImageBase64 && (
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg text-sm">
@@ -986,49 +970,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                   </div>
                 )}
 
-                {/* Link input field */}
-                {isLinkInputVisible && (
-                  <div className="flex items-center gap-2 flex-1 min-w-[200px]">
-                    <input
-                      type="url"
-                      placeholder="https://youtube.com/... or https://example.com/..."
-                      className="flex-1 px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      autoFocus
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          const url = (e.target as HTMLInputElement).value.trim();
-                          if (url) {
-                            // Reject youtu.be short links
-                            if (url.includes('youtu.be')) {
-                              alert('Please use the full YouTube URL (youtube.com/watch?v=...) instead of the short youtu.be link.');
-                              return;
-                            }
-                            const isYoutube = url.includes('youtube.com');
-                            if (isYoutube && youtubeUrls.length < 3) {
-                              setYoutubeUrls(prev => [...prev, url]);
-                            } else if (!isYoutube && webpageUrls.length < 5) {
-                              setWebpageUrls(prev => [...prev, url]);
-                            }
-                            (e.target as HTMLInputElement).value = '';
-                          }
-                          setIsLinkInputVisible(false);
-                        }
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setIsLinkInputVisible(false)}
-                      className="px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 rounded-lg transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                )}
-
                 {/* Attachment buttons */}
-                {!isLinkInputVisible && (
-                  <>
+                <>
                     {!hasExistingChat && (
                       <button
                         type="button"
@@ -1059,18 +1002,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                         </span>
                       </button>
                     )}
-                    {!hasExistingChat && (youtubeUrls.length < 3 || webpageUrls.length < 5) && (
-                      <button
-                        type="button"
-                        onClick={() => setIsLinkInputVisible(true)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                      >
-                        <Link2 className="w-4 h-4" />
-                        <span className="hidden sm:inline">{"Link"}</span>
-                      </button>
-                    )}
-                  </>
-                )}
+                </>
               </>
 
             </div>

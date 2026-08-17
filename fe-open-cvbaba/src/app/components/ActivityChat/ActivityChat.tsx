@@ -14,7 +14,6 @@ import { useUserImages } from "@/app/hooks/useUserImages";
 import { UserProfile, ActivityFormData } from "@/app/types/form";
 // Removed AnimatedText as we now render static text inline
 import Logo from "../ui/Logo";
-import { templates } from "./data/templates";
 import ActivityForm from "./ActivityForm";
 import { OpenCvbabaLogo } from "../ui/OpenCvbabaLogo";
 import { PdfPreview } from "../PdfPreview/PdfPreview";
@@ -86,8 +85,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
   // Attachment state for unified creation (supports multiple)
   const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
-  const [youtubeUrls, setYoutubeUrls] = useState<string[]>([]);
-  const [webpageUrls, setWebpageUrls] = useState<string[]>([]);
 
   // Page tools state (synced from PdfPreview)
   const [selectedPageIndex, setSelectedPageIndex] = useState<number | null>(0);
@@ -498,7 +495,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
       // Unified Multimodal Creation: Use FormData if attachments are present
       let submissionData: any = data;
-      const hasAttachments = attachedFiles.length > 0 || youtubeUrls.length > 0 || webpageUrls.length > 0;
+      const hasAttachments = attachedFiles.length > 0;
 
       if (hasAttachments) {
         const formDataObj = new FormData();
@@ -512,16 +509,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         attachedFiles.forEach(file => {
           formDataObj.append('files', file);
         });
-
-        // Append YouTube URLs (max 3, comma-separated)
-        if (youtubeUrls.length > 0) {
-          formDataObj.append('youtube_urls', youtubeUrls.join(','));
-        }
-
-        // Append webpage URLs (max 5, comma-separated)
-        if (webpageUrls.length > 0) {
-          formDataObj.append('webpage_urls', webpageUrls.join(','));
-        }
 
         submissionData = formDataObj;
       }
@@ -540,8 +527,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
             router.push(`/activity/${response.slug}`);
             // Clear attachments on success
             setAttachedFiles([]);
-            setYoutubeUrls([]);
-            setWebpageUrls([]);
             return;
           }
 
@@ -555,8 +540,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
           // Clear attachments on success
           setAttachedFiles([]);
-          setYoutubeUrls([]);
-          setWebpageUrls([]);
 
           if (response.pdf_content) {
             setTimeout(() => {
@@ -696,8 +679,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
               // Clear attachments on success
               setAttachedFiles([]);
-              setYoutubeUrls([]);
-              setWebpageUrls([]);
 
               if (!slug && chat.slug) {
                 router.push(`/activity/${chat.slug}`);
@@ -742,8 +723,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       isSubmitting,
       selectedDocumentType,
       attachedFiles,
-      youtubeUrls,
-      webpageUrls,
       selectedPageIndex,
       currentAvatar
     ]
@@ -777,22 +756,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
     getTimeBasedGreeting() + " " + (userProfile?.full_name?.split(" ")[0] || "User");
 
   // Handler functions for page interactions
-
-  const handleTemplateSelection = (templateId: string) => {
-    setFormData(prev => ({ ...prev, selectedTemplateId: templateId }));
-
-    const newDocType = 'cv';
-
-    const newParams = new URLSearchParams(searchParams.toString());
-    if (newDocType) newParams.set('type', newDocType);
-    else newParams.delete('type');
-    newParams.set('mode', 'prompt');
-
-    router.push(`/activity?${newParams.toString()}`);
-  };
-
-
-
 
   // Render the CV creation flow for each option
   return (
@@ -897,10 +860,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                       // Attachment props (multiple files and URLs)
                       attachedFiles={attachedFiles}
                       setAttachedFiles={setAttachedFiles}
-                      youtubeUrls={youtubeUrls}
-                      setYoutubeUrls={setYoutubeUrls}
-                      webpageUrls={webpageUrls}
-                      setWebpageUrls={setWebpageUrls}
 
                       // Page tools props - use reactive state synced from PdfPreview
                       selectedPageIndex={selectedPageIndex}
