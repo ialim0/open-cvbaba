@@ -492,6 +492,22 @@ class AIGenerator:
         3) Extract HTML from the model response.
         Fallback: simplified single-shot generation when primary attempt fails.
         """
+        try:
+            from app.services.chat.langgraph_pipeline import generate_document_with_langgraph
+            logger.info("Executing LangGraph multi-agent pipeline (Mistral Large + Codestral)")
+            result = await generate_document_with_langgraph(
+                user_input=user_input,
+                conversation_history=conversation_history,
+                document_type=document_type,
+                template_content=template_content,
+                template_id=template_id,
+                num_pages=num_pages or 1
+            )
+            if result and len(result.strip()) > 50:
+                return result
+        except Exception as e:
+            logger.warning(f"LangGraph pipeline error: {e}. Falling back to standard generation.")
+
         prompt, system_prompt, config, model_name, estimated_tokens = cls._prepare_generation(
             user_input=user_input,
             conversation_history=conversation_history,
@@ -565,8 +581,27 @@ class AIGenerator:
         Mistral 2.0 Flash supports 64k output tokens, which is more than enough
         for 70 pages (~105,000 tokens). Single-pass is more reliable than multi-pass.
         """
-        logger.info(f"Using single-pass generation (num_pages={num_pages}, document_type={document_type})")
+        logger.info(f"Using LangGraph + Codestral stream generation (num_pages={num_pages}, document_type={document_type})")
         
+        try:
+            from app.services.chat.langgraph_pipeline import stream_document_with_langgraph
+            yielded_any = False
+            async for chunk in stream_document_with_langgraph(
+                user_input=user_input,
+                conversation_history=conversation_history,
+                document_type=document_type,
+                template_content=template_content,
+                template_id=template_id,
+                num_pages=num_pages or 1
+            ):
+                if chunk:
+                    yielded_any = True
+                    yield chunk
+            if yielded_any:
+                return
+        except Exception as e:
+            logger.warning(f"LangGraph stream generation encountered error: {e}. Falling back to standard stream.")
+
         prompt, _, config, model_name, estimated_tokens = cls._prepare_generation(
             user_input=user_input,
             conversation_history=conversation_history,

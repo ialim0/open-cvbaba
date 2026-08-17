@@ -22,6 +22,8 @@ services:
       CORS_ORIGINS: '["http://localhost:3000"]'
       MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
       MISTRAL_MODEL: ${MISTRAL_MODEL:-mistral-large-latest}
+      MISTRAL_PLANNING_MODEL: ${MISTRAL_PLANNING_MODEL:-mistral-large-latest}
+      MISTRAL_CODE_MODEL: ${MISTRAL_CODE_MODEL:-codestral-latest}
       MISTRAL_TRANSCRIPTION_MODEL: ${MISTRAL_TRANSCRIPTION_MODEL:-voxtral-mini-latest}
       MISTRAL_REALTIME_MODEL: ${MISTRAL_REALTIME_MODEL:-voxtral-mini-transcribe-realtime-2602}
     ports:

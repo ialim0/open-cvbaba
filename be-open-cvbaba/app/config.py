@@ -38,6 +38,8 @@ class Settings(BaseSettings):
     AWS_S3_MAX_POOL_CONNECTIONS: int = 0
     MISTRAL_API_KEY: str = ""
     MISTRAL_MODEL: str = "mistral-large-latest"
+    MISTRAL_PLANNING_MODEL: str = "mistral-large-latest"
+    MISTRAL_CODE_MODEL: str = "codestral-latest"
     MISTRAL_OCR_MODEL: str = "mistral-ocr-latest"
     MISTRAL_TRANSCRIPTION_MODEL: str = "voxtral-mini-latest"
     MISTRAL_REALTIME_MODEL: str = "voxtral-mini-transcribe-realtime-2602"

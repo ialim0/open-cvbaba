@@ -3,7 +3,13 @@ from dataclasses import dataclass
 from types import SimpleNamespace
 from typing import Any, AsyncIterator
 from openai import AsyncOpenAI
-from mistralai import Mistral
+try:
+    from mistralai import Mistral
+except ImportError:
+    try:
+        from mistralai.client import Mistral
+    except ImportError:
+        Mistral = None
 
 class MistralClientError(Exception): pass
 @dataclass
