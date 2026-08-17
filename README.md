@@ -11,7 +11,7 @@
 [![Mistral AI](https://img.shields.io/badge/Mistral_AI-Native_Streaming-FF7000)](https://mistral.ai/)
 [![Docker](https://img.shields.io/badge/Docker-Compose_Ready-2496ED?logo=docker)](docker-compose.yml)
 
-[Quick Start](#-quick-start) • [Features](#-key-features) • [Architecture](#-architecture) • [Templates](#-template-library) • [Contributing](#-contributing)
+[Quick Start](#-quick-start) • [Visual Walkthrough](#-visual-walkthrough) • [Features](#-key-features) • [Sample PDF](#-sample-output) • [Architecture](#-architecture) • [Contributing](#-contributing)
 
 </div>
 
@@ -22,6 +22,53 @@
 **open-cvbaba** turns prompts and voice notes into polished, fully editable HTML documents, streams generation in real time, preserves version history in PostgreSQL, and exports directly to print-ready PDF and editable Microsoft Word (`.docx`).
 
 Designed to run locally with Docker without external accounts, OAuth, passwords, tracking, billing, or cloud lock-in.
+
+---
+
+## 📸 Visual Walkthrough
+
+### 1. Interactive Form & Template Selection
+Choose from 24 curated templates, configure target roles, record live voice notes via Voxtral, or upload existing resume files:
+
+<div align="center">
+  <img src="docs/images/vibe-form.png" alt="Document Configuration Form" width="850" />
+</div>
+
+### 2. Real-Time Streaming Document Generation
+Watch your document generate live with sub-second Server-Sent Events (SSE) streaming powered by Mistral AI:
+
+<div align="center">
+  <img src="docs/images/live-streaming.png" alt="Real-time Streaming Generation" width="850" />
+</div>
+
+### 3. WYSIWYG Shadow DOM Preview & A4 Pagination
+Isolated document rendering sandbox with realistic A4 pagination, page controls, and full theme styling:
+
+<div align="center">
+  <img src="docs/images/vibe-canvas.png" alt="WYSIWYG Shadow DOM Document Canvas" width="850" />
+</div>
+
+### 4. Direct In-Place Text Editing
+Edit any section, header, or bullet point directly on the canvas without leaving your document workspace:
+
+<div align="center">
+  <img src="docs/images/canvas-edit.png" alt="In-Place Document Editing" width="850" />
+</div>
+
+### 5. Final Document & Instant 1-Click Export
+Download clean, ATS-friendly documents as print-ready PDF (WeasyPrint) or editable Microsoft Word (`.docx`) files with one click:
+
+<div align="center">
+  <img src="docs/images/example-vibe-cv.png" alt="Final Document Preview" width="850" />
+</div>
+
+---
+
+## 📄 Sample Output
+
+Here is an example CV generated end-to-end with open-cvbaba and exported directly to PDF:
+
+- 📥 **[Download Sample Exported CV (AI_Research_CV.pdf)](docs/examples/AI_Research_CV.pdf)**
 
 ---
 
@@ -132,7 +179,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 flowchart LR
     Browser[Next.js Frontend\n:3000] -->|HTTP / SSE / WS| API[FastAPI Backend\n:8000]
     API --> Workspace[Anonymous Workspace]
-    API --> Chat[Document Engine]
+    API --> Chat[Document Engine\nLangGraph Pipeline]
     Chat --> Mistral[Mistral AI API\nStreaming / OCR / Voxtral]
     API --> Render[PDF & Word Exporters]
     Workspace --> DB[(PostgreSQL 16\n:5432)]
@@ -182,7 +229,10 @@ open-cvbaba/
 │   │   └── hooks/               # Custom hooks (speech-to-text, streaming)
 │   ├── Dockerfile               # Frontend Docker container definition
 │   └── package.json             # Frontend dependencies
-├── docs/                        # Architectural specifications and deep dives
+├── docs/                        # Architectural specifications and visual assets
+│   ├── images/                  # Product screenshots & walkthrough assets
+│   ├── examples/                # Sample exported PDF documents
+│   └── ARCHITECTURE.md          # Technical architecture deep dive
 ├── docker-compose.yml           # Multi-container orchestration (API, UI, PostgreSQL, MinIO)
 ├── CONTRIBUTING.md              # Contribution guide and development workflow
 ├── CODE_OF_CONDUCT.md           # Community guidelines
