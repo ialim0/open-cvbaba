@@ -1,43 +1,15 @@
 "use client";
 
 import React, { useState, useCallback, useEffect, useRef, useMemo } from "react";
-import {
-  Search,
-  Settings,
-  Plus,
-  Linkedin,
-  Languages,
-  Facebook,
-  Gift,
-  Upload,
-  Globe,
-  PenLine,
-  Sparkles,
-  FileUp,
-} from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Link from 'next/link';
 import { ScrollArea } from "../ui/ScrollArea";
 import { Input } from "../ui/Input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from "@radix-ui/react-tooltip";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@radix-ui/react-collapsible";
-import Logo from "../ui/Logo";
 import { ThemeSwitcher } from "./components/ThemeSwitcher";
-import { OpenCvbabaLogo } from "../ui/OpenCvbabaLogo";
 import ChatHistoryItem from "./components/ChatHistoryItem";
 import { useTranslation } from "@/app/i18n/i18n";
 import { useSidebar } from "@/app/contexts/SidebarContext";
-import { cn } from "../lib/utils";
 
 interface Chat {
   slug: string;
@@ -61,27 +33,12 @@ interface ChatHistoryResponse {
   meta: ChatHistoryMeta;
 }
 
-interface SharedChat {
-  slug: string;
-  title: string;
-  created_at: string;
-  updated_at: string;
-  owner_email: string;
-  shared_at: string;
-  share_id: number;
-  is_public: boolean;
-  access_level: string;
-}
 
 interface SidebarProps {
   isMobile: boolean;
   onLockedChange?: (locked: boolean) => void;
 }
 
-// Quick Actions icons mapping
-const quickActionIcons = {
-  create: Sparkles,
-};
 
 const Sidebar: React.FC<SidebarProps> = React.memo(
   ({
@@ -101,15 +58,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
 
-    // Shared chats state
-    const [activeTab, setActiveTab] = useState<'my_activities' | 'shared_with_me'>('my_activities');
-    const [sharedChats, setSharedChats] = useState<SharedChat[]>([]);
-    const [isLoadingShared, setIsLoadingShared] = useState<boolean>(false);
 
-    // Quick Actions with translations
-    const quickActions = useMemo(() => [
-      { id: 'create', icon: quickActionIcons.create, label: t('sidebar.quickActions.create.label', { defaultValue: 'Create' }), description: t('sidebar.quickActions.create.description') },
-    ], [t]);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const observer = useRef<IntersectionObserver>();
@@ -240,28 +189,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
       };
     }, [isLoadingMore, hasMore, loading, nextSkip, fetchChats, debouncedSearchQuery]);
 
-    const fetchSharedChats = useCallback(async () => {
-      if (!apiBaseUrl) return;
-
-      setIsLoadingShared(true);
-      try {
-        const response = await axios.get<SharedChat[]>(`${apiBaseUrl}/api/chat/shares/shared-with-me`, {
-          headers: { Accept: "application/json" },
-          withCredentials: true,
-        });
-        setSharedChats(response.data);
-      } catch (error) {
-        console.error("Error fetching shared chats:", error);
-      } finally {
-        setIsLoadingShared(false);
-      }
-    }, [apiBaseUrl]);
-
-    useEffect(() => {
-      if (activeTab === 'shared_with_me') {
-        fetchSharedChats();
-      }
-    }, [activeTab, fetchSharedChats]);
 
     const handleEditChat = useCallback((slug: string, newTitle: string) => {
       setChats((prevChats) =>
@@ -319,19 +246,12 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
       setHasMore(true);
       setNextSkip(0);
       setChats([]);
-      setActiveTab('my_activities');
       router.push("/activity");
       if (isMobile) {
         setIsSidebarOpen(false);
       }
     }, [router, isMobile, setIsSidebarOpen]);
 
-    const handleQuickAction = useCallback((mode: string) => {
-      router.push(`/activity?mode=${mode}`);
-      if (isMobile) {
-        setIsSidebarOpen(false);
-      }
-    }, [router, isMobile, setIsSidebarOpen]);
 
     const displayChats = useMemo(() => {
       const normalizedQuery = debouncedSearchQuery.trim().toLowerCase();
@@ -348,20 +268,13 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
     }, [chats, deletedItems, debouncedSearchQuery]);
 
     return (
-      <TooltipProvider>
         <div className="fixed top-0 left-0 w-full sm:w-80 h-full flex flex-col border-r overflow-hidden z-40 bg-background border-border">
 
-          {/* Header - Logo + New Button */}
-          <div className="p-4 border-b border-border flex items-center justify-between flex-shrink-0">
-            <Link href="/" className="hover:opacity-80 transition-opacity">
-              <div className="flex items-center gap-2">
-                <OpenCvbabaLogo className="w-7 h-7 text-black dark:text-white" />
-                <span className="text-lg font-bold text-foreground">open-cvbaba</span>
-              </div>
-            </Link>
+          {/* Primary action */}
+          <div className="p-3 border-b border-border flex-shrink-0">
             <button
               onClick={handleNewDocument}
-              className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.98]"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-3 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
             >
               <Plus className="h-4 w-4" />
               <span>{t("sidebar.newButton")}</span>
@@ -373,32 +286,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
             className="flex-1"
           >
             <div className="flex flex-col">
-              {/* Quick Actions */}
-              <div className="px-3 py-3">
-                <div className="grid grid-cols-2 gap-2">
-                  {quickActions.map((action) => {
-                    const ActionIcon = action.icon;
-                    return (
-                      <button
-                        key={action.id}
-                        onClick={() => handleQuickAction(action.id)}
-                        className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-transparent hover:border-blue-200 dark:hover:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-150 group"
-                      >
-                        <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white dark:group-hover:bg-blue-600 transition-colors">
-                          <ActionIcon className="h-5 w-5" strokeWidth={1.5} />
-                        </div>
-                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors text-center">
-                          {action.label}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Divider */}
-              <div className="mx-4 h-px bg-border" />
-
               {/* Search */}
               <div className="px-4 py-3 sticky top-0 bg-background z-10 shadow-sm border-b border-border/50">
                 <div className="relative">
@@ -413,42 +300,9 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                 </div>
               </div>
 
-              {/* Tabs */}
-              <div className="flex items-center px-4 py-2 mt-2 gap-4 bg-background mb-1 border-b border-border/50 shadow-sm">
-                <button
-                  onClick={() => setActiveTab('my_activities')}
-                  className={cn(
-                    "pb-2 text-sm font-semibold transition-all relative",
-                    activeTab === 'my_activities'
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-muted-foreground hover:text-foreground'
-                  )}
-                >
-                  {t("sidebar.tabs.myActivities")}
-                  {activeTab === 'my_activities' && (
-                    <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full animate-in slide-in-from-left-1 duration-200" />
-                  )}
-                </button>
-                <button
-                  onClick={() => setActiveTab('shared_with_me')}
-                  className={cn(
-                    "pb-2 text-sm font-semibold transition-all relative",
-                    activeTab === 'shared_with_me'
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-muted-foreground hover:text-foreground'
-                  )}
-                >
-                  {t("sidebar.tabs.shared")}
-                  {activeTab === 'shared_with_me' && (
-                    <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full animate-in slide-in-from-right-1 duration-200" />
-                  )}
-                </button>
-              </div>
-
-              {/* Activities List */}
+              {/* Documents */}
               <div className="p-3 space-y-1.5 min-h-[50vh]">
-                {activeTab === 'my_activities' ? (
-                  <>
+                <>
                     {loading && chats.length === 0 ? (
                       <div className="space-y-2 py-4">
                         {[1, 2, 3].map((i) => (
@@ -505,39 +359,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                         </button>
                       </div>
                     )}
-                  </>
-                ) : (
-                  /* Shared With Me List */
-                  <>
-                    {isLoadingShared ? (
-                      <div className="space-y-2 py-4">
-                        {[1, 2].map((i) => (
-                          <div key={i} className="h-16 bg-accent rounded-lg animate-pulse" />
-                        ))}
-                      </div>
-                    ) : sharedChats.length > 0 ? (
-                      sharedChats.map((chat) => (
-                        <ChatHistoryItem
-                          key={chat.share_id}
-                          slug={chat.slug}
-                          title={chat.title}
-                          date={chat.updated_at}
-                          onEdit={() => { }}
-                          onDelete={() => { }}
-                          onClick={() => handleChatClick(chat.slug)}
-                          isShared={true}
-                          ownerEmail={chat.owner_email}
-                        />
-                      ))
-                    ) : (
-                      <div className="text-center py-8">
-                        <p className="text-sm text-muted-foreground">
-                          {t("sidebar.noSharedDocuments")}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                )}
+                </>
               </div>
             </div>
           </ScrollArea>
@@ -553,7 +375,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
           </div>
 
         </div>
-      </TooltipProvider>
     );
   }
 );

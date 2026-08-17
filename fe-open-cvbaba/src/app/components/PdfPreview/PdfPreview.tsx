@@ -18,7 +18,6 @@ import {
   ChevronDown,
   FileDown,
   Crown,
-  Share2,
   X,
   Copy,
   Trash2,
@@ -47,7 +46,6 @@ import Modal from "../ui/Modal";
 import { Input } from "../ui/Input";
 import { toast } from "react-toastify";
 import { autoFixPagination } from "@/app/utils/autoFixPagination";
-import { ShareForm } from "./ShareForm";
 import { PageCommentsSheet } from "./PageCommentsSheet";
 import { InsertPageSheet } from "./InsertPageSheet";
 import { ExportModal } from "./ExportModal";
@@ -98,12 +96,8 @@ interface PdfPreviewProps {
   isPdfGenerating?: boolean;
   onFixPagination?: (overflowPages?: number[]) => void;
   isStreaming?: boolean;
-  onShare?: (email: string) => Promise<void>;
-  onTogglePublic?: (isPublic: boolean) => Promise<void>;
-  isPublic?: boolean;
   chatSlug?: string;
   accessLevel?: string;
-  onCopyChat?: () => Promise<void>;
   onCommentsStateChange?: (isOpen: boolean) => void;
   onRefreshVersions?: () => Promise<void>;
   // Page tools callback props for syncing with parent
@@ -130,12 +124,8 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   isPdfGenerating = false,
   onFixPagination,
   isStreaming = false,
-  onShare,
-  onTogglePublic,
-  isPublic = false,
   chatSlug,
   accessLevel,
-  onCopyChat,
   onCommentsStateChange,
   onRefreshVersions,
   onSelectedPageChange,
@@ -194,20 +184,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   const userHasScrolledRef = useRef(false);
   const isAutoScrollingRef = useRef(false);
 
-  // Share state
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const [isSharing, setIsSharing] = useState(false);
-  const [isTogglingPublic, setIsTogglingPublic] = useState(false);
-  const [localIsPublic, setLocalIsPublic] = useState(isPublic);
-  const [sharedUsers, setSharedUsers] = useState<Array<{
-    share_id: number;
-    shared_with_email: string;
-    shared_at: string;
-    access_level: string;
-    has_accessed: boolean;
-    accessed_at: string | null;
-  }>>([]);
-  const [isLoadingShares, setIsLoadingShares] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
@@ -464,157 +440,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   const commitEditsRef = useRef(commitEdits);
   // Update immediately during render (effect may lag behind)
   commitEditsRef.current = commitEdits;
-
-  // Fetch shared users when modal opens
-  const fetchSharedUsers = useCallback(async () => {
-    if (!chatSlug || !isShareModalOpen) return;
-
-    setIsLoadingShares(true);
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/${chatSlug}/shares`,
-        {
-          credentials: 'include',
-          headers: { Accept: "application/json" },
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setSharedUsers(data);
-      }
-    } catch (error) {
-      console.error("Error fetching shared users:", error);
-    } finally {
-      setIsLoadingShares(false);
-    }
-  }, [chatSlug, isShareModalOpen]);
-
-  useEffect(() => {
-    if (isShareModalOpen) {
-      fetchSharedUsers();
-    }
-  }, [isShareModalOpen, fetchSharedUsers]);
-
-  // Update local state when prop changes
-  useEffect(() => {
-    setLocalIsPublic(isPublic);
-  }, [isPublic]);
-
-  const handleShareClick = () => {
-    setIsShareModalOpen(true);
-  };
-
-  const handleShareSubmit = async (email: string) => {
-    if (!email || !onShare) return;
-
-    setIsSharing(true);
-    try {
-      await onShare(email);
-      // Refresh the shared users list
-      await fetchSharedUsers();
-    } catch (error) {
-      console.error("Error sharing:", error);
-    } finally {
-      setIsSharing(false);
-    }
-  };
-
-  const handleTogglePublic = async () => {
-    if (!onTogglePublic) return;
-
-    setIsTogglingPublic(true);
-    try {
-      const newValue = !localIsPublic;
-      await onTogglePublic(newValue);
-      setLocalIsPublic(newValue);
-    } catch (error) {
-      console.error("Error toggling public:", error);
-    } finally {
-      setIsTogglingPublic(false);
-    }
-  };
-
-  const handleUpdateAccessLevel = async (shareId: number, newAccessLevel: string) => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/shares/${shareId}/access`,
-        {
-          method: 'PATCH',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({ access_level: newAccessLevel }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to update access level');
-      }
-
-      // Update local state optimistically
-      setSharedUsers(prev =>
-        prev.map(user =>
-          user.share_id === shareId
-            ? { ...user, access_level: newAccessLevel }
-            : user
-        )
-      );
-
-      // Show success toast
-      toast.info(t('pdfPreview.accessUpdated', { defaultValue: 'Access updated' }), {
-        autoClose: 2000,
-      });
-    } catch (error) {
-      console.error('Error updating access level:', error);
-      toast.error(t('pdfPreview.accessUpdateError', { defaultValue: 'Couldn\'t update access' }), {
-        autoClose: 4000,
-      });
-      // Refresh the list to get the correct state
-      await fetchSharedUsers();
-    }
-  };
-
-  const handleRevokeAccess = async (shareId: number, email: string) => {
-    // Show confirmation dialog
-    if (!window.confirm(`Are you sure you want to revoke access for ${email}?`)) {
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/shares/${shareId}`,
-        {
-          method: 'DELETE',
-          credentials: 'include',
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to revoke access');
-      }
-
-      // Remove from local state
-      setSharedUsers(prev => prev.filter(user => user.share_id !== shareId));
-
-      // Show success toast
-      toast.info(t('pdfPreview.accessRevoked', { defaultValue: 'Access revoked' }), {
-        autoClose: 2000,
-      });
-    } catch (error) {
-      console.error('Error revoking access:', error);
-      toast.error(t('pdfPreview.accessRevokeError', { defaultValue: 'Couldn\'t revoke access' }), {
-        autoClose: 4000,
-      });
-      // Refresh the list to get the correct state
-      await fetchSharedUsers();
-    }
-  };
 
   // Comment handlers
   const handleAddComment = async (content: string, pageNumber: number) => {
@@ -1939,7 +1764,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       {isStreaming ? (
         <div className="flex items-center justify-center px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm z-10 transition-colors">
           <p className="text-sm text-gray-700 dark:text-gray-300">
-            {t('pdfPreview.streamingMessage', { defaultValue: '✨ Your document is being created. Download and share buttons will appear when ready.' })}
+            {t('pdfPreview.streamingMessage', { defaultValue: '✨ Your document is being created. Download buttons will appear when ready.' })}
           </p>
         </div>
       ) : (
@@ -2002,7 +1827,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
             <div className="h-4 w-px bg-gray-200 dark:bg-gray-700 mx-2 transition-colors" />
 
-            {/* Version History Dropdown - Hidden for shared chats */}
+            {/* Version history */}
             {true && (
               <div className="relative group">
                 <Button
@@ -2108,16 +1933,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
                   <div className="my-1 border-t border-gray-100 dark:border-gray-700" />
 
-                  {/* Toggle Public (Mobile) */}
-                  {onTogglePublic && (
-                    <button
-                      onClick={handleTogglePublic}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
-                    >
-                      <Share2 className={`h-4 w-4 mr-3 ${localIsPublic ? 'text-green-500' : 'text-gray-400'}`} />
-                      <span>{localIsPublic ? t('pdfPreview.makePrivate', { defaultValue: 'Make Private' }) : t('pdfPreview.makePublic', { defaultValue: 'Make Public' })}</span>
-                    </button>
-                  )}
+
                 </div>
               </div>
             )}
@@ -2145,22 +1961,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
               <div className="h-4 w-px bg-gray-200 dark:bg-gray-700 mx-2 transition-colors" />
 
-              {/* Make a Copy Button (visible for shared chats) */}
-              {onCopyChat && (
-                <Button
-                  variant="default"
-                  size="sm"
-                  onClick={() => {
-                    if (onCopyChat) onCopyChat();
-                  }}
-                  className="h-8 text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition-all"
-                >
-                  <Copy className="h-3.5 w-3.5 mr-2" />
-                  {t('pdfPreview.makeCopy', { defaultValue: 'Make a Copy' })}
-                </Button>
-              )}
-
-
               {/* Comments Button */}
               <TooltipProvider>
                 <Tooltip>
@@ -2182,21 +1982,8 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                 </Tooltip>
               </TooltipProvider>
 
-              {/* Share and Export Buttons - Desktop */}
+              {/* Export Buttons - Desktop */}
               <div className="flex items-center space-x-2">
-                {/* Share Button */}
-                {onShare && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleShareClick}
-                    className="h-8 text-xs font-medium text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                  >
-                    <Share2 className="h-3.5 w-3.5 mr-2" />
-                    {t('pdfPreview.share', { defaultValue: 'Share' })}
-                  </Button>
-                )}
-
                 {/* Download PDF Button */}
                 {true && (
                   <div className="relative" ref={formatMenuRef}>
@@ -2244,18 +2031,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
             {/* Mobile Primary Actions (Always visible if space permits) */}
             {isMobile && (
               <div className="flex items-center space-x-1">
-                {/* Minimal Share Button for Mobile */}
-                {onShare && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleShareClick}
-                    className="h-8 w-8 p-0 text-gray-600 dark:text-gray-400"
-                  >
-                    <Share2 className="h-4 w-4" />
-                  </Button>
-                )}
-
                 {/* Minimal Comments for Mobile */}
                 <Button
                   variant="ghost"
@@ -2507,130 +2282,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       }
 
 
-
-      <Modal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        title={t('pdfPreview.shareModalTitle', { defaultValue: 'Share Document' })}
-      >
-        <div className="space-y-6 p-1 sm:p-2">
-          {/* Public Link Toggle */}
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 dark:from-gray-800 dark:to-gray-900/50 rounded-xl p-5 border border-gray-200 dark:border-gray-700 transition-colors">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <h4 className="text-base font-semibold text-gray-900 dark:text-gray-100">{t('pdfPreview.publicLink', { defaultValue: 'Public Link' })}</h4>
-                  {localIsPublic && (
-                    <Badge className="h-5 text-[10px] px-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 border-emerald-200 dark:border-emerald-800 transition-colors">
-                      {t('pdfPreview.active', { defaultValue: 'Active' })}
-                    </Badge>
-                  )}
-                </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {t('pdfPreview.publicLinkDesc', { defaultValue: 'Anyone with the link can view this document' })}
-                </p>
-                {localIsPublic && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={onCopyChat}
-                    className="mt-3 h-9 text-sm bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition-all"
-                  >
-                    <Copy className="h-4 w-4 mr-2" />
-                    {t('pdfPreview.copyLink', { defaultValue: 'Copy Link' })}
-                  </Button>
-                )}
-              </div>
-              <div className="flex-shrink-0">
-                <button
-                  onClick={handleTogglePublic}
-                  disabled={isTogglingPublic}
-                  className={`relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 ${localIsPublic ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
-                    } ${isTogglingPublic ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                  <span
-                    className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white dark:bg-gray-200 shadow-lg ring-0 transition duration-200 ease-in-out ${localIsPublic ? 'translate-x-5' : 'translate-x-0'
-                      }`}
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200 dark:border-gray-800 transition-colors"></div>
-            </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-white dark:bg-gray-900 px-3 text-gray-500 dark:text-gray-400 font-medium transition-colors uppercase tracking-widest">{t('activityForm.or')}</span>
-            </div>
-          </div>
-
-          {/* Invite People */}
-          <div>
-            <label className="block text-base font-semibold text-gray-900 dark:text-gray-100 mb-3">
-              {t('pdfPreview.invitePeople', { defaultValue: 'Invite People' })}
-            </label>
-            <ShareForm onInvite={handleShareSubmit} isLoading={isSharing} />
-          </div>
-
-          {/* Shared Users List */}
-          {isLoadingShares ? (
-            <div className="flex justify-center py-12">
-              <Loader2 className="h-7 w-7 animate-spin text-gray-400" />
-            </div>
-          ) : sharedUsers.length > 0 ? (
-            <div className="space-y-3 pt-2">
-              <h4 className="text-base font-semibold text-gray-900 dark:text-gray-100">
-                {t('pdfPreview.peopleWithAccess', { count: sharedUsers.length, defaultValue: `People with access (${sharedUsers.length})` })}
-              </h4>
-              <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
-                {sharedUsers.map((user) => (
-                  <div
-                    key={user.share_id}
-                    className="flex items-center gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all group border border-transparent hover:border-gray-200 dark:hover:border-gray-700"
-                  >
-                    <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-sm">
-                      {user.shared_with_email.substring(0, 2).toUpperCase()}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate" title={user.shared_with_email}>
-                        {user.shared_with_email}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-0.5">
-                        {user.has_accessed ? (
-                          <span className="text-emerald-600 dark:text-emerald-400 font-medium">{t('pdfPreview.joined', { defaultValue: 'Joined' })}</span>
-                        ) : (
-                          <span className="text-amber-600 dark:text-amber-400 font-medium">{t('pdfPreview.pending', { defaultValue: 'Pending' })}</span>
-                        )} • {new Date(user.shared_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <select
-                        value={user.access_level}
-                        onChange={(e) => handleUpdateAccessLevel(user.share_id, e.target.value)}
-                        className="text-sm border border-gray-200 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 px-3 py-1.5 font-medium text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 cursor-pointer hover:border-black dark:hover:border-gray-500 transition-colors"
-                      >
-                        <option value="view">{t('pdfPreview.accessLevels.view', { defaultValue: 'Can view' })}</option>
-                        <option value="edit">{t('pdfPreview.accessLevels.edit', { defaultValue: 'Can edit' })}</option>
-                        <option value="full">{t('pdfPreview.accessLevels.full', { defaultValue: 'Full access' })}</option>
-                      </select>
-                      <button
-                        onClick={() => handleRevokeAccess(user.share_id, user.shared_with_email)}
-                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
-                        title="Remove access"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
-      </Modal>
 
       {/* Translate Modal */}
       <Modal

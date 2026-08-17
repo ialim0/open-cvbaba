@@ -69,7 +69,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   const [isLoadingVersions, setIsLoadingVersions] = useState(false);
   const [streamingHtml, setStreamingHtml] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
-  const [isPublic, setIsPublic] = useState<boolean>(false);
   const [accessLevel, setAccessLevel] = useState<string | undefined>(undefined);
   const [chatTitle, setChatTitle] = useState<string>(chat?.title || "");
   const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(false);
@@ -197,14 +196,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         console.log('⚠️ No versions found');
       }
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 403) {
-        // 403 means this is a shared chat - user doesn't have permission to view versions
-        // This is expected behavior, so we silently handle it without logging errors
-        console.log('ℹ️ Viewing shared chat - versions not available');
-        setVersions([]);
-        setCurrentVersionId(undefined);
-        return;
-      }
       console.error("Error fetching versions:", error);
     } finally {
       setIsLoadingVersions(false);
@@ -230,9 +221,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         }
       );
 
-      if (response.data.is_public !== undefined) {
-        setIsPublic(response.data.is_public);
-      }
       if (response.data.access_level !== undefined) {
         setAccessLevel(response.data.access_level);
       }
@@ -564,132 +552,8 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
     }
   }, [slug, formData.language, formData.selectedTemplateId, isSubmitting, fetchVersions]);
 
-  const handleShare = useCallback(async (email: string) => {
-    if (!slug) return;
 
-    const toastId = toast.loading(t('activity_chat.messages.sharing'));
 
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/${slug}/share`,
-        { email },
-        {
-          withCredentials: true,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      toast.update(toastId, {
-        render: t('activity_chat.messages.share_success'),
-        type: "success",
-        isLoading: false,
-        autoClose: 5000,
-        closeButton: true,
-        closeOnClick: true
-      });
-    } catch (error) {
-      console.error("Error sharing document:", error);
-      toast.update(toastId, {
-        render: t('activity_chat.messages.share_failed'),
-        type: "error",
-        isLoading: false,
-        autoClose: 5000,
-        closeButton: true,
-        closeOnClick: true
-      });
-      throw error;
-    }
-  }, [slug]);
-
-  const handleTogglePublic = useCallback(async (isPublic: boolean) => {
-    if (!slug) return;
-
-    const toastId = toast.loading(isPublic ? t('activity_chat.messages.public_loading') : t('activity_chat.messages.private_loading'));
-
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/${slug}/public`,
-        { is_public: isPublic },
-        {
-          withCredentials: true,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setIsPublic(isPublic);
-      toast.update(toastId, {
-        render: isPublic
-          ? t('activity_chat.messages.public_success')
-          : t('activity_chat.messages.private_success'),
-        type: "success",
-        isLoading: false,
-        autoClose: 5000,
-        closeButton: true,
-        closeOnClick: true
-      });
-    } catch (error) {
-      console.error("Error toggling public status:", error);
-      toast.update(toastId, {
-        render: t('activity_chat.messages.visibility_failed'),
-        type: "error",
-        isLoading: false,
-        autoClose: 5000,
-        closeButton: true,
-        closeOnClick: true
-      });
-      throw error;
-    }
-  }, [slug]);
-
-  const handleCopyChat = useCallback(async () => {
-    if (!slug) return;
-
-    const toastId = toast.loading(t('activity_chat.messages.copying'));
-
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/shared/${slug}/copy`,
-        {},
-        {
-          withCredentials: true,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      toast.update(toastId, {
-        render: t('activity_chat.messages.copy_success'),
-        type: "success",
-        isLoading: false,
-        autoClose: 2000,
-        closeButton: true,
-        closeOnClick: true
-      });
-
-      // Redirect to the new copy
-      if (response.data.slug) {
-        setTimeout(() => {
-          router.push(`/activity/${response.data.slug}`);
-        }, 500);
-      }
-    } catch (error) {
-      console.error("Error copying chat:", error);
-      toast.update(toastId, {
-        render: t('activity_chat.messages.copy_failed'),
-        type: "error",
-        isLoading: false,
-        autoClose: 5000,
-        closeButton: true,
-        closeOnClick: true
-      });
-    }
-  }, [slug, router]);
 
   const handleCommentsStateChange = useCallback((isOpen: boolean) => {
     setIsCommentsOpen(isOpen);
@@ -1276,12 +1140,8 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                     isLoadingVersions={isLoadingVersions}
                     onFixPagination={handleFixPagination}
                     isStreaming={isStreaming}
-                    onShare={handleShare}
-                    onTogglePublic={handleTogglePublic}
-                    isPublic={isPublic}
                     chatSlug={slug ?? undefined}
                     accessLevel={accessLevel}
-                    onCopyChat={handleCopyChat}
                     onCommentsStateChange={handleCommentsStateChange}
                     onRefreshVersions={fetchVersions}
                     onSelectedPageChange={setSelectedPageIndex}

@@ -45,8 +45,6 @@ interface ChatHistoryItemProps {
   onEdit: (slug: string, newTitle: string) => void;
   onDelete: (slug: string) => void;
   onClick: () => void;
-  isShared?: boolean;
-  ownerEmail?: string;
   unreadCount?: number;
 }
 
@@ -196,8 +194,6 @@ const ChatHistoryItemComponent: React.FC<ChatHistoryItemProps> = ({
   onEdit,
   onDelete,
   onClick,
-  isShared = false,
-  ownerEmail,
 
 }) => {
   const { t } = useTranslation('settings');
@@ -322,16 +318,10 @@ const ChatHistoryItemComponent: React.FC<ChatHistoryItemProps> = ({
                   >
                     {formattedDate}
                   </span>
-                  {isShared && ownerEmail && (
-                    <span className="text-[10px] text-gray-600 dark:text-gray-400 truncate">
-                      {t('chatHistory.sharedFrom')} {ownerEmail}
-                    </span>
-                  )}
                 </div>
               </div>
             </div>
-            {!isShared && (
-              <div
+                          <div
                 className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 onClick={(e) => e.stopPropagation()}
               >
@@ -346,7 +336,6 @@ const ChatHistoryItemComponent: React.FC<ChatHistoryItemProps> = ({
                   isDeleteMode={isDeleteMode}
                 />
               </div>
-            )}
           </>
         )}
       </TooltipProvider>
