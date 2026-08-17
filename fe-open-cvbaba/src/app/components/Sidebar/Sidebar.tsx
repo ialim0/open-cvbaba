@@ -8,7 +8,6 @@ import {
   Linkedin,
   Languages,
   Facebook,
-  LayoutTemplate,
   Gift,
   Upload,
   Globe,
@@ -81,8 +80,7 @@ interface SidebarProps {
 
 // Quick Actions icons mapping
 const quickActionIcons = {
-  create_mode: Sparkles,
-  templates: LayoutTemplate,
+  create: Sparkles,
 };
 
 const Sidebar: React.FC<SidebarProps> = React.memo(
@@ -110,8 +108,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
 
     // Quick Actions with translations
     const quickActions = useMemo(() => [
-      { id: 'create_mode', icon: quickActionIcons.create_mode, label: t('sidebar.quickActions.create.label', { defaultValue: 'Create' }), description: t('sidebar.quickActions.create.description') },
-      { id: 'templates', icon: quickActionIcons.templates, label: t('sidebar.quickActions.templates.label', { defaultValue: 'Templates' }), description: t('sidebar.quickActions.templates.description') },
+      { id: 'create', icon: quickActionIcons.create, label: t('sidebar.quickActions.create.label', { defaultValue: 'Create' }), description: t('sidebar.quickActions.create.description') },
     ], [t]);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);

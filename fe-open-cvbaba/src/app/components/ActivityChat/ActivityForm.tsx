@@ -1,10 +1,8 @@
 // ActivityForm.tsx
 import React, { useState, useCallback, ChangeEvent, useEffect, useRef } from 'react';
 import { useAnimatedPlaceholder } from '@/app/hooks/useAnimatedPlaceholder';
-import { Loader2, ArrowRight, Camera, ChevronDown, Upload, Type, Sparkles, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Globe, Grid3X3, Layers, Paperclip, Link2, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
+import { Loader2, ArrowRight, Camera, ChevronDown, Upload, Type, Sparkles, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Globe, Layers, Paperclip, Link2, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
 import Label from '../ui/Label';
-import TemplateSelector from './TemplateSelector';
-import { templates } from './data/templates';
 import Textarea from '../ui/Textarea';
 import { AutoResizeTextarea } from '../ui/AutoResizeTextarea';
 import axios from 'axios';
@@ -28,12 +26,11 @@ interface ActivityFormProps {
   setIncludePhoto: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
-  showTemplateSelector: boolean;
   userProfile: UserProfile | null;
   setUserProfile: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   hasExistingChat?: boolean; // New prop to indicate if there's an existing chat/slug
-  selectedOption: 'prompt' | 'import' | 'templates' | 'create_mode' | 'upload' | null;
-  setSelectedOption: (option: 'prompt' | 'import' | 'templates' | 'create_mode' | 'upload' | null) => void;
+  selectedOption: 'prompt' | 'import' | 'create' | 'upload' | null;
+  setSelectedOption: (option: 'prompt' | 'import' | 'create' | 'upload' | null) => void;
   selectedDocumentType: string | null;
   setSelectedDocumentType: (type: string | null) => void;
   // Page tools props
@@ -87,7 +84,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   setIncludePhoto,
   onSubmit,
   isLoading,
-  showTemplateSelector,
   userProfile,
   setUserProfile,
   hasExistingChat = false,
@@ -116,7 +112,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   setSelectedImageUrl: setSelectedImageUrlProp,
 }) => {
   const { t } = useTranslation('activity');
-  const [useTemplate, setUseTemplate] = useState(false);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [isUploadingDocument, setIsUploadingDocument] = useState(false);
@@ -255,8 +250,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   if (allAnimatedPlaceholders && typeof allAnimatedPlaceholders === 'object' && !Array.isArray(allAnimatedPlaceholders)) {
     let typeKey = 'default';
     if (selectedDocumentType) {
-      if (selectedDocumentType === 'cv_resume') typeKey = 'cv';
-      else if (selectedDocumentType === 'cover_letter') typeKey = 'cover_letter';
+      if (selectedDocumentType === 'cv') typeKey = 'cv';
+      else if (selectedDocumentType === 'cover-letter') typeKey = 'cover_letter';
       else if (selectedDocumentType === 'statement_of_purpose') typeKey = 'sop';
       else if (selectedDocumentType === 'proposal') typeKey = 'proposal';
       else if (selectedDocumentType === 'presentation') typeKey = 'presentation';
@@ -285,7 +280,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
 
   // selectedDocumentType is now passed as a prop
   const languageDropdownRef = useRef<HTMLDivElement>(null);
-  const templateSelectorRef = useRef<HTMLDivElement>(null);
   const photoDropdownRef = useRef<HTMLDivElement>(null);
   const uploadInputRef = useRef<HTMLInputElement>(null);
 
@@ -332,32 +326,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isLanguageDropdownOpen]);
-
-  // Close template selector when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      const templateButton = templateSelectorRef.current;
-      const templateContent = document.querySelector('[data-template-selector]');
-
-      // Check if click is outside both the button and the template content
-      if (useTemplate &&
-        templateButton &&
-        !templateButton.contains(target) &&
-        templateContent &&
-        !templateContent.contains(target)) {
-        setUseTemplate(false);
-      }
-    };
-
-    if (useTemplate) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [useTemplate]);
 
   // Close photo dropdown when clicking outside
   useEffect(() => {
@@ -409,33 +377,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
     };
   };
 
-  const getSelectedTemplateName = () => {
-    if (!formData.selectedTemplateId) return t('activityForm.chooseTemplate');
-    const selectedTemplate = templates.find(t => t.id === formData.selectedTemplateId);
-    return selectedTemplate ? selectedTemplate.name : t('activityForm.chooseTemplate');
-  };
-
-
-
-
-
-
-  const handleTemplateSelect = (templateId: string) => {
-    // If clicking the same template that's already selected, unselect it
-    if (formData.selectedTemplateId === templateId) {
-      setFormData(prev => ({ ...prev, selectedTemplateId: '' }));
-      // Close template selection after unselecting
-      setUseTemplate(false);
-      return;
-    }
-
-    const selectedTemplate = templates.find(t => t.id === templateId);
-    if (selectedTemplate) {
-      setFormData(prev => ({ ...prev, selectedTemplateId: templateId }));
-      // Close template selection after selection
-      setUseTemplate(false);
-    }
-  };
 
 
   const handleFileUpload = useCallback(async (file: File): Promise<string> => {
@@ -526,43 +467,9 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
 
 
   const isFormValid =
-    formData.resumeDescription && (!useTemplate || formData.selectedTemplateId);
+    Boolean(formData.resumeDescription.trim());
 
-  const filteredTemplates = templates.filter(template => {
-    if (!selectedDocumentType) return true;
-    const type = selectedDocumentType.toLowerCase();
 
-    if (type === 'cv') {
-      return template.type === 'CV';
-    } else if (type === 'letter' || ['cover-letter', 'sop', 'personal-statement', 'recommendation', 'proposal', 'cover letter', 'personal statements', 'recommendation letters', 'proposals'].includes(type)) {
-      return template.type === 'Letter';
-    }
-    return true;
-  });
-
-  // Handle template selection from TemplatesPage
-  const handleTemplateSelection = (templateId: string) => {
-    const selectedTemplate = templates.find(t => t.id === templateId);
-    setFormData(prev => ({ ...prev, selectedTemplateId: templateId }));
-    setSelectedOption('prompt');
-    setUseTemplate(false);
-
-    // Set document type based on template type to filter prompts appropriately
-    if (selectedTemplate) {
-      if (selectedTemplate.type === 'CV') {
-        setSelectedDocumentType('cv');
-      } else if (selectedTemplate.type === 'Letter') {
-        // Use 'letter' to show all letter-based prompts
-        setSelectedDocumentType('letter');
-      }
-    }
-  };
-
-  const handleCreateOptionSelect = (option: string) => {
-    setSelectedDocumentType(option);
-    setFormData(prev => ({ ...prev, resumeDescription: "" }));
-    setSelectedOption('prompt');
-  };
 
 
 
@@ -604,7 +511,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {/* Create option */}
             <button
-              onClick={() => setSelectedOption('create_mode')}
+              onClick={() => setSelectedOption('create')}
               className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-800 focus:border-gray-400 dark:focus:border-gray-500 p-8 text-left w-full"
               aria-label={`${t('activityForm.generatePrompt')} - ${t('activityForm.generatePromptDescription')}`}
               role="button"
@@ -691,33 +598,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
               </div>
             </button>
 
-            {/* Templates option */}
-            <button
-              onClick={() => setSelectedOption('templates')}
-              className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-800 focus:border-gray-400 dark:focus:border-gray-500 p-8 text-left w-full"
-              aria-label={`${t('activityForm.templatesButton')} - ${t('activityForm.templatesButtonDescription')}`}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="flex flex-col h-full">
-                {/* Icon container */}
-                <div className="flex justify-center mb-6">
-                  <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center group-hover:bg-gray-200 dark:group-hover:bg-gray-650 transition-all duration-300 group-hover:scale-105">
-                    <Grid3X3 className="w-8 h-8 text-gray-900 dark:text-gray-100" />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-black dark:group-hover:text-white transition-colors text-center">
-                    {t('activityForm.templatesButton')}
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-1 text-center">
-                    {t('activityForm.templatesButtonDescription')}
-                  </p>
-                </div>
-              </div>
-            </button>
           </div>
         </div>
       </div>
@@ -922,28 +802,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                 )}
               </div>
 
-              {/* Template Dropdown - HIDDEN
-              {showTemplateSelector && (
-                <div className="relative" ref={templateSelectorRef}>
-                  <button
-                    type="button"
-                    onClick={() => setUseTemplate(!useTemplate)}
-                    className={`inline-flex items-center space-x-2 px-4 py-2 rounded-full border text-sm font-medium transition-all ${formData.selectedTemplateId
-                      ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
-                      : useTemplate
-                        ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
-                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750'
-                      } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                  >
-                    <Grid3X3 className="h-4 w-4" />
-                    <span>{getSelectedTemplateName()}</span>
-                    <ChevronDown className={`h-4 w-4 transition-transform ${useTemplate ? 'rotate-180' : ''} ${formData.selectedTemplateId || useTemplate ? 'text-white' : 'text-gray-600 dark:text-gray-400'}`} />
-                  </button>
-                </div>
-              )} */}
 
               {/* Page Count (Only for new chat, hidden for poster) */}
-              {selectedDocumentType !== 'poster' && (
                 <div className="relative">
                   <div className="inline-flex items-center space-x-2 px-3 py-2 rounded-lg border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                     <Layers className="h-4 w-4 text-gray-500 dark:text-gray-400" />
@@ -961,28 +821,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                     <ChevronDown className="h-3 w-3 text-gray-400 absolute right-3 pointer-events-none" />
                   </div>
                 </div>
-              )}
 
-              {/* Document Size Selector - Only for poster */}
-              {selectedDocumentType === 'poster' && (
-                <div className="relative">
-                  <div className="inline-flex items-center space-x-2 px-3 py-2 rounded-lg border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                    <FileText className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 mr-1">{t('activityForm.size', { defaultValue: 'Size:' })}</span>
-                    <select
-                      value={formData.documentSize || 'A2'}
-                      onChange={(e) => setFormData(prev => ({ ...prev, documentSize: e.target.value }))}
-                      className="bg-transparent border-none text-sm font-semibold text-gray-900 dark:text-gray-100 focus:ring-0 cursor-pointer py-0 pl-1 pr-6"
-                      style={{ backgroundImage: 'none' }}
-                    >
-                      <option value="A0">A0</option>
-                      <option value="A1">A1</option>
-                      <option value="A2">A2</option>
-                    </select>
-                    <ChevronDown className="h-3 w-3 text-gray-400 absolute right-3 pointer-events-none" />
-                  </div>
-                </div>
-              )}
 
               {/* Document Orientation Selector - HIDDEN (Backend handles this) */}
 
@@ -1110,22 +949,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
             </div>
           )}
 
-          {/* Template Selector - Only show when template is selected */}
-          {showTemplateSelector && useTemplate && (
-            <div data-template-selector className="space-y-4 p-4 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50 rounded-xl transition-colors">
-
-              <div className="overflow-x-auto">
-                <TemplateSelector
-                  templates={filteredTemplates}
-                  selectedTemplateId={formData.selectedTemplateId}
-                  onSelectTemplate={handleTemplateSelect}
-                />
-              </div>
-            </div>
-          )}
-
-
-
           {/* Main Input Field with Submit Button */}
           <div className="space-y-3">
             <div className="relative">
@@ -1138,6 +961,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                       ? formData.resumeDescription + ' ' + interimTranscript
                       : interimTranscript
                     : formData.resumeDescription
+
                 }
                 onChange={onInputChange}
                 onKeyDown={handleKeyDown}

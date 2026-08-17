@@ -18,14 +18,11 @@ import { UserProfile, ActivityFormData } from "@/app/types/form";
 import Logo from "../ui/Logo";
 import { templates } from "./data/templates";
 import ActivityForm from "./ActivityForm";
-import WelcomePage from "./WelcomePage";
 import CreatePage from "./pages/CreatePage";
 import { OpenCvbabaLogo } from "../ui/OpenCvbabaLogo";
 import FeedbackToast from "../feedback/FeedbackToast";
 import FeedbackFollowUpModal from "../feedback/FeedbackFollowUpModal";
-import TemplatesPage from "./pages/TemplatesPage";
 import ImportUploadPage from "./pages/ImportUploadPage";
-import DocumentTypePage from "./pages/DocumentTypePage";
 import { PdfPreview } from "../PdfPreview/PdfPreview";
 import Modal from "../ui/Modal";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -66,7 +63,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   const [html, setHtml] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
-  const [selectedOption, setSelectedOption] = useState<'prompt' | 'import' | 'templates' | 'create_mode' | 'upload' | null>(null);
+  const [selectedOption, setSelectedOption] = useState<'prompt' | 'import' | 'create' | 'upload' | null>(null);
   const [versions, setVersions] = useState<Version[]>([]);
   const [currentVersionId, setCurrentVersionId] = useState<number | undefined>(undefined);
   const [isLoadingVersions, setIsLoadingVersions] = useState(false);
@@ -140,7 +137,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       setFormData(prev => ({ ...prev, resumeDescription: initialPrompt }));
     }
 
-    if (mode && ['prompt', 'import', 'templates', 'create_mode', 'upload'].includes(mode)) {
+    if (mode && ['prompt', 'import', 'create', 'upload'].includes(mode)) {
       setSelectedOption(mode as any);
     } else {
       setSelectedOption(null);
@@ -1200,7 +1197,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
     setShouldAutoSubmit(true);
   };
 
-  const handleSetSelectedOption = (option: 'prompt' | 'import' | 'templates' | 'create_mode' | 'upload' | null) => {
+  const handleSetSelectedOption = (option: 'prompt' | 'import' | 'create' | 'upload' | null) => {
     if (option === null) {
       router.push('/activity');
     } else {
@@ -1218,18 +1215,15 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       />
     );
   }
-  if (!slug && selectedOption === 'templates') {
-    return <TemplatesPage onSelectTemplate={handleTemplateSelection} onBack={() => router.push('/activity')} />;
-  }
-
-  // Show document type selection for create_mode
-  if (!slug && selectedOption === 'create_mode') {
+  if (!slug && selectedOption === 'create') {
     return (
-      <DocumentTypePage
-        onSelectType={(type) => {
-          setSelectedDocumentType(type);
-          router.push(`/activity?mode=prompt&type=${type}`);
+      <CreatePage
+        onComplete={({ documentType, templateId, language }) => {
+          setFormData((prev) => ({ ...prev, selectedTemplateId: templateId, language, resumeDescription: '' }));
+          setSelectedDocumentType(documentType);
+          router.push('/activity?mode=prompt&type=' + documentType);
         }}
+        initialDocumentType={selectedDocumentType === 'cover-letter' ? 'cover-letter' : 'cv'}
         onBack={() => router.push('/activity')}
       />
     );
@@ -1238,13 +1232,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   return (
     <div className="h-screen bg-gray-50/50 dark:bg-black transition-colors duration-300">
       <div className="container mx-auto h-full flex flex-col p-4 gap-4">
-        {!slug && selectedOption === null && (
-          <WelcomePage
-            userName={userProfile?.full_name?.split(" ")[0]}
-            onOptionSelect={(option) => router.push(`/activity?mode=${option}`)}
-          />
-        )}
-
         {error && (
           <div className="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-900/50 rounded-lg text-red-600 dark:text-red-400 text-center mx-4 sm:mx-6 shadow-soft">
             {error}
@@ -1342,7 +1329,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                       setIncludePhoto={setIncludePhoto}
                       onSubmit={handleSubmit}
                       isLoading={isSubmitting}
-                      showTemplateSelector={!slug}
                       userProfile={userProfile}
                       setUserProfile={setUserProfile}
                       hasExistingChat={!!slug || !!chat}
