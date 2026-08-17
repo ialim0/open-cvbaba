@@ -68,7 +68,7 @@ src/
 │   ├── utils/              # Document formatting, pagination, and styling helpers
 │   └── globals.css         # Global stylesheet & design tokens
 └── public/
-    └── templates/          # Template previews and thumbnails
+    └── images/             # Static assets, logos, and icons
 ```
 
 ## Contributing
