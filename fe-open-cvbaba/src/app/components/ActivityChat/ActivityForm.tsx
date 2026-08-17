@@ -248,8 +248,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   }
 
   const placeholderPrefix = hasExistingChat
-    ? "Messageopen cvbabaedit"
-    : "Messageopen cvbaba";
+    ? "Describe the changes you want to make to your CV."
+    : "Describe the CV you want to create.";
 
   const animatedPlaceholder = useAnimatedPlaceholder({
     placeholders: currentPlaceholders,
