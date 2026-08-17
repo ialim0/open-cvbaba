@@ -1,6 +1,6 @@
 # open-cvbaba Frontend
 
-Next.js web application for [open-cvbaba](../README.md) — an open-source, local-first AI document designer and creator.
+Next.js web application for [open-cvbaba](../README.md) — an open-source, local-first AI CV builder.
 
 ## Tech Stack
 
@@ -8,7 +8,6 @@ Next.js web application for [open-cvbaba](../README.md) — an open-source, loca
 - **Language**: TypeScript 5
 - **UI & Styling**: Tailwind CSS, Radix UI primitives, Lucide Icons, FontAwesome
 - **State & Animations**: React 18, Framer Motion
-- **Internationalization**: `i18next` & `react-i18next` with multi-language locale support
 - **Export & Rendering**: Live HTML Shadow DOM preview with A4 pagination and PDF / Word export
 
 ## Getting Started
@@ -16,7 +15,7 @@ Next.js web application for [open-cvbaba](../README.md) — an open-source, loca
 ### Prerequisites
 
 - Node.js 20+ (Node 20 or 22 recommended)
-- npm or pnpm
+- npm
 
 ### Installation
 
@@ -65,12 +64,10 @@ src/
 │   │   └── ui/             # Core UI components (Buttons, Modals, Tooltips, etc.)
 │   ├── contexts/           # React context providers (Language, Theme)
 │   ├── hooks/              # Custom hooks (speech-to-text, streaming, etc.)
-│   ├── i18n/               # Localization initialization
 │   ├── types/              # TypeScript type definitions
 │   ├── utils/              # Document formatting, pagination, and styling helpers
 │   └── globals.css         # Global stylesheet & design tokens
 └── public/
-    ├── locales/            # JSON translation bundles
     └── templates/          # Template previews and thumbnails
 ```
 

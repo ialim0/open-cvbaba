@@ -8,7 +8,6 @@ import { ScrollArea } from "../ui/ScrollArea";
 import { Input } from "../ui/Input";
 import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import ChatHistoryItem from "./components/ChatHistoryItem";
-import { useTranslation } from "@/app/i18n/i18n";
 import { useSidebar } from "@/app/contexts/SidebarContext";
 
 interface Chat {
@@ -45,7 +44,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
     isMobile,
     onLockedChange,
   }) => {
-    const { t } = useTranslation("settings");
     const router = useRouter();
     const { setIsSidebarOpen } = useSidebar();
     const [loading, setLoading] = useState<boolean>(false);
@@ -81,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
     const fetchChats = useCallback(
       async (skip: number, search: string, replace: boolean = false) => {
         if (!apiBaseUrl) {
-          setError(t("sidebar.errors.apiBaseUrlNotDefined"));
+          setError("The API URL is not configured.");
           return;
         }
 
@@ -131,7 +129,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
           setError(null);
         } catch (error) {
           console.error("Error fetching chats:", error);
-          setError(t("sidebar.errors.failedToLoadChats"));
+          setError("Couldn't load your CV history.");
         } finally {
           if (sanitizedSkip === 0) {
             pendingInitialRequestsRef.current = Math.max(0, pendingInitialRequestsRef.current - 1);
@@ -146,7 +144,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
           }
         }
       },
-      [apiBaseUrl, limit, t]
+      [apiBaseUrl, limit]
     );
 
     useEffect(() => {
@@ -277,7 +275,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-3 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
             >
               <Plus className="h-4 w-4" />
-              <span>{t("sidebar.newButton")}</span>
+              <span>{"Newbutton"}</span>
             </button>
           </div>
 
@@ -292,7 +290,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                   <Input
                     type="text"
-                    placeholder={t("sidebar.searchPlaceholder")}
+                    placeholder={"Searchplaceholder"}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 pr-3 py-2 w-full rounded-xl border border-border bg-accent/80 dark:bg-accent/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-background transition-all shadow-sm"
@@ -328,13 +326,13 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                           <Plus className="h-6 w-6 text-muted-foreground" />
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          {debouncedSearchQuery ? t("sidebar.noChatsFound") : t("sidebar.noActivitiesYet")}
+                          {debouncedSearchQuery ? "Nochatsfound" : "Noactivitiesyet"}
                         </p>
                         <button
                           onClick={handleNewDocument}
                           className="mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
                         >
-                          {t("sidebar.createFirstDocument")}
+                          {"Createfirstdocument"}
                         </button>
                       </div>
                     )}
@@ -355,7 +353,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                           onClick={() => fetchChats(0, debouncedSearchQuery, true)}
                           className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
                         >
-                          {t('common.retry', { defaultValue: 'Try again' })}
+                          {"Try again"}
                         </button>
                       </div>
                     )}

@@ -1,7 +1,6 @@
 // components/FileUploadArea.tsx
 import React from 'react';
 import { Upload, FileText, Image as ImageIcon } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 
 interface FileUploadAreaProps {
   isDragging: boolean;
@@ -18,7 +17,6 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   handleDrop,
   handleFileChange,
 }) => {
-  const { t } = useTranslation('activity');
 
   return (
     <div
@@ -36,10 +34,10 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         <Upload className="text-blue-500" size={20} />
       </div>
       <p className="font-medium text-gray-800 text-sm sm:text-base">
-        {t('resumeForm.clickToSelectFile')}
+        {"Clicktoselectfile"}
       </p>
       <p className="text-xs sm:text-sm text-gray-500 mt-1">
-        {t('resumeForm.dragDropFile')} (PDF, DOC, DOCX, JPG, PNG)
+        {"Dragdropfile"} (PDF, DOC, DOCX, JPG, PNG)
       </p>
       <input
         id="file-upload"
@@ -51,11 +49,11 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       <div className="mt-3 flex justify-center gap-2">
         <div className="flex items-center text-xs text-gray-500">
           <FileText className="mr-1 h-3 w-3" />
-          {t('resumeForm.documents')}
+          {"Documents"}
         </div>
         <div className="flex items-center text-xs text-gray-500">
           <ImageIcon className="mr-1 h-3 w-3" />
-          {t('resumeForm.images')}
+          {"Images"}
         </div>
       </div>
     </div>

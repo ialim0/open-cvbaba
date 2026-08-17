@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { PageSheet } from './PageSheet';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
@@ -26,7 +25,6 @@ export const ExportPageSheet: React.FC<ExportPageSheetProps> = ({
     pageCount,
     isGenerating,
 }) => {
-    const { t } = useTranslation('activity');
     const [scope, setScope] = useState<ExportScope>('full');
     const [singlePageInput, setSinglePageInput] = useState(pageNumber);
     const [rangeStart, setRangeStart] = useState(1);
@@ -49,7 +47,7 @@ export const ExportPageSheet: React.FC<ExportPageSheetProps> = ({
         <PageSheet
             isOpen={isOpen}
             onClose={onClose}
-            title={t('pdfPreview.exportTitle', { defaultValue: 'Export Document' })}
+            title={"Export Document"}
             icon={<Download className="h-4 w-4 text-green-600 dark:text-green-400" />}
             iconBgColor="bg-green-100 dark:bg-green-900/30"
             disabled={isGenerating}
@@ -61,7 +59,7 @@ export const ExportPageSheet: React.FC<ExportPageSheetProps> = ({
                         disabled={isGenerating}
                         className="flex-1"
                     >
-                        {t('common.cancel', { defaultValue: 'Cancel' })}
+                        {"Cancel"}
                     </Button>
                     <Button
                         onClick={handleExportPdf}
@@ -71,12 +69,12 @@ export const ExportPageSheet: React.FC<ExportPageSheetProps> = ({
                         {isGenerating ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                {t('common.exporting', { defaultValue: 'Exporting...' })}
+                                {"Exporting..."}
                             </>
                         ) : (
                             <>
                                 <Download className="mr-2 h-4 w-4" />
-                                {t('common.export', { defaultValue: 'Export PDF' })}
+                                {"Export PDF"}
                             </>
                         )}
                     </Button>
@@ -87,7 +85,7 @@ export const ExportPageSheet: React.FC<ExportPageSheetProps> = ({
                 {/* Scope Selection */}
                 <div className="space-y-2">
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                        {t('pdfPreview.exportScope', { defaultValue: 'Pages to Export' })}
+                        {"Pages to Export"}
                     </label>
                     <div className="space-y-2">
                         {/* Full Document */}
@@ -104,7 +102,7 @@ export const ExportPageSheet: React.FC<ExportPageSheetProps> = ({
                             </div>
                             <div>
                                 <div className={`font-medium text-sm ${scope === 'full' ? 'text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'}`}>
-                                    {t('pdfPreview.fullDocument', { defaultValue: 'All Pages' })}
+                                    {"All Pages"}
                                 </div>
                                 <div className="text-xs text-gray-500">{pageCount} {pageCount === 1 ? 'page' : 'pages'}</div>
                             </div>
@@ -124,7 +122,7 @@ export const ExportPageSheet: React.FC<ExportPageSheetProps> = ({
                             </div>
                             <div className="flex-1">
                                 <div className={`font-medium text-sm ${scope === 'single' ? 'text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'}`}>
-                                    {t('pdfPreview.singlePage', { defaultValue: 'Single Page' })}
+                                    {"Single Page"}
                                 </div>
                             </div>
                             {scope === 'single' && (
@@ -154,7 +152,7 @@ export const ExportPageSheet: React.FC<ExportPageSheetProps> = ({
                             </div>
                             <div className="flex-1">
                                 <div className={`font-medium text-sm ${scope === 'range' ? 'text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'}`}>
-                                    {t('pdfPreview.pageRange', { defaultValue: 'Page Range' })}
+                                    {"Page Range"}
                                 </div>
                             </div>
                             {scope === 'range' && (

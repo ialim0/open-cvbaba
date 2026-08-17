@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { X, ChevronDown } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { ActivityFormData } from '@/app/types/form';
 
 interface StyleModalProps {
@@ -38,7 +37,6 @@ const STANDARD_FONTS = [
 ];
 
 const StyleModal: React.FC<StyleModalProps> = ({ isOpen, onClose, formData, setFormData }) => {
-  const { t } = useTranslation('activity');
   const [selectedFont, setSelectedFont] = useState<string>('Arial');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -67,7 +65,7 @@ const StyleModal: React.FC<StyleModalProps> = ({ isOpen, onClose, formData, setF
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const prompt = t('activityForm.styleWithFontPrompt', { font: selectedFont });
+    const prompt = "Stylewithfontprompt";
     onClose();
 
     setFormData(prev => ({
@@ -93,7 +91,7 @@ const StyleModal: React.FC<StyleModalProps> = ({ isOpen, onClose, formData, setF
 
       <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-strong border border-blue-100 dark:border-gray-800 w-full max-w-md transform transition-all duration-300">
         <div className="flex items-center justify-between p-4 border-b border-blue-100 dark:border-gray-800 rounded-t-xl transition-colors">
-          <h3 className="text-lg font-bold text-blue-900 dark:text-blue-400">{t('activityForm.styleModalTitle')}</h3>
+          <h3 className="text-lg font-bold text-blue-900 dark:text-blue-400">{"Stylemodaltitle"}</h3>
           <button onClick={onClose} className="text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/40 rounded-lg p-1.5 transition-all duration-200">
             <X className="h-4 w-4" />
           </button>
@@ -101,7 +99,7 @@ const StyleModal: React.FC<StyleModalProps> = ({ isOpen, onClose, formData, setF
 
         <form onSubmit={handleSubmit} className="p-4 space-y-3">
           <label className="block text-sm font-semibold text-blue-900 dark:text-blue-400">
-            {t('activityForm.styleFontLabel')}
+            {"Stylefontlabel"}
           </label>
 
           {/* Dropdown (inspired by Translate modal) */}
@@ -139,7 +137,7 @@ const StyleModal: React.FC<StyleModalProps> = ({ isOpen, onClose, formData, setF
             type="submit"
             className="w-full px-4 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            {t('activityForm.styleApplyButton')}
+            {"Styleapplybutton"}
           </button>
         </form>
       </div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from '../ui/Button';
 import TextArea from '../ui/Textarea';
 import { MessageSquare, Edit2, Trash2, Check, X, Loader2 } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 import Modal from '../ui/Modal';
 
 interface Comment {
@@ -36,7 +35,6 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
     onDeleteComment,
     isLoading = false,
 }) => {
-    const { t } = useTranslation('activity');
     const [newComment, setNewComment] = useState('');
     const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
     const [editContent, setEditContent] = useState('');
@@ -85,7 +83,7 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
     };
 
     const handleDeleteComment = async (commentId: number) => {
-        if (!window.confirm(t('pdfPreview.comments.confirmDelete', { defaultValue: 'Are you sure you want to delete this comment?' }))) {
+        if (!window.confirm("Are you sure you want to delete this comment?")) {
             return;
         }
 
@@ -104,10 +102,10 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
         const now = new Date();
         const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-        if (diffInSeconds < 60) return t('pdfPreview.comments.justNow', { defaultValue: 'Just now' });
-        if (diffInSeconds < 3600) return t('pdfPreview.comments.minutesAgo', { count: Math.floor(diffInSeconds / 60), defaultValue: `${Math.floor(diffInSeconds / 60)} minutes ago` });
-        if (diffInSeconds < 86400) return t('pdfPreview.comments.hoursAgo', { count: Math.floor(diffInSeconds / 3600), defaultValue: `${Math.floor(diffInSeconds / 3600)} hours ago` });
-        if (diffInSeconds < 604800) return t('pdfPreview.comments.daysAgo', { count: Math.floor(diffInSeconds / 86400), defaultValue: `${Math.floor(diffInSeconds / 86400)} days ago` });
+        if (diffInSeconds < 60) return "Just now";
+        if (diffInSeconds < 3600) return "Minutesago";
+        if (diffInSeconds < 86400) return "Hoursago";
+        if (diffInSeconds < 604800) return "Daysago";
 
         return date.toLocaleDateString();
     };
@@ -128,7 +126,7 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
                     <div className="flex items-center gap-2">
                         <MessageSquare className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                         <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                            {t('pdfPreview.comments.pageTitle', { page: pageNumber, defaultValue: `Page ${pageNumber} Comments` })}
+                            {"Pagetitle"}
                         </h2>
                     </div>
                     <button
@@ -151,10 +149,10 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
                                 <MessageSquare className="h-6 w-6 text-gray-400" />
                             </div>
                             <p className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
-                                {t('pdfPreview.comments.noPageCommentsTitle', { defaultValue: 'No comments yet' })}
+                                {"No comments yet"}
                             </p>
                             <p className="text-xs text-gray-500 dark:text-gray-400 max-w-[200px]">
-                                {t('pdfPreview.comments.noPageCommentsDesc', { defaultValue: 'Start the conversation by adding a comment to this page.' })}
+                                {"Start the conversation by adding a comment to this page."}
                             </p>
                         </div>
                     ) : (
@@ -222,7 +220,7 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
                                                 disabled={isSubmitting}
                                                 className="h-7 text-xs"
                                             >
-                                                {t('common.cancel', { defaultValue: 'Cancel' })}
+                                                {"Cancel"}
                                             </Button>
                                             <Button
                                                 size="sm"
@@ -230,7 +228,7 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
                                                 disabled={isSubmitting || !editContent.trim()}
                                                 className="h-7 text-xs bg-purple-600 hover:bg-purple-700 text-white"
                                             >
-                                                {t('common.save', { defaultValue: 'Save' })}
+                                                {"Save"}
                                             </Button>
                                         </div>
                                     </div>
@@ -241,7 +239,7 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
                                         </p>
                                         {comment.updated_at && (
                                             <p className="text-[10px] text-gray-400 mt-1 italic">
-                                                {t('pdfPreview.comments.edited', { defaultValue: '(edited)' })}
+                                                {"(edited)"}
                                             </p>
                                         )}
                                     </div>
@@ -257,7 +255,7 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
                         <TextArea
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
-                            placeholder={t('pdfPreview.comments.placeholder', { defaultValue: 'Write a comment...' })}
+                            placeholder={"Write a comment..."}
                             className="min-h-[80px] pb-10 text-sm resize-none border-gray-200 dark:border-gray-700 focus:border-purple-500 focus:ring-purple-500"
                             disabled={isSubmitting}
                         />
@@ -272,7 +270,7 @@ export const PageCommentsModal: React.FC<PageCommentsModalProps> = ({
                                     <Loader2 className="animate-spin h-3 w-3" />
                                 ) : (
                                     <div className="flex items-center gap-1">
-                                        <span className="text-xs font-medium">{t('common.post', { defaultValue: 'Post' })}</span>
+                                        <span className="text-xs font-medium">{"Post"}</span>
                                         <MessageSquare className="h-3 w-3" />
                                     </div>
                                 )}

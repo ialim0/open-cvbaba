@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Languages, ChevronDown } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { ActivityFormData } from '@/app/types/form';
 import { languageOptions, getLanguageShortName } from '@/app/config/languages';
 
@@ -19,7 +18,6 @@ const TranslateModal: React.FC<TranslateModalProps> = ({
   setFormData,
   onSubmit,
 }) => {
-  const { t } = useTranslation('activity');
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(formData.language);
   const languageDropdownRef = useRef<HTMLDivElement>(null);
@@ -61,7 +59,7 @@ const TranslateModal: React.FC<TranslateModalProps> = ({
 
     // Update form data with selected language and translate prompt
     const selectedLanguageOption = languageOptions.find(opt => opt.value === selectedLanguage);
-    const translatePrompt = t('activityForm.translateToLanguagePrompt', { language: getLanguageShortName(selectedLanguage) });
+    const translatePrompt = "Translatetolanguageprompt";
     // Persist selected language so Settings/ActivityForm reflect it as current
     try {
       localStorage.setItem('selectedLanguage', selectedLanguage);
@@ -111,7 +109,7 @@ const TranslateModal: React.FC<TranslateModalProps> = ({
       <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-strong border border-blue-100 dark:border-gray-800 w-full max-w-sm transform transition-all duration-300">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-blue-100 dark:border-gray-800 bg-gradient-to-r from-blue-50 to-white dark:from-blue-900/20 dark:to-gray-900 rounded-t-xl transition-colors">
-          <h3 className="text-lg font-bold text-blue-900 dark:text-blue-400">{t('activityForm.translateTo')}</h3>
+          <h3 className="text-lg font-bold text-blue-900 dark:text-blue-400">{"Translateto"}</h3>
           <button
             onClick={onClose}
             className="text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/40 rounded-lg p-1.5 transition-all duration-200"
@@ -125,7 +123,7 @@ const TranslateModal: React.FC<TranslateModalProps> = ({
           {/* Language Dropdown */}
           <div className="space-y-2">
             <label className="block text-sm font-semibold text-blue-900 dark:text-blue-400">
-              {t('activityForm.targetLanguage')}
+              {"Targetlanguage"}
             </label>
             <div className="relative" ref={languageDropdownRef}>
               <button
@@ -168,7 +166,7 @@ const TranslateModal: React.FC<TranslateModalProps> = ({
             type="submit"
             className="w-full px-4 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            {t('activityForm.translateDocument')}
+            {"Translatedocument"}
           </button>
         </form>
       </div>

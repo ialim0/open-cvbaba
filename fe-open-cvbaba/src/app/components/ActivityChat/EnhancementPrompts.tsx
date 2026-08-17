@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 
 interface EnhancementPromptsProps {
   onTranslateClick: () => void;
@@ -16,27 +15,26 @@ const EnhancementPrompts: React.FC<EnhancementPromptsProps> = ({
   onJustifyClick,
   onImageClick,
 }) => {
-  const { t } = useTranslation('activity');
 
   const enhancements = [
     {
-      label: t('activityForm.translate'),
+      label: "Translate",
       onClick: onTranslateClick,
     },
     {
-      label: t('activityForm.ats'),
+      label: "Ats",
       onClick: onATSClick,
     },
     {
-      label: t('activityForm.style'),
+      label: "Style",
       onClick: onStyleClick,
     },
     {
-      label: t('activityForm.justify'),
+      label: "Justify",
       onClick: onJustifyClick,
     },
     {
-      label: t('activityForm.image'),
+      label: "Photo",
       onClick: onImageClick,
     },
   ];
@@ -47,7 +45,7 @@ const EnhancementPrompts: React.FC<EnhancementPromptsProps> = ({
       <div className="flex items-center">
         <div className="flex-1 border-t border-gray-100 dark:border-gray-800 transition-colors"></div>
         <span className="px-3 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-900 transition-colors">
-          {t('activityForm.enhancementOptions')}
+          {"Enhancementoptions"}
         </span>
         <div className="flex-1 border-t border-gray-100 dark:border-gray-800 transition-colors"></div>
       </div>

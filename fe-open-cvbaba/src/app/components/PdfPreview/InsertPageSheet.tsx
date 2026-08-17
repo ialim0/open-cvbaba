@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { PageSheet } from './PageSheet';
 import { Button } from '../ui/Button';
 import { FilePlus, ArrowDown, ArrowUp, Loader2, Sparkles } from 'lucide-react';
@@ -19,7 +18,6 @@ export const InsertPageSheet: React.FC<InsertPageSheetProps> = ({
     pageNumber,
     isGenerating,
 }) => {
-    const { t } = useTranslation('activity');
     const [prompt, setPrompt] = useState('');
     const [position, setPosition] = useState<'before' | 'after'>('after');
 
@@ -33,7 +31,7 @@ export const InsertPageSheet: React.FC<InsertPageSheetProps> = ({
         <PageSheet
             isOpen={isOpen}
             onClose={onClose}
-            title={t('pdfPreview.insertPageTitle', { defaultValue: 'Insert Page' })}
+            title={"Insert Page"}
             icon={<FilePlus className="h-4 w-4 text-blue-600 dark:text-blue-400" />}
             iconBgColor="bg-blue-100 dark:bg-blue-900/30"
             disabled={isGenerating}
@@ -45,7 +43,7 @@ export const InsertPageSheet: React.FC<InsertPageSheetProps> = ({
                         disabled={isGenerating}
                         className="flex-1"
                     >
-                        {t('common.cancel', { defaultValue: 'Cancel' })}
+                        {"Cancel"}
                     </Button>
                     <Button
                         onClick={handleSubmit}
@@ -55,12 +53,12 @@ export const InsertPageSheet: React.FC<InsertPageSheetProps> = ({
                         {isGenerating ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                {t('common.generating', { defaultValue: 'Creating...' })}
+                                {"Creating..."}
                             </>
                         ) : (
                             <>
                                 <Sparkles className="mr-2 h-4 w-4" />
-                                {t('common.generate', { defaultValue: 'Generate' })}
+                                {"Generate"}
                             </>
                         )}
                     </Button>
@@ -71,7 +69,7 @@ export const InsertPageSheet: React.FC<InsertPageSheetProps> = ({
                 {/* Position Selection */}
                 <div className="space-y-2">
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                        {t('pdfPreview.insertPosition', { defaultValue: 'Position' })}
+                        {"Position"}
                     </label>
                     <div className="grid grid-cols-2 gap-2">
                         <button
@@ -103,14 +101,12 @@ export const InsertPageSheet: React.FC<InsertPageSheetProps> = ({
                 <div className="space-y-2">
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide flex items-center gap-2">
                         <Sparkles className="h-3 w-3" />
-                        {t('pdfPreview.pageContent', { defaultValue: 'AI Content' })}
+                        {"AI Content"}
                     </label>
                     <textarea
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
-                        placeholder={t('pdfPreview.insertPlaceholder', {
-                            defaultValue: 'Describe what to add, e.g. "A project timeline" or "List of references"...'
-                        })}
+                        placeholder={"Describe what to add, e.g. \"A project timeline\" or \"List of references\"..."}
                         className="w-full min-h-[100px] p-3 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                         disabled={isGenerating}
                     />

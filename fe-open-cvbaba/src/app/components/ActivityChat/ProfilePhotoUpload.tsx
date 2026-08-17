@@ -1,7 +1,6 @@
 // components/ProfilePhotoUpload.tsx
 import React from 'react';
 import { Loader2, Camera } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 
 interface ProfilePhotoUploadProps {
   currentAvatar: string | null;
@@ -16,7 +15,6 @@ const ProfilePhotoUpload: React.FC<ProfilePhotoUploadProps> = ({
   handlePhotoUpload,
   includePhoto,
 }) => {
-  const { t } = useTranslation('activity');
 
   if (!includePhoto) return null;
 
@@ -27,7 +25,7 @@ const ProfilePhotoUpload: React.FC<ProfilePhotoUploadProps> = ({
           <div className="relative">
             <img
               src={currentAvatar}
-              alt={t('resumeForm.profilePhotoAlt')}
+              alt={"Profilephotoalt"}
               className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-gray-200 shadow-sm"
             />
             <label

@@ -9,13 +9,11 @@ import { useRouter, usePathname } from 'next/navigation'
 
 import { SidebarProvider, useSidebar } from "../contexts/SidebarContext"
 import Sidebar from "./Sidebar/Sidebar"
-import { useTranslation } from "../i18n/i18n"
 import { OpenCvbabaLogo } from "./ui/OpenCvbabaLogo"
 
 
 // Mini Chat History Items Component for the collapsed sidebar
 const MiniChatHistoryItems: React.FC = () => {
-  const { t } = useTranslation('activity');
   const router = useRouter();
   const pathname = usePathname(); // Use the hook from next/navigation
   const [chats, setChats] = useState<any[]>([]);
@@ -27,7 +25,7 @@ const MiniChatHistoryItems: React.FC = () => {
       try {
         const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
         if (!apiBaseUrl) {
-          setError(t("sidebar.errors.apiBaseUrlNotDefined"));
+          setError("The API URL is not configured.");
           return;
         }
 
@@ -53,7 +51,7 @@ const MiniChatHistoryItems: React.FC = () => {
           setChats([]);
         } else {
           console.error("Error fetching chats:", error);
-          setError(t("sidebar.errors.failedToLoadChats"));
+          setError("Couldn't load your CV history.");
         }
       } finally {
         setLoading(false);
@@ -61,7 +59,7 @@ const MiniChatHistoryItems: React.FC = () => {
     };
 
     fetchChats();
-  }, [t, pathname]);
+  }, [pathname]);
 
   const handleChatClick = (slug: string) => {
     router.push(`/activity/${slug}`);
@@ -113,7 +111,6 @@ const ActivityLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =
 }
 
 const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { t } = useTranslation('activity')
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
   const [isLoading] = useState<boolean>(false)
   const [isMobile, setIsMobile] = useState<boolean>(false)
@@ -146,7 +143,7 @@ const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         <button
           onClick={toggleSidebar}
           className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 active:scale-95"
-          aria-label={t("sidebar.toggle")}
+          aria-label={"Toggle sidebar"}
           suppressHydrationWarning
         >
           <Menu className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -179,7 +176,7 @@ const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       </div>
 
       {/* Sidebar Content */}
-      <Suspense fallback={<div className="w-80">{t("loadingSidebar")}</div>}>
+      <Suspense fallback={<div className="w-80">{"Loading sidebar..."}</div>}>
         <div
           className={`fixed md:static z-40 h-full transition-slow ${isSidebarOpen ? "translate-x-0 w-64 md:w-80" : "-translate-x-full w-0"
             } bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-xl border-r border-gray-100 dark:border-gray-800`}
@@ -207,7 +204,7 @@ const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           ${isMobile ? "pt-16" : "pt-0"}
           bg-white dark:bg-gray-900`}
       >
-        <Suspense fallback={<div>{t("loadingCVPage")}</div>}>{children}</Suspense>
+        <Suspense fallback={<div>{"Loading..."}</div>}>{children}</Suspense>
       </main>
 
       {/* Modals */}

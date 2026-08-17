@@ -6,7 +6,6 @@ import Label from '../ui/Label';
 import Textarea from '../ui/Textarea';
 import { AutoResizeTextarea } from '../ui/AutoResizeTextarea';
 import axios from 'axios';
-import { useTranslation } from '@/app/i18n/i18n';
 import TranslateModal from './TranslateModal';
 import ATSModal from './ATSModal';
 import StyleModal from './StyleModal';
@@ -29,8 +28,6 @@ interface ActivityFormProps {
   userProfile: UserProfile | null;
   setUserProfile: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   hasExistingChat?: boolean; // New prop to indicate if there's an existing chat/slug
-  selectedDocumentType: string | null;
-  setSelectedDocumentType: (type: string | null) => void;
   // Page tools props
   selectedPageIndex?: number | null;
   pageCount?: number;
@@ -85,8 +82,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   userProfile,
   setUserProfile,
   hasExistingChat = false,
-  selectedDocumentType,
-  setSelectedDocumentType,
   // Page tools
   selectedPageIndex,
   pageCount = 0,
@@ -107,7 +102,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   selectedImageUrl: selectedImageUrlProp,
   setSelectedImageUrl: setSelectedImageUrlProp,
 }) => {
-  const { t } = useTranslation('activity');
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [isUploadingDocument, setIsUploadingDocument] = useState(false);
@@ -147,7 +141,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
 
   const handleDeleteImage = async (slug: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!confirm(t('common.deleteConfirm', { defaultValue: 'Are you sure you want to delete this image?' }))) return;
+    if (!confirm("Are you sure you want to delete this image?")) return;
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/file/user/images/${slug}`, {
@@ -236,8 +230,11 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   }, [hasExistingChat, selectedPageIndex]);
 
   // Animated Placeholder Logic
-  const creationPlaceholders = t('activityForm.animatedPlaceholders', { returnObjects: true });
-  const improvementPlaceholders = t('activityForm.animatedPlaceholdersImprove', { returnObjects: true });
+  const creationPlaceholders: Record<string, string[]> = {
+    default: ['Describe the role you are targeting and your professional background.'],
+    cv: ['Describe the role you are targeting and your professional background.'],
+  };
+  const improvementPlaceholders: Record<string, string[]> = creationPlaceholders;
 
   const allAnimatedPlaceholders = hasExistingChat ? improvementPlaceholders : creationPlaceholders;
 
@@ -245,13 +242,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
 
   if (allAnimatedPlaceholders && typeof allAnimatedPlaceholders === 'object' && !Array.isArray(allAnimatedPlaceholders)) {
     let typeKey = 'default';
-    if (selectedDocumentType) {
-      if (selectedDocumentType === 'cv') typeKey = 'cv';
-      else if (selectedDocumentType === 'cover-letter') typeKey = 'cover_letter';
-      else if (selectedDocumentType === 'statement_of_purpose') typeKey = 'sop';
-      else if (selectedDocumentType === 'proposal') typeKey = 'proposal';
-      else if (selectedDocumentType === 'presentation') typeKey = 'presentation';
-      else if (selectedDocumentType === 'business_plan') typeKey = 'business_plan';
+    if (true) {
+      typeKey = 'cv';
     }
     // @ts-ignore
     currentPlaceholders = allAnimatedPlaceholders[typeKey] || allAnimatedPlaceholders['default'] || [];
@@ -263,8 +255,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   }
 
   const placeholderPrefix = hasExistingChat
-    ? t('activityForm.messageopen-cvbabaEdit')
-    : t('activityForm.messageopen-cvbaba');
+    ? "Messageopen cvbabaedit"
+    : "Messageopen cvbaba";
 
   const animatedPlaceholder = useAnimatedPlaceholder({
     placeholders: currentPlaceholders,
@@ -543,11 +535,11 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                 </div>
                 <div>
                   <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                    {t('pdfPreview.page', { defaultValue: 'Page' })} {selectedPageIndex + 1}
+                    {"Page"} {selectedPageIndex + 1}
                   </span>
                   {pageCount > 1 && (
                     <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
-                      {t('pdfPreview.of', { defaultValue: 'of' })} {pageCount}
+                      {"of"} {pageCount}
                     </span>
                   )}
                 </div>
@@ -560,8 +552,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                     <FilePlus className="w-4 h-4 text-white" />
                   </div>
                   <div className="text-left">
-                    <div className="text-sm font-semibold text-blue-900 dark:text-blue-100">{t('pdfPreview.insert', { defaultValue: 'Insert' })}</div>
-                    <div className="text-[10px] text-blue-600 dark:text-blue-400">{t('pdfPreview.addNewPage', { defaultValue: 'Add new page' })}</div>
+                    <div className="text-sm font-semibold text-blue-900 dark:text-blue-100">{"Insert"}</div>
+                    <div className="text-[10px] text-blue-600 dark:text-blue-400">{"Add new page"}</div>
                   </div>
                 </button>
 
@@ -574,8 +566,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                       <ImagePlus className="w-4 h-4 text-white" />
                     </div>
                     <div className="text-left">
-                      <div className="text-sm font-semibold text-amber-900 dark:text-amber-100">{t('pdfPreview.insertImage', { defaultValue: 'Image' })}</div>
-                      <div className="text-[10px] text-amber-600 dark:text-amber-400">{t('pdfPreview.addImage', { defaultValue: 'Add to page' })}</div>
+                      <div className="text-sm font-semibold text-amber-900 dark:text-amber-100">{"Image"}</div>
+                      <div className="text-[10px] text-amber-600 dark:text-amber-400">{"Add to page"}</div>
                     </div>
                   </button>
                 )}
@@ -588,8 +580,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                       <Trash2 className="w-4 h-4 text-white" />
                     </div>
                     <div className="text-left">
-                      <div className="text-sm font-semibold text-red-900 dark:text-red-100">{t('pdfPreview.delete', { defaultValue: 'Delete' })}</div>
-                      <div className="text-[10px] text-red-600 dark:text-red-400">{t('pdfPreview.removePage', { defaultValue: 'Remove page' })}</div>
+                      <div className="text-sm font-semibold text-red-900 dark:text-red-100">{"Delete"}</div>
+                      <div className="text-[10px] text-red-600 dark:text-red-400">{"Remove page"}</div>
                     </div>
                   </button>
                 )}
@@ -615,14 +607,14 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                 )}
                 <div className="text-left flex-1">
                   <div className="text-sm font-semibold text-purple-900 dark:text-purple-100">
-                    {selectedImageUrl ? t('activityForm.imageSelected', { defaultValue: 'Image Selected' }) : t('activityForm.yourImages', { defaultValue: 'Your Images' })}
+                    {selectedImageUrl ? "Image Selected" : "Your Images"}
                   </div>
                   <div className="text-[10px] text-purple-600 dark:text-purple-400">
                     {selectedImageUrl
-                      ? t('activityForm.clickToChange', { defaultValue: 'Click to change' })
+                      ? "Click to change"
                       : isLoadingUserImages
-                        ? t('common.loading', { defaultValue: 'Loading...' })
-                        : `${userImagesList.length} ${t('common.images', { defaultValue: 'images' })}`
+                        ? "Loading..."
+                        : `${userImagesList.length} ${"images"}`
                     }
                   </div>
                 </div>
@@ -634,7 +626,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                       setSelectedImageUrl(null);
                     }}
                     className="p-1.5 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors"
-                    title={t('common.remove', { defaultValue: 'Remove' })}
+                    title={"Remove"}
                   >
                     <X className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                   </button>
@@ -691,7 +683,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                 <div className="relative">
                   <div className="inline-flex items-center space-x-2 px-3 py-2 rounded-lg border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                     <Layers className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 mr-1">{t('activityForm.pages', { defaultValue: 'Pages:' })}</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 mr-1">{"Pages:"}</span>
                     <select
                       value={formData.pageCount || 1}
                       onChange={(e) => setFormData(prev => ({ ...prev, pageCount: parseInt(e.target.value) }))}
@@ -722,7 +714,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                       }`}
                   >
                     <Camera className={`h-4 w-4 ${includePhoto ? 'text-white' : 'text-gray-600 dark:text-gray-400'}`} />
-                    <span>{includePhoto ? 'Photo' : t('activityForm.photo')}</span>
+                    <span>{includePhoto ? 'Photo' : "Photo"}</span>
                     <ChevronDown className={`h-4 w-4 transition-transform ${isPhotoDropdownOpen ? 'rotate-180' : ''} ${includePhoto ? 'text-white' : 'text-gray-600 dark:text-gray-400'}`} />
                   </button>
 
@@ -754,7 +746,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                                 <div className="relative w-24 h-24">
                                   <img
                                     src={currentAvatar ?? undefined}
-                                    alt={t('activityForm.profile')}
+                                    alt={"Profile"}
                                     className="w-full h-full rounded-xl object-cover border-2 border-white dark:border-gray-800 shadow-lg"
                                   />
                                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-xl transition-all duration-300 flex items-center justify-center">
@@ -779,15 +771,15 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                                   </div>
                                 </div>
                                 <div className="mt-2 text-center">
-                                  <p className="text-xs font-medium text-gray-900 dark:text-gray-100">{t('activityForm.photoUploaded')}</p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400">{t('activityForm.hoverToChange')}</p>
+                                  <p className="text-xs font-medium text-gray-900 dark:text-gray-100">{"Photouploaded"}</p>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400">{"Hovertochange"}</p>
                                   <button
                                     type="button"
                                     onClick={handleRemovePhoto}
                                     disabled={isUploadingPhoto}
                                     className="mt-1 text-xs text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 underline disabled:opacity-50"
                                   >
-                                    {isUploadingPhoto ? t('activityForm.removing') : t('activityForm.remove')}
+                                    {isUploadingPhoto ? "Removing" : "Remove"}
                                   </button>
                                 </div>
                               </div>
@@ -802,13 +794,13 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                                       <Camera className="w-6 h-6 text-gray-600 dark:text-gray-400" />
                                     </div>
                                     <div className="text-center">
-                                      <p className="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">{t('activityForm.uploadPhoto')}</p>
-                                      <p className="text-xs text-gray-500 dark:text-gray-400">{t('activityForm.clickToBrowse')}</p>
+                                      <p className="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">{"Uploadphoto"}</p>
+                                      <p className="text-xs text-gray-500 dark:text-gray-400">{"Clicktobrowse"}</p>
                                     </div>
                                     {isUploadingPhoto && (
                                       <div className="flex items-center space-x-1 text-gray-900 dark:text-gray-200">
                                         <Loader2 className="w-3 h-3 animate-spin" />
-                                        <span className="text-xs">{t('activityForm.uploading')}</span>
+                                        <span className="text-xs">{"Uploading"}</span>
                                       </div>
                                     )}
                                   </div>
@@ -850,7 +842,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                 onChange={onInputChange}
                 onKeyDown={handleKeyDown}
                 onPaste={handlePaste}
-                placeholder={isListening ? t('activityForm.listeningPlaceholder', { defaultValue: 'Listening... speak now' }) : animatedPlaceholder}
+                placeholder={isListening ? "Listening... speak now" : animatedPlaceholder}
                 className={`text-base pr-24 ${isListening ? 'border-red-300 dark:border-red-700 ring-2 ring-red-200 dark:ring-red-900/30' : ''}`}
                 minHeight={120}
                 maxHeight={400}
@@ -884,7 +876,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                   ? 'bg-red-500 text-white shadow-lg shadow-red-500/40 scale-110'
                   : 'bg-gray-100 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
                   }`}
-                title={isListening ? t('activityForm.stopListening', { defaultValue: 'Click to stop' }) : t('activityForm.startListening', { defaultValue: 'Voice input' })}
+                title={isListening ? "Click to stop" : "Voice input"}
               >
                 <Mic className={`h-5 w-5 ${isListening ? 'animate-pulse' : ''}`} />
               </button>
@@ -1062,7 +1054,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                       >
                         <Paperclip className="w-4 h-4" />
                         <span className="hidden sm:inline">
-                          {t('activityForm.attachFile', { defaultValue: 'File' })}
+                          {"File"}
                           {!hasExistingChat && ` (${attachedFiles.length}/5)`}
                         </span>
                       </button>
@@ -1074,7 +1066,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                         className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                       >
                         <Link2 className="w-4 h-4" />
-                        <span className="hidden sm:inline">{t('activityForm.addLink', { defaultValue: 'Link' })}</span>
+                        <span className="hidden sm:inline">{"Link"}</span>
                       </button>
                     )}
                   </>
@@ -1143,7 +1135,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  {t('activityForm.yourImages', { defaultValue: 'Your Images' })}
+                  {"Your Images"}
                 </h3>
                 <button
                   type="button"
@@ -1162,7 +1154,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                   </div>
                 ) : userImagesList.length === 0 ? (
                   <div className="text-center py-12 text-gray-500 dark:text-gray-400">
-                    {t('activityForm.noImages', { defaultValue: 'No images uploaded yet' })}
+                    {"No images uploaded yet"}
                   </div>
                 ) : (
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
@@ -1187,14 +1179,14 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                         />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                           <span className="opacity-0 group-hover:opacity-100 text-white text-xs font-medium bg-black/50 px-2 py-1 rounded">
-                            {t('common.select', { defaultValue: 'Select' })}
+                            {"Select"}
                           </span>
                         </div>
                         <button
                           type="button"
                           onClick={(e) => handleDeleteImage(img.slug || img.id.toString(), e)}
                           className="absolute top-1 right-1 p-1 bg-red-500/80 hover:bg-red-600 text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                          title={t('common.delete', { defaultValue: 'Delete' })}
+                          title={"Delete"}
                         >
                           <Trash2 className="w-3 h-3" />
                         </button>

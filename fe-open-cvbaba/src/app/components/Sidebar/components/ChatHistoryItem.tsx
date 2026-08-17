@@ -14,7 +14,6 @@ import { format, formatDistanceToNow, isToday, isYesterday } from 'date-fns';
 import { Input } from '../../ui/Input';
 import { toast } from 'react-toastify';
 import { cn } from '../../lib/utils';
-import { useTranslation } from '@/app/i18n/i18n';
 
 // Format date in a smart, relative way
 const formatSmartDate = (dateString: string, yesterdayText: string): string => {
@@ -71,7 +70,6 @@ const EditMode: React.FC<EditModeProps> = ({
   onCancel,
   inputId,
 }) => {
-  const { t } = useTranslation('settings');
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') onConfirm();
@@ -86,7 +84,7 @@ const EditMode: React.FC<EditModeProps> = ({
         onChange={(e) => setEditTitle(e.target.value)}
         onKeyDown={handleKeyDown}
         className="w-full text-sm font-medium text-gray-900 dark:text-gray-100 bg-transparent focus:ring-1 focus:ring-gray-500 rounded-md"
-        aria-label={t('chatHistory.editTitleAriaLabel')}
+        aria-label={"Edittitlearialabel"}
         autoFocus
       />
       <div className="flex justify-end gap-2">
@@ -95,7 +93,7 @@ const EditMode: React.FC<EditModeProps> = ({
           size="sm"
           onClick={onConfirm}
           className="text-gray-900 hover:bg-gray-100"
-          aria-label={t('chatHistory.saveButtonAriaLabel')}
+          aria-label={"Savebuttonarialabel"}
         >
           <Check className="h-4 w-4" />
         </Button>
@@ -104,7 +102,7 @@ const EditMode: React.FC<EditModeProps> = ({
           size="sm"
           onClick={onCancel}
           className="text-gray-600 hover:bg-gray-100"
-          aria-label={t('chatHistory.cancelButtonAriaLabel')}
+          aria-label={"Cancelbuttonarialabel"}
         >
           <X className="h-4 w-4" />
         </Button>
@@ -120,7 +118,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   onCancelDelete,
   isDeleteMode,
 }) => {
-  const { t } = useTranslation('settings');
 
   return (
     <div className="flex items-center gap-1">
@@ -130,7 +127,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           size="icon"
           onClick={onEditClick}
           className="h-8 w-8 rounded-full text-gray-500 hover:text-black hover:bg-gray-100"
-          aria-label={t('chatHistory.editButtonAriaLabel')}
+          aria-label={"Editbuttonarialabel"}
         >
           <Edit className="h-4 w-4" />
         </Button>
@@ -142,7 +139,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
             size="icon"
             onClick={onConfirmDelete}
             className="h-8 w-8 rounded-full text-red-600 hover:bg-red-100"
-            aria-label={t('chatHistory.confirmDeleteButtonAriaLabel')}
+            aria-label={"Confirmdeletebuttonarialabel"}
           >
             <Check className="h-4 w-4" />
           </Button>
@@ -151,7 +148,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
             size="icon"
             onClick={onCancelDelete}
             className="h-8 w-8 rounded-full text-gray-600 hover:bg-gray-100"
-            aria-label={t('chatHistory.cancelDeleteButtonAriaLabel')}
+            aria-label={"Canceldeletebuttonarialabel"}
           >
             <X className="h-4 w-4" />
           </Button>
@@ -162,7 +159,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           size="icon"
           onClick={onDeleteClick}
           className="h-8 w-8 rounded-full text-gray-500 hover:text-red-600 hover:bg-red-100"
-          aria-label={t('chatHistory.deleteButtonAriaLabel')}
+          aria-label={"Deletebuttonarialabel"}
         >
           <Trash2 className="h-4 w-4" />
         </Button>
@@ -196,7 +193,6 @@ const ChatHistoryItemComponent: React.FC<ChatHistoryItemProps> = ({
   onClick,
 
 }) => {
-  const { t } = useTranslation('settings');
   const router = useRouter();
   const pathname = usePathname();
   const [isEditMode, setIsEditMode] = useState(false);
@@ -209,7 +205,7 @@ const ChatHistoryItemComponent: React.FC<ChatHistoryItemProps> = ({
     title.length > MAX_TITLE_LENGTH
       ? `${title.substring(0, MAX_TITLE_LENGTH)}...`
       : title;
-  const formattedDate = formatSmartDate(date, t('chatHistory.yesterday'));
+  const formattedDate = formatSmartDate(date, "Yesterday");
 
 
 
@@ -232,10 +228,10 @@ const ChatHistoryItemComponent: React.FC<ChatHistoryItemProps> = ({
       );
       onEdit(slug, trimmedTitle);
       setIsEditMode(false);
-      toast.success(t('chatHistory.editSuccessMessage'));
+      toast.success("Editsuccessmessage");
     } catch (error) {
       console.error('Error updating chat title:', error);
-      toast.error(t('chatHistory.editErrorMessage'));
+      toast.error("Editerrormessage");
       setEditTitle(title);
       setIsEditMode(false);
     }
@@ -249,10 +245,10 @@ const ChatHistoryItemComponent: React.FC<ChatHistoryItemProps> = ({
       });
       onDelete(slug);
       setIsDeleteMode(false);
-      toast.success(t('chatHistory.deleteSuccessMessage'));
+      toast.success("Deletesuccessmessage");
     } catch (error) {
       console.error('Error deleting chat:', error);
-      toast.error(t('chatHistory.deleteErrorMessage'));
+      toast.error("Deleteerrormessage");
       setIsDeleteMode(false);
     }
   };

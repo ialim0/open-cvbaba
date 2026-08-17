@@ -1,7 +1,6 @@
 // components/VoiceInputSection.tsx
 import React from 'react';
 import { Mic } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { AutoResizeTextarea } from '../ui/AutoResizeTextarea';
 
 interface VoiceInputSectionProps {
@@ -19,7 +18,6 @@ const VoiceInputSection: React.FC<VoiceInputSectionProps> = ({
   resumeDescription,
   handleInputChange,
 }) => {
-  const { t } = useTranslation('activity');
 
   return (
     <div className="space-y-3 sm:space-y-4">
@@ -31,7 +29,7 @@ const VoiceInputSection: React.FC<VoiceInputSectionProps> = ({
           className={`flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full ${
             isRecording ? 'bg-red-500' : 'bg-blue-500'
           } text-white shadow-md sm:shadow-lg transition-all hover:shadow-lg active:scale-95`}
-          aria-label={isRecording ? t('resumeForm.stopRecording') : t('resumeForm.startRecording')}
+          aria-label={isRecording ? "Stoprecording" : "Startrecording"}
         >
           <Mic className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
@@ -39,8 +37,8 @@ const VoiceInputSection: React.FC<VoiceInputSectionProps> = ({
         {/* Status text */}
         <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-gray-600 text-center">
           {isRecording
-            ? t('resumeForm.listening')
-            : t('resumeForm.clickToRecord')}
+            ? "Listening"
+            : "Clicktorecord"}
         </p>
 
         {/* Recording indicator */}
@@ -59,7 +57,7 @@ const VoiceInputSection: React.FC<VoiceInputSectionProps> = ({
         name="resumeDescription"
         value={resumeDescription}
         onChange={handleInputChange}
-        placeholder={t('resumeForm.voiceTranscriptPlaceholder')}
+        placeholder={"Voicetranscriptplaceholder"}
         className="text-sm"
         readOnly={isRecording}
         minHeight={100}
@@ -70,7 +68,7 @@ const VoiceInputSection: React.FC<VoiceInputSectionProps> = ({
 
       {/* Instructions */}
       <p className="text-xs text-gray-500 px-1">
-        {t('resumeForm.voiceInputInstructions')}
+        {"Voiceinputinstructions"}
       </p>
     </div>
   );

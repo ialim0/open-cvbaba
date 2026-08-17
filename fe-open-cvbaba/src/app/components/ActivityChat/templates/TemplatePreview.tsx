@@ -16,15 +16,6 @@ import AcademicTemplate5 from './CV/AcademicTemplate5';
 // import FAANGTemplate4 from './CV/FAANGTemplate4';
 // import FAANGTemplate5 from './CV/FAANGTemplate5';
 // import FAANGTemplate6 from './CV/FAANGTemplate6';
-// FL Templates
-import FLHarvardTemplate1 from './FL/FLHarvardTemplate1';
-import FLHarvardTemplate2 from './FL/FLHarvardTemplate2';
-import FLHarvardTemplate3 from './FL/FLHarvardTemplate3';
-import FLHarvardTemplate4 from './FL/FLHarvardTemplate4';
-import FLHarvardTemplate5 from './FL/FLHarvardTemplate5';
-import FLAcademicTemplate1 from './FL/FLAcademicTemplate1';
-import FLAcademicTemplate2 from './FL/FLAcademicTemplate2';
-import FLAcademicTemplate3 from './FL/FLAcademicTemplate3';
 
 interface TemplatePreviewProps {
   templateId: string;
@@ -59,16 +50,6 @@ const TemplatePreview: React.FC<TemplatePreviewProps> = ({
         return <HarvardTemplate3 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
       case 'harvard_04':
         return <HarvardTemplate4 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
-      case 'fl_harvard_01':
-        return <FLHarvardTemplate1 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
-      case 'fl_harvard_02':
-        return <FLHarvardTemplate2 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
-      case 'fl_harvard_03':
-        return <FLHarvardTemplate3 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
-      case 'fl_harvard_04':
-        return <FLHarvardTemplate4 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
-      case 'fl_harvard_05':
-        return <FLHarvardTemplate5 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
       case 'academic_01':
         return <AcademicTemplate1 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
       case 'academic_02':
@@ -91,12 +72,6 @@ const TemplatePreview: React.FC<TemplatePreviewProps> = ({
                return <div>FAANG 5</div>;
              case 'cv_sahil':
                return <div>CV Sahil</div>;
-             case 'fl_academic_01':
-               return <FLAcademicTemplate1 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
-             case 'fl_academic_02':
-               return <FLAcademicTemplate2 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
-             case 'fl_academic_03':
-               return <FLAcademicTemplate3 scale={scale} className={combinedClassName} compact={compact} isModal={isModalContext} />;
              default:
                // For other templates, we'll add them later
                return (

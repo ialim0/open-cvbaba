@@ -1,6 +1,5 @@
 // components/ModalStepper.tsx
 import React from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { Check } from 'lucide-react';
 
 interface ModalStepperProps {

@@ -6,22 +6,17 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ActivityChatProps } from "./ActivityChat.types";
 import { useSidebar } from "@/app/contexts/SidebarContext";
-import { useTranslation } from "@/app/i18n/i18n";
 import { useExtractSlug } from "@/app/hooks/useExtractSlug";
 import { submitData } from "@/app/hooks/useSubmitData";
 import { useStreamSubmitData } from "@/app/hooks/useStreamSubmitData";
 import { getTimeBasedGreeting } from "@/app/utils/getTimeBasedGreeting";
-import { useFeedback } from "@/app/hooks/useFeedback";
 import { useUserImages } from "@/app/hooks/useUserImages";
 import { UserProfile, ActivityFormData } from "@/app/types/form";
 // Removed AnimatedText as we now render static text inline
 import Logo from "../ui/Logo";
 import { templates } from "./data/templates";
 import ActivityForm from "./ActivityForm";
-import CreatePage from "./pages/CreatePage";
 import { OpenCvbabaLogo } from "../ui/OpenCvbabaLogo";
-import FeedbackToast from "../feedback/FeedbackToast";
-import FeedbackFollowUpModal from "../feedback/FeedbackFollowUpModal";
 import { PdfPreview } from "../PdfPreview/PdfPreview";
 import Modal from "../ui/Modal";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -55,14 +50,12 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pdfUrl, setPdfUrl] = useState("");
-  const { t } = useTranslation("home");
   const [error, setError] = useState<string | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isLoadingProfile] = useState<boolean>(false);
   const [html, setHtml] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
-  const [selectedOption, setSelectedOption] = useState<'prompt' | 'create'>('prompt');
   const [versions, setVersions] = useState<Version[]>([]);
   const [currentVersionId, setCurrentVersionId] = useState<number | undefined>(undefined);
   const [isLoadingVersions, setIsLoadingVersions] = useState(false);
@@ -72,34 +65,10 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   const [chatTitle, setChatTitle] = useState<string>(chat?.title || "");
   const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(false);
 
-  // Feedback state
-  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
-  const [currentFeedbackAction, setCurrentFeedbackAction] = useState<string>('');
-  const { submitBinaryFeedback, submitDetailedFeedback } = useFeedback();
-
   // User images for avatar
   const { currentAvatar, refreshImages } = useUserImages();
 
-  // const [selectedDocumentType, setSelectedDocumentType] = useState<string | null>(null); // Replaced with URL state
-  const selectedDocumentType = searchParams.get('type');
-
-  const setSelectedDocumentType = (type: string | null) => {
-    const newParams = new URLSearchParams(searchParams.toString());
-    if (type) {
-      newParams.set('type', type);
-      // For poster, always set page count to 1
-      if (type === 'poster') {
-        setFormData(prev => ({ ...prev, pageCount: 1 }));
-      }
-    } else {
-      newParams.delete('type');
-    }
-    // Maintain the current mode or default to prompt if not set
-    if (!newParams.has('mode')) {
-      newParams.set('mode', 'prompt');
-    }
-    router.push(`/activity?${newParams.toString()}`);
-  };
+  const selectedDocumentType = 'cv';
   const streamCleanupRef = useRef<(() => void) | null>(null);
   const { streamSubmitData, cleanup: cleanupStream } = useStreamSubmitData();
 
@@ -128,18 +97,12 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   const slug = useExtractSlug();
 
   useEffect(() => {
-    const mode = searchParams.get('mode');
     const initialPrompt = searchParams.get('initialPrompt');
 
     if (initialPrompt) {
       setFormData(prev => ({ ...prev, resumeDescription: initialPrompt }));
     }
 
-    if (mode && ['prompt', 'create'].includes(mode)) {
-      setSelectedOption(mode as any);
-    } else {
-      setSelectedOption('prompt');
-    }
   }, [searchParams]);
 
 
@@ -236,7 +199,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       // Find the selected version
       const selectedVersion = versions.find(v => v.id === versionId);
       if (!selectedVersion) {
-        setError(t('activity_chat.errors.version_not_found'));
+        setError("Version not found");
         return;
       }
 
@@ -251,7 +214,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
     } catch (error) {
       console.error("Error selecting version:", error);
-      setError(t('activity_chat.errors.version_load_failed'));
+      setError("Version load failed");
     }
   };
 
@@ -266,11 +229,11 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
   const handlePdfGenerate = async (pages?: string) => {
     if (!slug) {
-      toast.error(t('activity_chat.messages.no_document'));
+      toast.error("No document");
       return;
     }
 
-    const toastId = toast.loading(t('activity_chat.messages.preparing_doc', { format: 'PDF' }));
+    const toastId = toast.loading("Preparing doc");
 
     try {
       const response = await fetch(
@@ -292,7 +255,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       const url = URL.createObjectURL(blob);
 
       toast.update(toastId, {
-        render: t('activity_chat.messages.download_success'),
+        render: "Download success",
         type: "success",
         isLoading: false,
         autoClose: 5000,
@@ -302,7 +265,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
       // Trigger feedback toast after 3 second delay
       setTimeout(() => {
-        showFeedbackToast('export_pdf');
       }, 3000);
 
       // Download directly without switching to preview mode
@@ -326,14 +288,14 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       }, 100);
     } catch (err) {
       toast.update(toastId, {
-        render: t('activity_chat.messages.download_failed'),
+        render: "Download failed",
         type: "error",
         isLoading: false,
         autoClose: 5000,
         closeButton: true,
         closeOnClick: true
       });
-      setError(t('activity_chat.messages.generation_error', { format: 'PDF' }));
+      setError("Generation error");
     }
   };
 
@@ -354,7 +316,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       }
     } catch (err) {
       console.error("Error updating PDF content:", err);
-      setError(t('activity_chat.errors.save_failed'));
+      setError("Save failed");
     }
   }, [slug, fetchVersions]);
 
@@ -372,7 +334,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         } catch (error) {
           console.error("Error saving changes:", error);
           if (!silent) {
-            setError(t('activity_chat.messages.save_failed'));
+            setError("Save failed");
           }
         } finally {
           if (!silent) {
@@ -405,104 +367,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
     link.click();
   }, [pdfUrl, userProfile?.full_name, chatTitle]);
 
-  // Feedback handlers
-  const showFeedbackToast = useCallback((action: string) => {
-    setCurrentFeedbackAction(action);
-
-    toast(
-      ({ closeToast }) => (
-        <FeedbackToast
-          question={t('feedback.question')}
-          onPositive={async () => {
-            await submitBinaryFeedback(action, 'positive');
-            closeToast?.();
-
-            // Show quality question after positive response
-            setTimeout(() => {
-              showQualityToast(action);
-            }, 300);
-          }}
-          onNegative={() => {
-            closeToast?.();
-            setIsFeedbackModalOpen(true);
-          }}
-          onDismiss={() => {
-            closeToast?.();
-          }}
-        />
-      ),
-      {
-        position: "bottom-center",
-        autoClose: 12000,
-        hideProgressBar: true,
-        closeButton: false,
-        className: "feedback-toast",
-        style: { background: 'transparent', boxShadow: 'none', padding: 0 },
-        bodyStyle: { padding: 0 },
-        toastId: 'feedback-time-saved',
-      }
-    );
-  }, [t, submitBinaryFeedback]);
-
-  const showQualityToast = useCallback((action: string) => {
-    toast(
-      ({ closeToast }) => (
-        <div className="flex items-center gap-4 pl-6 pr-2 py-2 bg-blue-600 text-white rounded-full shadow-2xl shadow-blue-900/20 min-w-[340px] max-w-[420px] animate-in slide-in-from-bottom-8 fade-in duration-300">
-          <p className="font-medium text-sm whitespace-nowrap">{t('feedback.quality_question', { defaultValue: 'How was the quality?' })}</p>
-          <div className="flex items-center gap-1">
-            <button
-              onClick={async () => {
-                await submitDetailedFeedback(action, 'quality_excellent');
-                closeToast?.();
-                toast.success(t('feedback.thank_you'), { autoClose: 2000, position: 'bottom-center' });
-              }}
-              className="px-3 py-1.5 text-xs font-medium rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/50"
-            >
-              {t('feedback.excellent', { defaultValue: 'Excellent' })}
-            </button>
-            <button
-              onClick={async () => {
-                await submitDetailedFeedback(action, 'quality_good');
-                closeToast?.();
-                toast.success(t('feedback.thank_you'), { autoClose: 2000, position: 'bottom-center' });
-              }}
-              className="px-3 py-1.5 text-xs font-medium rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/50"
-            >
-              {t('feedback.good', { defaultValue: 'Good' })}
-            </button>
-            <button
-              onClick={async () => {
-                await submitDetailedFeedback(action, 'quality_fair');
-                closeToast?.();
-                toast.success(t('feedback.thank_you'), { autoClose: 2000, position: 'bottom-center' });
-              }}
-              className="px-3 py-1.5 text-xs font-medium rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/50"
-            >
-              {t('feedback.fair', { defaultValue: 'Fair' })}
-            </button>
-          </div>
-        </div>
-      ),
-      {
-        position: "bottom-center",
-        autoClose: 10000,
-        hideProgressBar: true,
-        closeButton: false,
-        className: "feedback-toast",
-        style: { background: 'transparent', boxShadow: 'none', padding: 0 },
-        bodyStyle: { padding: 0 },
-        toastId: 'feedback-quality',
-      }
-    );
-  }, [t, submitDetailedFeedback]);
-
-  const handleFeedbackSubmit = useCallback(async (category: string, comment?: string) => {
-    await submitDetailedFeedback(currentFeedbackAction, category, comment);
-    toast.success(t('feedback.thank_you'), { autoClose: 2000 });
-    setIsFeedbackModalOpen(false);
-  }, [currentFeedbackAction, submitDetailedFeedback, t]);
-
-
   const handleFixPagination = useCallback(async (overflowPages?: number[]) => {
     if (!slug || isSubmitting) return;
 
@@ -516,7 +380,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         : 'Content overflows page boundaries.';
 
       const data = {
-        user_input: t('activity_chat.prompts.pagination', { info: pageInfo }),
+        user_input: "Pagination",
         language: formData.language,
       };
 
@@ -537,7 +401,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       }
     } catch (error) {
       console.error("Error fixing pagination:", error);
-      setError(t('activity_chat.errors.pagination_fix_failed'));
+      setError("Pagination fix failed");
       setIsThinking(false);
     } finally {
 
@@ -570,7 +434,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       e.preventDefault();
 
       if (!formData.resumeDescription.trim()) {
-        setError(t('activity_chat.messages.provide_description'));
+        setError("Provide description");
         return;
       }
 
@@ -588,7 +452,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       setStreamingHtml("");
 
       let userInputMessage = formData.resumeDescription;
-      userInputMessage += t('activity_chat.prompts.language_suffix', { language: formData.language });
+      userInputMessage += "Write the CV in " + formData.language + ".";
 
       // Append page count instruction for new documents
       if (!slug && formData.pageCount) {
@@ -596,7 +460,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       }
 
       if (includePhoto && currentAvatar) {
-        userInputMessage += t('activity_chat.prompts.include_photo', { url: currentAvatar });
+        userInputMessage += "Include the profile photo.";
       }
 
       const data: any = {
@@ -716,15 +580,15 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
           if (responseError && Array.isArray(responseError.detail)) {
             const errorDetail = responseError.detail[0];
             if (errorDetail.type === "string_too_long") {
-              setError(t('errors.input_too_long'));
+              setError("Your request is too long. Please shorten it and try again.");
             } else {
-              setError(t('errors.assistantError'));
+              setError("The assistant could not complete that request. Please try again.");
             }
           } else {
-            setError(t('errors.submissionError'));
+            setError("We could not submit your request. Please try again.");
           }
         } else {
-          setError(t('errors.submissionError'));
+          setError("We could not submit your request. Please try again.");
         }
         setIsThinking(false);
       };
@@ -873,7 +737,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       router,
       slug,
       userProfile,
-      t,
       fetchVersions,
       streamSubmitData,
       isSubmitting,
@@ -904,40 +767,21 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       <div className="flex items-center justify-center h-screen bg-white dark:bg-gray-900">
         <div className="flex flex-col items-center gap-4">
           <OpenCvbabaLogo className="w-12 h-12 text-black dark:text-white animate-bounce" />
-          <div className="text-black dark:text-gray-100 text-sm">{t('activity_chat.messages.loading')}</div>
+          <div className="text-black dark:text-gray-100 text-sm">{"Loading"}</div>
         </div>
       </div>
     );
   }
 
   const usergreeting =
-    t(getTimeBasedGreeting()) + " " + (userProfile?.full_name?.split(" ")[0] || t('activity_chat.user'));
+    getTimeBasedGreeting() + " " + (userProfile?.full_name?.split(" ")[0] || "User");
 
   // Handler functions for page interactions
-
-  const handleCreateOptionSelect = (option: string) => {
-    const newParams = new URLSearchParams(searchParams.toString());
-    newParams.set('type', option);
-    newParams.set('mode', 'prompt');
-
-    setFormData(prev => ({ ...prev, resumeDescription: "" }));
-    router.push(`/activity?${newParams.toString()}`);
-  };
 
   const handleTemplateSelection = (templateId: string) => {
     setFormData(prev => ({ ...prev, selectedTemplateId: templateId }));
 
-    // Infer document type from template
-    const selectedTemplate = templates.find(t => t.id === templateId);
-    let newDocType: string | null = null;
-
-    if (selectedTemplate) {
-      if (selectedTemplate.type === 'CV') {
-        newDocType = 'cv';
-      } else if (selectedTemplate.type === 'Letter') {
-        newDocType = 'letter';
-      }
-    }
+    const newDocType = 'cv';
 
     const newParams = new URLSearchParams(searchParams.toString());
     if (newDocType) newParams.set('type', newDocType);
@@ -950,76 +794,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
 
 
-  const handleUploadComplete = (data: {
-    extractedText: string;
-    documentType: string;
-    templateId: string;
-    language: string;
-  }) => {
-    // Generate a clear prompt based on document type
-    const documentTypePrompts: Record<string, string> = {
-      'cv': t('activity_chat.prompts.upload.cv'),
-      'cover-letter': t('activity_chat.prompts.upload.cover_letter'),
-      'sop': t('activity_chat.prompts.upload.sop'),
-      'personal-statement': t('activity_chat.prompts.upload.personal_statement'),
-      'recommendation': t('activity_chat.prompts.upload.recommendation'),
-      'proposal': t('activity_chat.prompts.upload.proposal'),
-    };
-
-    const prompt = documentTypePrompts[data.documentType] || t('activity_chat.prompts.upload.default');
-    const fullPrompt = prompt + data.extractedText;
-
-    setFormData(prev => ({
-      ...prev,
-      resumeDescription: fullPrompt,
-      selectedTemplateId: data.templateId,
-      language: data.language,
-    }));
-    setSelectedDocumentType(data.documentType);
-    router.push('/activity?mode=prompt');
-    setShouldAutoSubmit(true);
-  };
-
-
-
-
-  const handleTranslateComplete = (data: {
-    extractedText: string;
-    documentType: string;
-    templateId: string;
-    language: string;
-  }) => {
-    // Generate a clear prompt for translation
-    const prompt = t('activity_chat.prompts.translate', { type: data.documentType, language: data.language });
-
-    const fullPrompt = prompt + data.extractedText;
-
-    setFormData(prev => ({
-      ...prev,
-      resumeDescription: fullPrompt,
-      selectedTemplateId: data.templateId,
-      language: data.language,
-    }));
-    setSelectedDocumentType(data.documentType);
-    router.push('/activity?mode=prompt');
-    setShouldAutoSubmit(true);
-  };
-
-  // Render full-page views for each option
-  if (!slug && selectedOption === 'create') {
-    return (
-      <CreatePage
-        onComplete={({ documentType, templateId, language }) => {
-          setFormData((prev) => ({ ...prev, selectedTemplateId: templateId, language, resumeDescription: '' }));
-          setSelectedDocumentType(documentType);
-          router.push('/activity?mode=prompt&type=' + documentType);
-        }}
-        initialDocumentType={selectedDocumentType === 'cover-letter' ? 'cover-letter' : 'cv'}
-        onBack={() => router.push('/activity')}
-      />
-    );
-  }
-
+  // Render the CV creation flow for each option
   return (
     <div className="h-screen bg-gray-50/50 dark:bg-black transition-colors duration-300">
       <div className="container mx-auto h-full flex flex-col p-4 gap-4">
@@ -1046,7 +821,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                 {(isThinking && !streamingHtml) ? (
                   <div className="flex flex-col items-center space-y-4">
                     <OpenCvbabaLogo className="w-16 h-16 text-black dark:text-white animate-pulse" />
-                    <p className="text-lg font-medium text-gray-700 dark:text-gray-300">{t('activity_chat.isThinking')}</p>
+                    <p className="text-lg font-medium text-gray-700 dark:text-gray-300">{"Isthinking"}</p>
                   </div>
                 ) : (
                   <PdfPreview
@@ -1100,10 +875,10 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
                       <div className="space-y-2 max-w-sm mx-auto">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                          {t('activity_chat.messages.creating_doc')}
+                          Creating your CV
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {t('activity_chat.messages.preview_wait')}
+                          Preparing your CV preview
                         </p>
                       </div>
                     </div>
@@ -1119,8 +894,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                       userProfile={userProfile}
                       setUserProfile={setUserProfile}
                       hasExistingChat={!!slug || !!chat}
-                      selectedDocumentType={selectedDocumentType}
-                      setSelectedDocumentType={setSelectedDocumentType}
                       // Attachment props (multiple files and URLs)
                       attachedFiles={attachedFiles}
                       setAttachedFiles={setAttachedFiles}
@@ -1151,12 +924,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       {/* Revert action moved to overflow menu in PdfPreview component for cleaner UX */}
 
 
-      {/* Feedback Follow-up Modal */}
-      <FeedbackFollowUpModal
-        isOpen={isFeedbackModalOpen}
-        onClose={() => setIsFeedbackModalOpen(false)}
-        onSubmit={handleFeedbackSubmit}
-      />
     </div>
   );
 };

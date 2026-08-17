@@ -4,7 +4,6 @@ import { Button } from '../ui/Button';
 import { ScrollArea } from '../ui/ScrollArea';
 import { Template } from './data/templates';
 import { Badge } from '../ui/Badge';
-import { useTranslation } from '@/app/i18n/i18n';
 import { Card, CardContent } from '../ui/Card';
 import {
   Dialog,
@@ -52,7 +51,6 @@ const TemplateSelector = ({
   selectedTemplateId,
   onSelectTemplate,
 }: TemplateSelectorProps) => {
-  const { t } = useTranslation('activity');
   const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
   const [hoveredTemplateId, setHoveredTemplateId] = useState<string | null>(null);
   const [isPreviewHovered, setIsPreviewHovered] = useState(false);
@@ -145,7 +143,7 @@ const TemplateSelector = ({
               onClick={(e) => !isLocked && handleTemplateClick(template, e)}
               onKeyDown={(e) => !isLocked && e.key === 'Enter' && handleTemplateClick(template, e as any)}
               tabIndex={isLocked ? -1 : 0}
-              aria-label={t('templateSelector.selectTemplate', { name: template.name })}
+              aria-label={"Selecttemplate"}
             >
               <div className="absolute inset-0 bg-[url('/images/paper-texture.png')] opacity-5" />
 
@@ -154,14 +152,14 @@ const TemplateSelector = ({
                   {!isSelected && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none z-10 backdrop-blur-sm">
                       <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-lg border border-gray-200 dark:border-gray-700">
-                        {t('templateSelector.useThisTemplate')}
+                        {"Usethistemplate"}
                       </div>
                     </div>
                   )}
                   {isSelected && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none z-10 backdrop-blur-sm">
                       <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-lg border border-gray-200 dark:border-gray-700">
-                        {t('templateSelector.clickToUnselect', { defaultValue: 'Click to unselect' })}
+                        {"Click to unselect"}
                       </div>
                     </div>
                   )}
@@ -171,7 +169,7 @@ const TemplateSelector = ({
               {isHovered && isLocked && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none z-10">
                   <div className="bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-md">
-                    {t('templateSelector.upgradeToUse')}
+                    {"Upgradetouse"}
                   </div>
                 </div>
               )}
@@ -192,7 +190,7 @@ const TemplateSelector = ({
               ) : (
                 <img
                   src={template.imageUrl}
-                  alt={t('templateSelector.templateAlt', { name: template.name })}
+                  alt={"Templatealt"}
                   className="object-contain w-full h-full p-1 sm:p-2"
                   loading="lazy"
                   onError={(e) => {
@@ -205,12 +203,12 @@ const TemplateSelector = ({
 
               {false ? (
                 <Badge className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs">
-                  {t('templateSelector.pro')}
+                  {"PRO"}
                 </Badge>
               ) : (
                 !true && (
                   <Badge className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-green-500 text-white text-xs">
-                    {t('templateSelector.free', { defaultValue: 'Free' })}
+                    {"Free"}
                   </Badge>
                 )
               )}
@@ -232,7 +230,7 @@ const TemplateSelector = ({
                 </span>
                 {isSelected && (
                   <Badge className="bg-blue-600 dark:bg-blue-500 text-white text-xs font-medium shadow-sm border-0">
-                    {t('templateSelector.selected', { defaultValue: 'Selected' })}
+                    {"Selected"}
                   </Badge>
                 )}
               </div>
@@ -250,7 +248,7 @@ const TemplateSelector = ({
           <div
             className="flex space-x-2 sm:space-x-4 p-1 sm:p-2 pb-4 scroll-smooth"
             role="list"
-            aria-label={t('templateSelector.availableTemplates')}
+            aria-label={"Availabletemplates"}
           >
             {templates.map((template) => (
               <div key={template.id} role="listitem" className="flex-shrink-0">
@@ -269,7 +267,7 @@ const TemplateSelector = ({
                 <span>{previewTemplate?.name}</span>
                 {false && (
                   <Badge className="ml-2 bg-blue-600 dark:bg-blue-500 text-white border-0">
-                    {t('templateSelector.pro')}
+                    {"PRO"}
                   </Badge>
                 )}
               </div>
@@ -309,8 +307,8 @@ const TemplateSelector = ({
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none z-10">
                   <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-md border border-gray-200 dark:border-gray-700">
                     {previewTemplate.id === selectedTemplateId
-                      ? t('templateSelector.alreadySelected')
-                      : t('templateSelector.useThisTemplate')}
+                      ? "Alreadyselected"
+                      : "Usethistemplate"}
                   </div>
                 </div>
               )}
@@ -330,7 +328,7 @@ const TemplateSelector = ({
                   ) : (
                     <img
                       src={previewTemplate.imageUrl}
-                      alt={t('templateSelector.templateAlt', { name: previewTemplate.name })}
+                      alt={"Templatealt"}
                       className="object-contain w-full h-full rounded-md"
                       onError={(e) => {
                         e.currentTarget.src = '/images/open-cvbaba-logo.png';
@@ -349,7 +347,7 @@ const TemplateSelector = ({
                 className="flex-1"
               >
                 <ChevronLeft className="mr-2 h-4 w-4" />
-                {t('templateSelector.previous')}
+                {"Previous"}
               </Button>
 
               <Button
@@ -358,7 +356,7 @@ const TemplateSelector = ({
                 onClick={() => navigateTemplates('next')}
                 className="flex-1"
               >
-                {t('templateSelector.next')}
+                {"Next"}
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>

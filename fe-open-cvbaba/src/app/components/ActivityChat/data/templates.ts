@@ -2,7 +2,7 @@ export interface Template {
   id: string;
   name: string;
   imageUrl: string;
-  type: 'CV' | 'Letter';
+  type: 'CV';
   hasComponent?: boolean; // New property to indicate if template has React component
   description?: string; // Description of the template
   category?: string; // Category like "Professional", "Academic", "Modern"
@@ -31,16 +31,6 @@ export const templates: Template[] = [
     characteristics: ['Traditional format', 'Academic-oriented', 'Timeless design', 'Professional'],
   },
   {
-    id: 'fl_harvard_01',
-    name: 'FL_Harvard 1',
-    imageUrl: '/templates/fl_harvard_01.png',
-    type: 'Letter',
-    hasComponent: true,
-    description: 'Professional cover letter template following Harvard business standards.',
-    category: 'Academic',
-    characteristics: ['Formal style', 'Business-ready', 'Clear structure'],
-  },
-  {
     id: 'harvard_02',
     name: 'CV_Harvard 2',
     imageUrl: '/templates/harvard_02.png',
@@ -51,28 +41,10 @@ export const templates: Template[] = [
     characteristics: ['Classic design', 'Versatile', 'Professional appearance'],
   },
   {
-    id: 'fl_harvard_02',
-    name: 'FL_Harvard 2',
-    imageUrl: '/templates/fl_harvard_02.png',
-    type: 'Letter',
-    hasComponent: true,
-    description: 'Elegant cover letter template with professional formatting.',
-    category: 'Academic',
-    characteristics: ['Professional tone', 'Well-structured', 'Business-appropriate'],
-  },
-  {
     id: 'harvard_03',
     name: 'CV_Harvard 3',
     imageUrl: '/templates/harvard_03.png',
     type: 'CV',
-    hasComponent: true,
-    category: 'Academic',
-  },
-  {
-    id: 'fl_harvard_03',
-    name: 'FL_Harvard 3',
-    imageUrl: '/templates/fl_harvard_03.png',
-    type: 'Letter',
     hasComponent: true,
     category: 'Academic',
   },
@@ -85,34 +57,10 @@ export const templates: Template[] = [
     category: 'Academic',
   },
   {
-    id: 'fl_harvard_04',
-    name: 'FL_Harvard 4',
-    imageUrl: '/templates/fl_harvard_04.png',
-    type: 'Letter',
-    hasComponent: true,
-    category: 'Academic',
-  },
-  {
-    id: 'fl_harvard_05',
-    name: 'FL_HARVARD 5',
-    imageUrl: '/templates/fl_harvard_05.png',
-    type: 'Letter',
-    hasComponent: true,
-    category: 'Academic',
-  },
-  {
     id: 'academic_01',
     name: 'CV_Academic 1',
     imageUrl: '/templates/academic_01.png',
     type: 'CV',
-    hasComponent: true,
-    category: 'Academic',
-  },
-  {
-    id: 'fl_academic_01',
-    name: 'FL_ACADEMIC 1',
-    imageUrl: '/templates/fl_academic_01.png',
-    type: 'Letter',
     hasComponent: true,
     category: 'Academic',
   },
@@ -125,26 +73,10 @@ export const templates: Template[] = [
     category: 'Academic',
   },
   {
-    id: 'fl_academic_02',
-    name: 'FL_ACADEMIC 2',
-    imageUrl: '/templates/fl_academic_02.png',
-    type: 'Letter',
-    hasComponent: true,
-    category: 'Academic',
-  },
-  {
     id: 'academic_03',
     name: 'CV_Academic 3',
     imageUrl: '/templates/academic_03.png',
     type: 'CV',
-    hasComponent: true,
-    category: 'Academic',
-  },
-  {
-    id: 'fl_academic_03',
-    name: 'FL_ACADEMIC 3',
-    imageUrl: '/templates/fl_academic_03.png',
-    type: 'Letter',
     hasComponent: true,
     category: 'Academic',
   },

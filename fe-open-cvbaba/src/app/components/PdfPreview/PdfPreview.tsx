@@ -33,7 +33,6 @@ import {
   Languages,
 } from "lucide-react";
 import { Badge } from "../ui/Badge";
-import { useTranslation } from "@/app/i18n/i18n";
 import {
   Tooltip,
   TooltipContent,
@@ -131,7 +130,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   onSelectedPageChange,
   onPageCountChange,
 }) => {
-  const { t } = useTranslation("home");
   const [scale, setScale] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -304,14 +302,12 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
         },
         triggerDeletePage: async (pageIndex: number) => {
           const pageNum = pageIndex + 1;
-          if (!window.confirm(t('pdfPreview.confirmDeletePage', {
-            defaultValue: `Delete page ${pageNum}?`
-          }))) {
+          if (!window.confirm("Confirmdeletepage")) {
             return;
           }
 
           const toastId = toast.loading(
-            t('pdfPreview.deletingPage', { defaultValue: 'Deleting page...' }),
+            "Deleting page...",
             { position: 'bottom-center' }
           );
 
@@ -350,7 +346,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
               if (onRefreshVersions) await onRefreshVersions();
 
               toast.update(toastId, {
-                render: t('pdfPreview.pageDeleted', { defaultValue: 'Page deleted' }),
+                render: "Page deleted",
                 type: 'info',
                 isLoading: false,
                 autoClose: 2000,
@@ -359,7 +355,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           } catch (error) {
             console.error('Error deleting page:', error);
             toast.update(toastId, {
-              render: t('pdfPreview.deletePageError', { defaultValue: "Couldn't delete page" }),
+              render: "Couldn't delete page",
               type: 'error',
               isLoading: false,
               autoClose: 4000,
@@ -399,7 +395,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
         },
       };
     }
-  }, [previewRef, selectedPageIndex, pageCount, chatSlug, t, onSave, onRefreshVersions]);
+  }, [previewRef, selectedPageIndex, pageCount, chatSlug, onSave, onRefreshVersions]);
 
   // Commit edits to state/backend
   const commitEdits = useCallback(async (silent: boolean = false) => {
@@ -465,12 +461,12 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
       const newComment = await response.json();
       setComments(prev => [...prev, newComment]);
-      toast.info(t('pdfPreview.comments.addSuccess', { defaultValue: 'Comment added' }), {
+      toast.info("Comment added", {
         autoClose: 2000,
       });
     } catch (error) {
       console.error('Error adding comment:', error);
-      toast.error(t('pdfPreview.comments.addError', { defaultValue: 'Couldn\'t add comment' }), {
+      toast.error("Couldn\'t complete the operation.", {
         autoClose: 4000,
       });
       throw error;
@@ -502,12 +498,12 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           comment.id === commentId ? updatedComment : comment
         )
       );
-      toast.info(t('pdfPreview.comments.editSuccess', { defaultValue: 'Comment updated' }), {
+      toast.info("Comment updated", {
         autoClose: 2000,
       });
     } catch (error) {
       console.error('Error editing comment:', error);
-      toast.error(t('pdfPreview.comments.editError', { defaultValue: 'Couldn\'t update comment' }), {
+      toast.error("Couldn\'t complete the operation.", {
         autoClose: 4000,
       });
       throw error;
@@ -532,12 +528,12 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       }
 
       setComments(prev => prev.filter(comment => comment.id !== commentId));
-      toast.info(t('pdfPreview.comments.deleteSuccess', { defaultValue: 'Comment removed' }), {
+      toast.info("Comment removed", {
         autoClose: 2000,
       });
     } catch (error) {
       console.error('Error deleting comment:', error);
-      toast.error(t('pdfPreview.comments.deleteError', { defaultValue: 'Couldn\'t remove comment' }), {
+      toast.error("Couldn\'t complete the operation.", {
         autoClose: 4000,
       });
       throw error;
@@ -550,7 +546,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
     setIsSwappingPages(true);
     const toastId = toast.loading(
-      t('pdfPreview.swappingPages', { defaultValue: 'Moving pages...' }),
+      "Moving pages...",
       { position: 'bottom-center' }
     );
 
@@ -561,7 +557,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
     if (!pageAElement || !pageBElement) {
       toast.update(toastId, {
-        render: t('pdfPreview.swapError', { defaultValue: 'Couldn\'t swap pages' }),
+        render: "Couldn\'t complete the operation.",
         type: 'error',
         isLoading: false,
         autoClose: 4000,
@@ -598,7 +594,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       }
 
       toast.update(toastId, {
-        render: t('pdfPreview.swapSuccess', { defaultValue: 'Pages reordered' }),
+        render: "Pages reordered",
         type: 'info',
         isLoading: false,
         autoClose: 2000,
@@ -613,7 +609,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     } catch (error) {
       console.error('Error swapping pages:', error);
       toast.update(toastId, {
-        render: t('pdfPreview.swapError', { defaultValue: 'Couldn\'t swap pages' }),
+        render: "Couldn\'t complete the operation.",
         type: 'error',
         isLoading: false,
         autoClose: 4000,
@@ -623,7 +619,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       setDraggedPageIndex(null);
       setDragOverPageIndex(null);
     }
-  }, [chatSlug, t, selectedPageIndex]);
+  }, [chatSlug, selectedPageIndex]);
 
   // Handle document translation
   const handleTranslate = useCallback(async (language: string) => {
@@ -632,7 +628,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     setIsTranslating(true);
     setIsTranslateModalOpen(false);
     const toastId = toast.loading(
-      t('pdfPreview.translating', { defaultValue: 'Translating document...' }),
+      "Translating document...",
       { position: 'bottom-center' }
     );
 
@@ -665,7 +661,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       }
 
       toast.update(toastId, {
-        render: t('pdfPreview.translateSuccess', { defaultValue: 'Document translated' }),
+        render: "Document translated",
         type: 'info',
         isLoading: false,
         autoClose: 2000,
@@ -678,7 +674,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     } catch (error) {
       console.error('Error translating document:', error);
       toast.update(toastId, {
-        render: t('pdfPreview.translateError', { defaultValue: 'Couldn\'t translate document' }),
+        render: "Couldn\'t complete the operation.",
         type: 'error',
         isLoading: false,
         autoClose: 4000,
@@ -687,7 +683,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       setIsTranslating(false);
       setTargetLanguage('');
     }
-  }, [chatSlug, t, onRefreshVersions]);
+  }, [chatSlug, onRefreshVersions]);
 
   const fetchComments = useCallback(async () => {
     if (!chatSlug) return;
@@ -1322,7 +1318,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
     setIsDeletingPage(true);
     const toastId = toast.loading(
-      t('pdfPreview.deletingPage', { defaultValue: 'Deleting page...' }),
+      "Deleting page...",
       { position: 'bottom-center' }
     );
 
@@ -1360,7 +1356,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
         if (onRefreshVersions) await onRefreshVersions();
 
         toast.update(toastId, {
-          render: t('pdfPreview.pageDeleted', { defaultValue: 'Page deleted' }),
+          render: "Page deleted",
           type: 'info',
           isLoading: false,
           autoClose: 2000,
@@ -1369,7 +1365,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     } catch (error) {
       console.error('Error deleting page:', error);
       toast.update(toastId, {
-        render: t('pdfPreview.deletePageError', { defaultValue: 'Couldn\'t delete page' }),
+        render: "Couldn\'t complete the operation.",
         type: 'error',
         isLoading: false,
         autoClose: 4000,
@@ -1394,7 +1390,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     setAddPageAfterIndex(null);
 
     const toastId = 'generating-page';
-    toast.info(t('pdfPreview.generatingPage', { defaultValue: 'Adding new page...' }), {
+    toast.info("Adding new page...", {
       autoClose: false,
       toastId
     });
@@ -1445,7 +1441,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           },
           onComplete: () => {
             toast.dismiss(toastId);
-            toast.info(t('pdfPreview.pageAddedSuccess', { defaultValue: 'Page added' }));
+            toast.info("Page added");
 
             if (streamWrapper && streamWrapper.parentNode) {
               while (streamWrapper.firstChild) {
@@ -1478,7 +1474,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           },
           onError: (error) => {
             console.error("Failed to add page:", error);
-            toast.error(error || t('pdfPreview.pageAddError', { defaultValue: 'Couldn\'t add page' }));
+            toast.error(error || "Couldn\'t complete the operation.");
             setIsAddingPage(false);
             toast.dismiss(toastId);
             if (streamWrapper && streamWrapper.parentNode) {
@@ -1493,7 +1489,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       );
     } catch (error) {
       console.error("Failed to add page:", error);
-      toast.error(t('pdfPreview.pageAddError', { defaultValue: 'Couldn\'t add page' }));
+      toast.error("Couldn\'t complete the operation.");
       setIsAddingPage(false);
       toast.dismiss(toastId);
     }
@@ -1534,7 +1530,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
     } catch (error) {
       console.error("Download failed", error);
-      toast.error(t('errors.downloadFailed', { defaultValue: 'Download failed' }));
+      toast.error("Download failed");
     } finally {
       setIsDownloading(false);
       setIsDownloadModalOpen(false);
@@ -1744,7 +1740,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Word export error:', error);
-      toast.error(t('pdfPreview.exportError', { defaultValue: 'Couldn\'t export document' }));
+      toast.error("Couldn\'t complete the operation.");
     } finally {
       setIsGenerating(false);
     }
@@ -1764,7 +1760,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       {isStreaming ? (
         <div className="flex items-center justify-center px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm z-10 transition-colors">
           <p className="text-sm text-gray-700 dark:text-gray-300">
-            {t('pdfPreview.streamingMessage', { defaultValue: '✨ Your document is being created. Download buttons will appear when ready.' })}
+            {"✨ Your document is being created. Download buttons will appear when ready."}
           </p>
         </div>
       ) : (
@@ -1815,12 +1811,12 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
               {isSaving ? (
                 <div className="flex items-center text-xs text-blue-600 dark:text-blue-400 font-medium">
                   <Loader2 className="w-3 h-3 mr-1.5 animate-spin" />
-                  {t('common.saving', { defaultValue: 'Saving...' })}
+                  {"Saving..."}
                 </div>
               ) : lastSaved ? (
                 <div className="flex items-center text-xs text-gray-400 dark:text-gray-500 animate-in fade-in duration-500">
                   <CheckCircle className="w-3 h-3 mr-1.5" />
-                  {t('common.saved', { defaultValue: 'Saved' })}
+                  {"Saved"}
                 </div>
               ) : null}
             </div>
@@ -1836,14 +1832,14 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                   className="h-8 text-xs font-medium text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
                   <RefreshCw className={`h-3.5 w-3.5 mr-2 ${isLoadingVersions ? 'animate-spin' : ''}`} />
-                  {versions.length > 0 ? t('pdfPreview.versionNumbered', { number: versions.find(v => v.id === currentVersionId)?.version_number || 'Current', defaultValue: `Version ${versions.find(v => v.id === currentVersionId)?.version_number || 'Current'}` }) : t('pdfPreview.currentVersion', { defaultValue: 'Current Version' })}
+                  {versions.length > 0 ? "Versionnumbered" : "Current Version"}
                   <ChevronDown className="h-3 w-3 ml-2 opacity-50" />
                 </Button>
 
                 {versions.length > 0 && (
                   <div className="absolute top-full left-0 mt-1 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 py-1 hidden group-hover:block z-50 animate-in fade-in duration-200">
                     <div className="px-3 py-2 border-b border-gray-50 dark:border-gray-700">
-                      <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">{t('pdfPreview.versionHistory', { defaultValue: 'Version History' })}</span>
+                      <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">{"Version History"}</span>
                     </div>
                     <div className="max-h-64 overflow-y-auto">
                       {versions.map((version) => (
@@ -1896,7 +1892,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
                     >
                       <RefreshCw className="h-4 w-4 mr-3 text-gray-400" />
-                      <span>{t('pdfPreview.versionHistory', { defaultValue: 'History' })}</span>
+                      <span>{"History"}</span>
                     </button>
                   )}
 
@@ -1906,7 +1902,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
                   >
                     <Languages className="h-4 w-4 mr-3 text-gray-400" />
-                    <span>{t('pdfPreview.translate', { defaultValue: 'Translate' })}</span>
+                    <span>{"Translate"}</span>
                   </button>
 
                   <div className="my-1 border-t border-gray-100 dark:border-gray-700" />
@@ -1919,14 +1915,14 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                         className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
                       >
                         <FileText className="h-4 w-4 mr-3 text-red-500" />
-                        <span>{t('pdfPreview.exportPDF', { defaultValue: 'Export PDF' })}</span>
+                        <span>{"Export PDF"}</span>
                       </button>
                       <button
                         onClick={() => handleWordDownload()}
                         className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
                       >
                         <FileDown className="h-4 w-4 mr-3 text-blue-500" />
-                        <span>{t('pdfPreview.exportWord', { defaultValue: 'Export Word' })}</span>
+                        <span>{"Export Word"}</span>
                       </button>
                     </>
                   )}
@@ -1955,7 +1951,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       {isTranslating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4" />}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>{t('pdfPreview.translate', { defaultValue: 'Translate' })}</TooltipContent>
+                  <TooltipContent>{"Translate"}</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 
@@ -1978,7 +1974,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       <MessageSquare className="h-4 w-4" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>{t('pdfPreview.comments.button', { defaultValue: 'Comments' })}</TooltipContent>
+                  <TooltipContent>{"Comments"}</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 
@@ -1999,7 +1995,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       ) : (
                         <Download className="h-3.5 w-3.5 mr-2" />
                       )}
-                      {t('pdfPreview.export', { defaultValue: 'Export' })}
+                      {"Export"}
                       <ChevronDown className="h-3 w-3 ml-2 opacity-70" />
                     </Button>
 
@@ -2079,8 +2075,8 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                 <MessageSquare className="w-4 h-4 text-purple-600" />
                 <span className="text-sm font-medium">
                   {comments.filter(c => c.page_number === selectedPageIndex + 1).length > 0
-                    ? t('pdfPreview.comments.viewCount', { count: comments.filter(c => c.page_number === selectedPageIndex + 1).length, defaultValue: `${comments.filter(c => c.page_number === selectedPageIndex + 1).length} Comments` })
-                    : t('pdfPreview.comments.add', { defaultValue: 'Add Comment' })}
+                    ? "Viewcount"
+                    : "Add Comment"}
                 </span>
               </button>
             </div>
@@ -2129,7 +2125,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                 <iframe
                   src={pdfUrl}
                   className="w-full h-full border-none"
-                  title={t("pdfPreview.pdfPreviewTitle")}
+                  title={"Pdfpreviewtitle"}
                   onLoad={handleIframeLoad}
                 />
               </div>
@@ -2150,7 +2146,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
             <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm z-50 transition-all">
               <div className="flex flex-col items-center space-y-3">
                 <Loader2 className="h-8 w-8 animate-spin text-gray-900 dark:text-gray-100" />
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{t('pdfPreview.rendering', { defaultValue: 'Rendering preview...' })}</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{"Rendering preview..."}</p>
               </div>
             </div>
           )}
@@ -2287,11 +2283,11 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       <Modal
         isOpen={isTranslateModalOpen}
         onClose={() => setIsTranslateModalOpen(false)}
-        title={t('pdfPreview.translateTitle', { defaultValue: 'Translate Document' })}
+        title={"Translate Document"}
       >
         <div className="p-4 space-y-4">
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            {t('pdfPreview.translateDesc', { defaultValue: 'Select a language to translate your document.' })}
+            {"Select a language to translate your document."}
           </p>
           <div className="grid grid-cols-2 gap-2">
             {[
@@ -2316,7 +2312,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           </div>
           <div className="flex justify-end pt-2 border-t border-gray-100 dark:border-gray-800">
             <Button variant="outline" onClick={() => setIsTranslateModalOpen(false)}>
-              {t('common.cancel', { defaultValue: 'Cancel' })}
+              {"Cancel"}
             </Button>
           </div>
         </div>
@@ -2334,7 +2330,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
             <div className="absolute inset-x-0 top-0 bottom-24 bg-white dark:bg-gray-900 z-50 flex flex-col animate-in slide-in-from-bottom-5 duration-200 shadow-xl rounded-b-xl">
               <div className="flex items-center justify-between p-3 border-b border-gray-100 dark:border-gray-800">
                 <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                  {t('pdfPreview.page', { defaultValue: 'Page' })} {pageNum}
+                  {"Page"} {pageNum}
                 </span>
                 <Button
                   variant="ghost"
@@ -2361,7 +2357,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       <FilePlus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                      {t('pdfPreview.insert', { defaultValue: 'Insert' })}
+                      {"Insert"}
                     </span>
                   </button>
 
@@ -2378,7 +2374,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       <Edit className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                     </div>
                     <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                      {t('pdfPreview.edit', { defaultValue: 'Edit' })}
+                      {"Edit"}
                     </span>
                   </button>
 
@@ -2400,7 +2396,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       )}
                     </div>
                     <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                      {t('pdfPreview.comments.button', { defaultValue: 'Comments' })}
+                      {"Comments"}
                     </span>
                   </button>
 
@@ -2418,7 +2414,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       <Download className="w-5 h-5 text-green-600 dark:text-green-400" />
                     </div>
                     <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                      {t('pdfPreview.export', { defaultValue: 'Export' })}
+                      {"Export"}
                     </span>
                   </button>
 
@@ -2436,7 +2432,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                         <Trash2 className="w-5 h-5 text-red-600 dark:text-red-400" />
                       </div>
                       <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                        {t('pdfPreview.delete', { defaultValue: 'Delete' })}
+                        {"Delete"}
                       </span>
                     </button>
                   )}
@@ -2462,7 +2458,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
             <div className="absolute inset-x-0 top-0 bottom-24 bg-white dark:bg-gray-900 z-50 flex flex-col animate-in slide-in-from-bottom-5 duration-200 shadow-xl rounded-b-xl">
               <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  {t('pdfPreview.editPageTitle', { defaultValue: `Edit Page ${editPageNum}` })}
+                  {"Editpagetitle"}
                 </h3>
                 <Button
                   variant="ghost"
@@ -2481,11 +2477,11 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {t('pdfPreview.editInstructions', { defaultValue: 'Edit Instructions' })}
+                    {"Edit Instructions"}
                   </label>
                   <textarea
                     className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 resize-none"
-                    placeholder={t('pdfPreview.editPlaceholder', { defaultValue: 'Describe what changes to make to this page...' })}
+                    placeholder={"Describe what changes to make to this page..."}
                     value={editPagePrompt}
                     onChange={(e) => setEditPagePrompt(e.target.value)}
                   />
@@ -2494,7 +2490,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                 {/* File Attachment Section */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {t('pdfPreview.editFileContext', { defaultValue: 'Attach File (Optional)' })}
+                    {"Attach File (Optional)"}
                   </label>
                   <input
                     type="file"
@@ -2512,7 +2508,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       className="text-xs"
                     >
                       <Plus className="h-3.5 w-3.5 mr-1.5" />
-                      {t('pdfPreview.chooseFile', { defaultValue: 'Choose File' })}
+                      {"Choose File"}
                     </Button>
                     {editPageFile && (
                       <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg text-xs">
@@ -2532,7 +2528,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                     )}
                   </div>
                   <p className="text-[10px] text-gray-500 dark:text-gray-400">
-                    {t('pdfPreview.editFileHint', { defaultValue: 'Use an image or document as context for the edit.' })}
+                    {"Use an image or document as context for the edit."}
                   </p>
                 </div>
               </div>
@@ -2548,7 +2544,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                   }}
                   disabled={isEditingPage}
                 >
-                  {t('common.cancel', { defaultValue: 'Cancel' })}
+                  {"Cancel"}
                 </Button>
                 <Button
                   onClick={async () => {
@@ -2558,7 +2554,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                     setIsEditPageModalOpen(false);
 
                     const toastId = 'editing-page';
-                    toast.info(t('pdfPreview.editingPage', { defaultValue: 'Updating page...' }), {
+                    toast.info("Updating page...", {
                       autoClose: false,
                       toastId
                     });
@@ -2622,7 +2618,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                           },
                           onError: (error: string) => {
                             console.error('Edit page error:', error);
-                            toast.error(t('pdfPreview.editPageError', { defaultValue: 'Couldn\'t update page' }));
+                            toast.error("Couldn\'t complete the operation.");
                             toast.dismiss(toastId);
                             setEditPageFile(null);
                             setIsEditingPage(false);
@@ -2635,7 +2631,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                       );
                     } catch (error: any) {
                       console.error('Edit page error:', error);
-                      toast.error(error.message || t('pdfPreview.editPageError', { defaultValue: 'Couldn\'t update page' }));
+                      toast.error(error.message || "Couldn\'t complete the operation.");
                       toast.dismiss(toastId);
                       setIsEditingPage(false);
                     }
@@ -2646,10 +2642,10 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                   {isEditingPage ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {t('pdfPreview.editing', { defaultValue: 'Editing...' })}
+                      {"Editing..."}
                     </>
                   ) : (
-                    t('pdfPreview.applyEdit', { defaultValue: 'Apply Edit' })
+                    "Apply Edit"
                   )}
                 </Button>
               </div>

@@ -1,7 +1,6 @@
 // components/ModalFooter.tsx
 import React from 'react';
 import { ArrowRight, Check } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { Button } from '../ui/Button';
 
 interface ModalFooterProps {
@@ -19,7 +18,6 @@ const ModalFooter: React.FC<ModalFooterProps> = ({
   goToNextStep,
   handleSubmit,
 }) => {
-  const { t } = useTranslation('activity');
 
   return (
     <div className={`
@@ -36,7 +34,7 @@ const ModalFooter: React.FC<ModalFooterProps> = ({
           className="hover:bg-gray-100 shadow-sm text-sm sm:text-sm min-w-[80px] sm:min-w-[100px] h-12 sm:h-10"
           size="sm"
         >
-          {t('resumeForm.back')}
+          {"Back"}
         </Button>
       )}
       <Button 
@@ -58,12 +56,12 @@ const ModalFooter: React.FC<ModalFooterProps> = ({
       >
         {currentStep === 3 ? (
           <span className="flex items-center justify-center">
-            <span className="truncate">{t('resumeForm.createDocument')}</span>
+            <span className="truncate">{"Createdocument"}</span>
             <Check className="ml-2 h-4 w-4 sm:h-4 sm:w-4 flex-shrink-0" />
           </span>
         ) : (
           <span className="flex items-center justify-center">
-            <span className="truncate">{t('resumeForm.continue')}</span>
+            <span className="truncate">{"Continue"}</span>
             <ArrowRight className="ml-2 h-4 w-4 sm:h-4 sm:w-4 flex-shrink-0" />
           </span>
         )}

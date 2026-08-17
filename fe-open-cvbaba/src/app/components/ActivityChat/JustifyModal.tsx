@@ -1,6 +1,5 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { ActivityFormData } from '@/app/types/form';
 
 interface JustifyModalProps {
@@ -10,13 +9,12 @@ interface JustifyModalProps {
 }
 
 const JustifyModal: React.FC<JustifyModalProps> = ({ isOpen, onClose, setFormData }) => {
-  const { t } = useTranslation('activity');
 
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const prompt = t('activityForm.justifyPrompt');
+    const prompt = "Justifyprompt";
 
     // Close modal first for snappy UX
     onClose();
@@ -48,7 +46,7 @@ const JustifyModal: React.FC<JustifyModalProps> = ({ isOpen, onClose, setFormDat
       <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-strong border border-blue-100 dark:border-gray-800 w-full max-w-md transform transition-all duration-300">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-blue-100 dark:border-gray-800 rounded-t-xl transition-colors">
-          <h3 className="text-lg font-bold text-blue-900 dark:text-blue-400">{t('activityForm.justifyModalTitle')}</h3>
+          <h3 className="text-lg font-bold text-blue-900 dark:text-blue-400">{"Justifymodaltitle"}</h3>
           <button onClick={onClose} className="text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/40 rounded-lg p-1.5 transition-all duration-200">
             <X className="h-4 w-4" />
           </button>
@@ -57,14 +55,14 @@ const JustifyModal: React.FC<JustifyModalProps> = ({ isOpen, onClose, setFormDat
         {/* Content */}
         <form onSubmit={handleSubmit} className="p-4 space-y-3">
           <p className="text-sm text-gray-700 dark:text-gray-300">
-            {t('activityForm.justifyPrompt')}
+            {"Justifyprompt"}
           </p>
 
           <button
             type="submit"
             className="w-full px-4 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            {t('activityForm.justifyApplyButton')}
+            {"Justifyapplybutton"}
           </button>
         </form>
       </div>

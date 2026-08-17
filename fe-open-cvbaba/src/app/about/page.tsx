@@ -5,7 +5,7 @@ const milestones = [
   ['2024', 'Research begins', 'AI could generate text and code, but reliably producing a real, polished, compilable document end to end was still difficult.'],
   ['2024', 'LaTeX tooling and data research', 'The first experiments focused on browser-friendly LaTeX compilation and structured annotation for high-quality LaTeX CV data.'],
   ['2025', 'Editable HTML documents', 'HTML became the practical format for a faster WYSIWYG workflow. That direction became CVBaba and grew through real usage and community interest.'],
-  ['Now', 'Open-source document creation', 'open-cvbaba is the self-hostable continuation: a local-first workspace for creating CVs, letters, books, and ebooks with Mistral-powered generation.'],
+  ['Now', 'Open-source document creation', 'open-cvbaba is the self-hostable continuation: a local-first workspace for creating polished CVs with Mistral-powered generation.'],
 ];
 
 export default function AboutPage() {

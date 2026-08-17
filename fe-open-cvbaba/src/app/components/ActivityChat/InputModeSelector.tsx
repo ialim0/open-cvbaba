@@ -1,7 +1,6 @@
 // components/InputModeSelector.tsx
 import React from 'react';
 import { Type, FileText, Linkedin } from 'lucide-react';
-import { useTranslation } from '@/app/i18n/i18n';
 
 interface InputModeSelectorProps {
   inputMode: 'text' | 'file' | 'profile';
@@ -9,7 +8,6 @@ interface InputModeSelectorProps {
 }
 
 const InputModeSelector: React.FC<InputModeSelectorProps> = ({ inputMode, setInputMode }) => {
-  const { t } = useTranslation('activity');
 
   return (
     <div className="flex justify-center mb-4 sm:mb-6 px-2">
@@ -22,10 +20,10 @@ const InputModeSelector: React.FC<InputModeSelectorProps> = ({ inputMode, setInp
               ? 'bg-blue-600 text-white border-blue-600'
               : 'bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900'
           }`}
-          aria-label={t('resumeForm.textInput')}
+          aria-label="Text input"
         >
           <Type className={`h-5 w-5 sm:mr-2 ${inputMode === 'text' ? 'text-white' : 'text-gray-600'}`} />
-          <span className="hidden sm:inline">{t('resumeForm.textInput')}</span>
+          <span className="hidden sm:inline">Text input</span>
         </button>
         <button
           type="button"
@@ -35,10 +33,10 @@ const InputModeSelector: React.FC<InputModeSelectorProps> = ({ inputMode, setInp
               ? 'bg-blue-600 text-white border-blue-600'
               : 'bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900'
           }`}
-          aria-label={t('resumeForm.fileUpload')}
+          aria-label="File upload"
         >
           <FileText className={`h-5 w-5 sm:mr-2 ${inputMode === 'file' ? 'text-white' : 'text-gray-600'}`} />
-          <span className="hidden sm:inline">{t('resumeForm.fileUpload')}</span>
+          <span className="hidden sm:inline">File upload</span>
         </button>
         <button
           type="button"
@@ -48,10 +46,10 @@ const InputModeSelector: React.FC<InputModeSelectorProps> = ({ inputMode, setInp
               ? 'bg-blue-600 text-white'
               : 'bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900'
           }`}
-          aria-label={t('resumeForm.analyzeProfile')}
+          aria-label="Analyze profile"
         >
           <Linkedin className={`h-5 w-5 sm:mr-2 ${inputMode === 'profile' ? 'text-white' : 'text-gray-600'}`} />
-          <span className="hidden sm:inline">{t('resumeForm.analyzeProfile')}</span>
+          <span className="hidden sm:inline">Analyze profile</span>
         </button>
       </div>
     </div>

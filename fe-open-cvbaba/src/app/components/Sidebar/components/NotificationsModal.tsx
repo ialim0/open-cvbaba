@@ -1,7 +1,6 @@
 import React from 'react';
 import { Bell, CheckCircle } from 'lucide-react';
 import Modal from '../../ui/Modal';
-import { useTranslation } from '@/app/i18n/i18n';
 import { Button } from '../../ui/Button';
 import { ScrollArea } from '../../ui/ScrollArea';
 
@@ -25,13 +24,12 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
   notifications,
   onMarkAsRead,
 }) => {
-  const { t } = useTranslation('settings');
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={t('notifications.title')}
+      title={"Title"}
       ariaLabelledBy="notifications-modal-title"
       className="w-full sm:max-w-md mx-auto"
     >
@@ -40,7 +38,7 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
         <div className="flex justify-between items-center px-4 py-2 border-b">
           <span className="text-sm text-gray-500">
             {notifications.filter((n) => !n.read).length}{' '}
-            {t('notifications.unread')}
+            {"Unread"}
           </span>
           <Button
             variant="ghost"
@@ -49,7 +47,7 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
             disabled={!notifications.some((n) => !n.read)}
           >
             <CheckCircle className="h-4 w-4 mr-2" />
-            {t('notifications.markAsRead')}
+            {"Markasread"}
           </Button>
         </div>
 
@@ -58,7 +56,7 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
           {notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12">
               <Bell className="h-8 w-8 text-gray-400 mb-4" />
-              <p className="text-gray-500">{t('notifications.empty')}</p>
+              <p className="text-gray-500">{"Empty"}</p>
             </div>
           ) : (
             notifications.map((notification) => (

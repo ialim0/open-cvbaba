@@ -12,27 +12,27 @@ const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'] }
 export const metadata: Metadata = {
   // TODO: Replace with your actual production domain
   metadataBase: new URL('http://localhost:3000'),
-  title: "open-cvbaba - Design & Create Professional Documents",
+  title: "open-cvbaba - AI CV Builder",
   description:
-    "open-cvbaba is your intelligent document designer. Generate beautifully formatted PDF and Word documents instantly. More than just writing—create stunning reports, proposals, and CVs.",
+    "open-cvbaba is an open-source AI CV builder for creating polished, editable resumes.",
   openGraph: {
-    title: "open-cvbaba - Design & Create Professional Documents",
+    title: "open-cvbaba - AI CV Builder",
     description:
-      "Generate beautifully formatted PDF and Word documents instantly. More than just writing—create stunning reports, proposals, and CVs with AI.",
+      "Create a polished, editable CV with AI and export it as PDF or Word.",
     images: [
       {
         url: "/images/open-cvbaba-logo.png",
         width: 1254,
         height: 1254,
-        alt: "open-cvbaba - AI Document Designer",
+        alt: "open-cvbaba - AI CV Builder",
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "open-cvbaba - Design & Create Professional Documents",
+    title: "open-cvbaba - AI CV Builder",
     description:
-      "Generate beautifully formatted PDF and Word documents instantly. More than just writing—create stunning reports, proposals, and CVs with AI.",
+      "Create a polished, editable CV with AI and export it as PDF or Word.",
     images: ['/images/open-cvbaba-logo.png'],
   },
   icons: {

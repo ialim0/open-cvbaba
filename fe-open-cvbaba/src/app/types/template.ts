@@ -4,7 +4,7 @@ export type Template = {
   image: string;
   description: string;
   category: string;
-  type: 'CV' | 'Letter';
+  type: 'CV';
   characteristics: string[];
   isNew?: boolean;
   hasComponent?: boolean;

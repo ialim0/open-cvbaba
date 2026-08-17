@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import Modal from '../ui/Modal';
 import { Button } from '../ui/Button';
 import { Trash2, AlertTriangle, Loader2 } from 'lucide-react';
@@ -19,7 +18,6 @@ export const DeletePageModal: React.FC<DeletePageModalProps> = ({
     pageNumber,
     isDeleting,
 }) => {
-    const { t } = useTranslation('activity');
 
     return (
         <Modal
@@ -28,17 +26,14 @@ export const DeletePageModal: React.FC<DeletePageModalProps> = ({
             title={
                 <div className="flex items-center gap-2 text-red-600 dark:text-red-500">
                     <AlertTriangle className="h-5 w-5" />
-                    <span>{t('pdfPreview.deletePageTitle', { defaultValue: 'Delete Page' })}</span>
+                    <span>{"Delete Page"}</span>
                 </div>
             }
             size="sm"
         >
             <div className="p-6 pt-2">
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    {t('pdfPreview.deletePageConfirm', {
-                        page: pageNumber,
-                        defaultValue: `Are you sure you want to delete Page ${pageNumber}? This action cannot be undone.`
-                    })}
+                    {"Deletepageconfirm"}
                 </p>
 
                 <div className="flex items-center justify-end gap-3">
@@ -47,7 +42,7 @@ export const DeletePageModal: React.FC<DeletePageModalProps> = ({
                         onClick={onClose}
                         disabled={isDeleting}
                     >
-                        {t('common.cancel', { defaultValue: 'Cancel' })}
+                        {"Cancel"}
                     </Button>
                     <Button
                         variant="destructive"
@@ -58,12 +53,12 @@ export const DeletePageModal: React.FC<DeletePageModalProps> = ({
                         {isDeleting ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                {t('common.deleting', { defaultValue: 'Deleting...' })}
+                                {"Deleting..."}
                             </>
                         ) : (
                             <>
                                 <Trash2 className="mr-2 h-4 w-4" />
-                                {t('common.delete', { defaultValue: 'Delete' })}
+                                {"Delete"}
                             </>
                         )}
                     </Button>

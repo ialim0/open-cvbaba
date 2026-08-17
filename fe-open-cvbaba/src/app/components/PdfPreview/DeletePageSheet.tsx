@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { PageSheet } from './PageSheet';
 import { Button } from '../ui/Button';
 import { Trash2, AlertTriangle, Loader2 } from 'lucide-react';
@@ -19,13 +18,12 @@ export const DeletePageSheet: React.FC<DeletePageSheetProps> = ({
     pageNumber,
     isDeleting,
 }) => {
-    const { t } = useTranslation('activity');
 
     return (
         <PageSheet
             isOpen={isOpen}
             onClose={onClose}
-            title={t('pdfPreview.deletePageTitle', { defaultValue: 'Delete Page' })}
+            title={"Delete Page"}
             icon={<AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400" />}
             iconBgColor="bg-red-100 dark:bg-red-900/30"
             disabled={isDeleting}
@@ -37,7 +35,7 @@ export const DeletePageSheet: React.FC<DeletePageSheetProps> = ({
                         disabled={isDeleting}
                         className="flex-1"
                     >
-                        {t('common.cancel', { defaultValue: 'Cancel' })}
+                        {"Cancel"}
                     </Button>
                     <Button
                         onClick={onConfirm}
@@ -47,12 +45,12 @@ export const DeletePageSheet: React.FC<DeletePageSheetProps> = ({
                         {isDeleting ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                {t('common.deleting', { defaultValue: 'Deleting...' })}
+                                {"Deleting..."}
                             </>
                         ) : (
                             <>
                                 <Trash2 className="mr-2 h-4 w-4" />
-                                {t('common.delete', { defaultValue: 'Delete' })}
+                                {"Delete"}
                             </>
                         )}
                     </Button>
@@ -64,15 +62,10 @@ export const DeletePageSheet: React.FC<DeletePageSheetProps> = ({
                     <Trash2 className="h-8 w-8 text-red-600 dark:text-red-400" />
                 </div>
                 <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                    {t('pdfPreview.deletePageConfirmTitle', {
-                        page: pageNumber,
-                        defaultValue: `Delete Page ${pageNumber}?`
-                    })}
+                    {"Deletepageconfirmtitle"}
                 </h4>
                 <p className="text-sm text-gray-500 dark:text-gray-400 max-w-[250px]">
-                    {t('pdfPreview.deletePageConfirm', {
-                        defaultValue: 'This action cannot be undone. The page will be permanently removed from your document.'
-                    })}
+                    {"This action cannot be undone. The page will be permanently removed from your document."}
                 </p>
             </div>
         </PageSheet>

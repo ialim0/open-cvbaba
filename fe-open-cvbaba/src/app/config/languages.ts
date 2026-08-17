@@ -1,4 +1,4 @@
-/** Languages available for generated documents and document translation. */
+/** Languages available for generated CVs and CV translation. */
 export interface LanguageOption {
   value: 'en' | 'fr' | 'es';
   language: string;
@@ -13,11 +13,6 @@ export const languageOptions: LanguageOption[] = [
 ];
 
 export type DocumentLanguage = LanguageOption['value'];
-export type LocaleTypes = 'en';
-
-/** The website has one deliberately fixed interface language. */
-export const supportedLanguages: LocaleTypes[] = ['en'];
-export const fallbackLng: LocaleTypes = 'en';
 
 const languageNameByCode: Record<DocumentLanguage, string> = {
   en: 'English',
@@ -25,22 +20,6 @@ const languageNameByCode: Record<DocumentLanguage, string> = {
   es: 'Spanish',
 };
 
-export function getFlagCode(languageCode: string): string {
-  return languageCode.split('-')[0];
-}
-
-export function getLanguageDisplayName(languageCode: string): string {
-  return languageNameByCode[languageCode as DocumentLanguage] || 'English';
-}
-
 export function getLanguageShortName(languageCode: string): string {
-  return getLanguageDisplayName(languageCode);
-}
-
-export function isLanguageSupported(languageCode: string): languageCode is LocaleTypes {
-  return languageCode === 'en';
-}
-
-export function getBaseLanguage(languageCode: string): string {
-  return languageCode.split('-')[0];
+  return languageNameByCode[languageCode as DocumentLanguage] || 'English';
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import Modal from '../ui/Modal';
 import { Button } from '../ui/Button';
 import TextArea from '../ui/Textarea';
@@ -20,7 +19,6 @@ export const InsertPageModal: React.FC<InsertPageModalProps> = ({
     pageNumber,
     isGenerating,
 }) => {
-    const { t } = useTranslation('activity');
     const [prompt, setPrompt] = useState('');
     const [position, setPosition] = useState<'before' | 'after'>('after');
 
@@ -37,7 +35,7 @@ export const InsertPageModal: React.FC<InsertPageModalProps> = ({
             title={
                 <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
                     <FilePlus className="h-5 w-5" />
-                    <span>{t('pdfPreview.insertPageTitle', { defaultValue: 'Insert New Page' })}</span>
+                    <span>{"Insert New Page"}</span>
                 </div>
             }
             size="md"
@@ -46,7 +44,7 @@ export const InsertPageModal: React.FC<InsertPageModalProps> = ({
                 {/* Position Selection */}
                 <div className="space-y-3">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('pdfPreview.insertPosition', { defaultValue: 'Position' })}
+                        {"Position"}
                     </label>
                     <div className="grid grid-cols-2 gap-3">
                         <button
@@ -59,7 +57,7 @@ export const InsertPageModal: React.FC<InsertPageModalProps> = ({
                         >
                             <ArrowUp className="mb-2 h-5 w-5" />
                             <span className="text-sm font-medium">
-                                {t('pdfPreview.insertBefore', { defaultValue: 'Before Page' })} {pageNumber}
+                                {"Before Page"} {pageNumber}
                             </span>
                         </button>
                         <button
@@ -72,7 +70,7 @@ export const InsertPageModal: React.FC<InsertPageModalProps> = ({
                         >
                             <ArrowDown className="mb-2 h-5 w-5" />
                             <span className="text-sm font-medium">
-                                {t('pdfPreview.insertAfter', { defaultValue: 'After Page' })} {pageNumber}
+                                {"After Page"} {pageNumber}
                             </span>
                         </button>
                     </div>
@@ -81,15 +79,13 @@ export const InsertPageModal: React.FC<InsertPageModalProps> = ({
                 {/* Content Prompt */}
                 <div className="space-y-3">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center justify-between">
-                        <span>{t('pdfPreview.pageContent', { defaultValue: 'Page Content Instructions' })}</span>
+                        <span>{"Page Content Instructions"}</span>
                         <span className="text-xs text-gray-400 font-normal">AI Generated</span>
                     </label>
                     <TextArea
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
-                        placeholder={t('pdfPreview.insertPlaceholder', {
-                            defaultValue: 'Describe what you want on this new page like "A project timeline section" or "A list of references"...'
-                        })}
+                        placeholder={"Describe what you want on this new page like \"A project timeline section\" or \"A list of references\"..."}
                         className="min-h-[120px] resize-none"
                         disabled={isGenerating}
                     />
@@ -101,7 +97,7 @@ export const InsertPageModal: React.FC<InsertPageModalProps> = ({
                         onClick={onClose}
                         disabled={isGenerating}
                     >
-                        {t('common.cancel', { defaultValue: 'Cancel' })}
+                        {"Cancel"}
                     </Button>
                     <Button
                         onClick={handleSubmit}
@@ -111,12 +107,12 @@ export const InsertPageModal: React.FC<InsertPageModalProps> = ({
                         {isGenerating ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                {t('common.generating', { defaultValue: 'Generating...' })}
+                                {"Generating..."}
                             </>
                         ) : (
                             <>
                                 <Sparkles className="mr-2 h-4 w-4" />
-                                {t('common.generate', { defaultValue: 'Generate' })}
+                                {"Generate"}
                             </>
                         )}
                     </Button>

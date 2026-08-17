@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import Modal from '../ui/Modal';
 import { Button } from '../ui/Button';
 import { Download, FileText, FileDown, Loader2 } from 'lucide-react';
@@ -21,7 +20,6 @@ export const ExportPageModal: React.FC<ExportPageModalProps> = ({
     pageNumber,
     isGenerating,
 }) => {
-    const { t } = useTranslation('activity');
 
     return (
         <Modal
@@ -30,14 +28,14 @@ export const ExportPageModal: React.FC<ExportPageModalProps> = ({
             title={
                 <div className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
                     <Download className="h-5 w-5 text-green-600" />
-                    <span>{t('pdfPreview.exportPageTitle', { defaultValue: `Export Page ${pageNumber}` })}</span>
+                    <span>{"Exportpagetitle"}</span>
                 </div>
             }
             size="sm"
         >
             <div className="p-6 pt-2 space-y-4">
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {t('pdfPreview.exportPageDesc', { defaultValue: 'Choose a format to download this page:' })}
+                    {"Choose a format to download this page:"}
                 </p>
 
                 <div className="grid grid-cols-1 gap-3">
@@ -76,7 +74,7 @@ export const ExportPageModal: React.FC<ExportPageModalProps> = ({
                 {isGenerating && (
                     <div className="flex items-center justify-center pt-2 text-sm text-gray-500">
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        {t('common.generating', { defaultValue: 'Generating file...' })}
+                        {"Generating file..."}
                     </div>
                 )}
             </div>

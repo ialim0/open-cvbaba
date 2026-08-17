@@ -1,5 +1,4 @@
 import React, { useState, useRef, ChangeEvent } from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import Modal from '../ui/Modal';
 import { Button } from '../ui/Button';
 import TextArea from '../ui/Textarea';
@@ -20,7 +19,6 @@ export const InsertImageModal: React.FC<InsertImageModalProps> = ({
     pageNumber,
     isUploading,
 }) => {
-    const { t } = useTranslation('activity');
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [prompt, setPrompt] = useState('');
@@ -72,7 +70,7 @@ export const InsertImageModal: React.FC<InsertImageModalProps> = ({
             title={
                 <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400">
                     <Image className="h-5 w-5" />
-                    <span>{t('pdfPreview.insertImageTitle', { defaultValue: 'Insert Image' })}</span>
+                    <span>{"Insert Image"}</span>
                 </div>
             }
             size="md"
@@ -80,13 +78,13 @@ export const InsertImageModal: React.FC<InsertImageModalProps> = ({
             <div className="p-6 pt-2 space-y-6">
                 {/* Page Info */}
                 <div className="text-sm text-gray-500 dark:text-gray-400">
-                    {t('pdfPreview.insertImagePage', { defaultValue: 'Adding image to Page' })} {pageNumber}
+                    {"Adding image to Page"} {pageNumber}
                 </div>
 
                 {/* Image Upload Area */}
                 <div className="space-y-3">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {t('pdfPreview.selectImage', { defaultValue: 'Select Image' })}
+                        {"Select Image"}
                     </label>
 
                     <input
@@ -128,7 +126,7 @@ export const InsertImageModal: React.FC<InsertImageModalProps> = ({
                                 <Upload className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                             </div>
                             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {t('pdfPreview.clickToUpload', { defaultValue: 'Click to upload image' })}
+                                {"Click to upload image"}
                             </span>
                             <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                 PNG, JPG, GIF, WebP
@@ -140,15 +138,13 @@ export const InsertImageModal: React.FC<InsertImageModalProps> = ({
                 {/* Instructions Prompt */}
                 <div className="space-y-3">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center justify-between">
-                        <span>{t('pdfPreview.imageInstructions', { defaultValue: 'Placement Instructions' })}</span>
-                        <span className="text-xs text-gray-400 font-normal">{t('common.optional', { defaultValue: 'Optional' })}</span>
+                        <span>{"Placement Instructions"}</span>
+                        <span className="text-xs text-gray-400 font-normal">{"Optional"}</span>
                     </label>
                     <TextArea
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
-                        placeholder={t('pdfPreview.imagePlaceholder', {
-                            defaultValue: 'E.g., "Add as header image", "Place in the skills section", "Use as background"...'
-                        })}
+                        placeholder={"E.g., \"Add as header image\", \"Place in the skills section\", \"Use as background\"..."}
                         className="min-h-[80px] resize-none"
                         disabled={isUploading}
                     />
@@ -160,7 +156,7 @@ export const InsertImageModal: React.FC<InsertImageModalProps> = ({
                         onClick={handleClose}
                         disabled={isUploading}
                     >
-                        {t('common.cancel', { defaultValue: 'Cancel' })}
+                        {"Cancel"}
                     </Button>
                     <Button
                         onClick={handleSubmit}
@@ -170,12 +166,12 @@ export const InsertImageModal: React.FC<InsertImageModalProps> = ({
                         {isUploading ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                {t('common.uploading', { defaultValue: 'Uploading...' })}
+                                {"Uploading..."}
                             </>
                         ) : (
                             <>
                                 <Sparkles className="mr-2 h-4 w-4" />
-                                {t('pdfPreview.insertImage', { defaultValue: 'Insert Image' })}
+                                {"Insert Image"}
                             </>
                         )}
                     </Button>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from '@/app/i18n/i18n';
 import { PageSheet } from './PageSheet';
 import { Button } from '../ui/Button';
 import TextArea from '../ui/Textarea';
@@ -36,7 +35,6 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
     onDeleteComment,
     isLoading = false,
 }) => {
-    const { t } = useTranslation('activity');
     const [newComment, setNewComment] = useState('');
     const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
     const [editContent, setEditContent] = useState('');
@@ -85,7 +83,7 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
     };
 
     const handleDeleteComment = async (commentId: number) => {
-        if (!window.confirm(t('pdfPreview.comments.confirmDelete', { defaultValue: 'Are you sure you want to delete this comment?' }))) {
+        if (!window.confirm("Are you sure you want to delete this comment?")) {
             return;
         }
 
@@ -104,7 +102,7 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
         const now = new Date();
         const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-        if (diffInSeconds < 60) return t('pdfPreview.comments.justNow', { defaultValue: 'Just now' });
+        if (diffInSeconds < 60) return "Just now";
         if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m`;
         if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h`;
         if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d`;
@@ -116,7 +114,7 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
         <PageSheet
             isOpen={isOpen}
             onClose={onClose}
-            title={t('pdfPreview.comments.pageTitle', { page: pageNumber, defaultValue: `Page ${pageNumber} Comments` })}
+            title={"Pagetitle"}
             icon={<MessageSquare className="h-4 w-4 text-purple-600 dark:text-purple-400" />}
             iconBgColor="bg-purple-100 dark:bg-purple-900/30"
             footer={
@@ -124,7 +122,7 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
                     <TextArea
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
-                        placeholder={t('pdfPreview.comments.placeholder', { defaultValue: 'Write a comment...' })}
+                        placeholder={"Write a comment..."}
                         className="min-h-[70px] pb-10 text-sm resize-none border-gray-200 dark:border-gray-700 focus:border-purple-500 focus:ring-purple-500"
                         disabled={isSubmitting}
                     />
@@ -138,7 +136,7 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
                             {isSubmitting ? (
                                 <Loader2 className="animate-spin h-3 w-3" />
                             ) : (
-                                <span className="text-xs font-medium">{t('common.post', { defaultValue: 'Post' })}</span>
+                                <span className="text-xs font-medium">{"Post"}</span>
                             )}
                         </Button>
                     </div>
@@ -156,10 +154,10 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
                             <MessageSquare className="h-6 w-6 text-gray-400" />
                         </div>
                         <p className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
-                            {t('pdfPreview.comments.noPageCommentsTitle', { defaultValue: 'No comments yet' })}
+                            {"No comments yet"}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400 max-w-[200px]">
-                            {t('pdfPreview.comments.noPageCommentsDesc', { defaultValue: 'Start the conversation by adding a comment.' })}
+                            {"Start the conversation by adding a comment."}
                         </p>
                     </div>
                 ) : (
@@ -227,7 +225,7 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
                                             disabled={isSubmitting}
                                             className="h-7 text-xs"
                                         >
-                                            {t('common.cancel', { defaultValue: 'Cancel' })}
+                                            {"Cancel"}
                                         </Button>
                                         <Button
                                             size="sm"
@@ -235,7 +233,7 @@ export const PageCommentsSheet: React.FC<PageCommentsSheetProps> = ({
                                             disabled={isSubmitting || !editContent.trim()}
                                             className="h-7 text-xs bg-purple-600 hover:bg-purple-700 text-white"
                                         >
-                                            {t('common.save', { defaultValue: 'Save' })}
+                                            {"Save"}
                                         </Button>
                                     </div>
                                 </div>
