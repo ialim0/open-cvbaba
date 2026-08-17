@@ -18,14 +18,12 @@ const MiniChatHistoryItems: React.FC = () => {
   const pathname = usePathname(); // Use the hook from next/navigation
   const [chats, setChats] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchChats = async () => {
       try {
         const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
         if (!apiBaseUrl) {
-          setError("The API URL is not configured.");
           return;
         }
 
@@ -51,7 +49,6 @@ const MiniChatHistoryItems: React.FC = () => {
           setChats([]);
         } else {
           console.error("Error fetching chats:", error);
-          setError("Couldn't load your CV history.");
         }
       } finally {
         setLoading(false);
@@ -73,8 +70,8 @@ const MiniChatHistoryItems: React.FC = () => {
     );
   }
 
-  if (error || chats.length === 0) {
-    return null; // Don't show anything if there's an error or no chats
+  if (chats.length === 0) {
+    return null; // Don't show anything if there are no chats
   }
 
   return (

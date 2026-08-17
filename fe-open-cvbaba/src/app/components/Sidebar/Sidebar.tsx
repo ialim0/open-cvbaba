@@ -50,7 +50,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>("");
     const [chats, setChats] = useState<Chat[]>([]);
-    const [error, setError] = useState<string | null>(null);
     const [deletedItems, setDeletedItems] = useState<Set<string>>(new Set());
     const [nextSkip, setNextSkip] = useState<number | null>(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
@@ -79,7 +78,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
     const fetchChats = useCallback(
       async (skip: number, search: string, replace: boolean = false) => {
         if (!apiBaseUrl) {
-          setError("The API URL is not configured.");
           return;
         }
 
@@ -126,10 +124,8 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
 
           setHasMore(meta.has_more);
           setNextSkip(meta.has_more ? meta.next_skip : null);
-          setError(null);
         } catch (error) {
           console.error("Error fetching chats:", error);
-          setError("Couldn't load your CV history.");
         } finally {
           if (sanitizedSkip === 0) {
             pendingInitialRequestsRef.current = Math.max(0, pendingInitialRequestsRef.current - 1);
@@ -346,17 +342,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                       )}
                     </div>
 
-                    {error && (
-                      <div className="text-center py-4">
-                        <p className="text-destructive text-sm mb-2">{error}</p>
-                        <button
-                          onClick={() => fetchChats(0, debouncedSearchQuery, true)}
-                          className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
-                        >
-                          {"Try again"}
-                        </button>
-                      </div>
-                    )}
+
                 </>
               </div>
             </div>
