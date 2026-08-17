@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from databases import Database
 from app.config import settings
@@ -39,6 +39,13 @@ def get_db():
     finally:
         db.close()
 
-async def init_db():  
-    from app.models import user
+async def init_db():
+    """Bootstrap the legacy schema and pgvector extension for local installs.
+
+    Alembic remains the deployment migration source of truth. This bootstrap is
+    retained for the project's existing local-first startup behavior.
+    """
+    from app.models import user  # noqa: F401 - import registers model metadata
+    with engine.begin() as connection:
+        connection.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
     Base.metadata.create_all(bind=engine)

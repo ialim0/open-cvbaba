@@ -1,17 +1,15 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
 
 from alembic import context
 
 # Import your models and database engine from your app
 from app.db import Base, engine
 from app import models  # Import all SQLAlchemy models for autogenerate
-config.set_main_option("sqlalchemy.url", str(engine.url))
 
 # Interpret the config file for Python logging.
 config = context.config
+config.set_main_option("sqlalchemy.url", str(engine.url))
 fileConfig(config.config_file_name)
 
 # Set the target metadata for Alembic migrations
@@ -51,11 +49,9 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    # Reuse the application engine so Docker/.env credentials are identical
+    # between bootstrap and migration commands.
+    connectable = engine
 
     with connectable.connect() as connection:
         context.configure(
