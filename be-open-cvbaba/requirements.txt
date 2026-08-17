@@ -35,3 +35,8 @@ websockets
 mistralai[realtime]>=1.8.2
 langgraph>=0.2.0
 langchain-core>=0.3.0
+# Optional visual QA renderer (install browsers with: playwright install chromium)
+playwright>=1.40
+
+pgvector>=0.3.6
+alembic>=1.13

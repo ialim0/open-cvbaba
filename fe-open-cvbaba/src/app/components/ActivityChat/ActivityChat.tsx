@@ -14,7 +14,7 @@ import { useStreamSubmitData } from "@/app/hooks/useStreamSubmitData";
 import { getTimeBasedGreeting } from "@/app/utils/getTimeBasedGreeting";
 import { useFeedback } from "@/app/hooks/useFeedback";
 import { useUserImages } from "@/app/hooks/useUserImages";
-import { UserProfile } from "@/app/types/form";
+import { UserProfile, ActivityFormData } from "@/app/types/form";
 // Removed AnimatedText as we now render static text inline
 import Logo from "../ui/Logo";
 import { templates } from "./data/templates";
@@ -110,13 +110,15 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   const streamCleanupRef = useRef<(() => void) | null>(null);
   const { streamSubmitData, cleanup: cleanupStream } = useStreamSubmitData();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ActivityFormData>({
     resumeDescription: "",
     selectedTemplateId: "",
     language: "en-US",
     pageCount: 1,
     documentSize: "A2" as string,
     documentOrientation: "portrait" as string,
+    layoutImageBase64: null,
+    layoutImageUrl: null,
   });
   const [shouldAutoSubmit, setShouldAutoSubmit] = useState(false);
 
@@ -770,6 +772,14 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         data.profile_photo_url = currentAvatar;
       }
 
+      // Add visual sketch layout if present
+      if (formData.layoutImageBase64) {
+        data.layout_image_base64 = formData.layoutImageBase64;
+      }
+      if (formData.layoutImageUrl) {
+        data.layout_image_url = formData.layoutImageUrl;
+      }
+
       // Unified Multimodal Creation: Use FormData if attachments are present
       let submissionData: any = data;
       const hasAttachments = attachedFiles.length > 0 || youtubeUrls.length > 0 || webpageUrls.length > 0;
@@ -987,7 +997,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
               }
 
               // Clear form after successful edit
-              setFormData(prev => ({ ...prev, resumeDescription: '' }));
+              setFormData(prev => ({ ...prev, resumeDescription: '', layoutImageBase64: null, layoutImageUrl: null }));
 
               setIsThinking(false);
               setIsSubmitting(false);

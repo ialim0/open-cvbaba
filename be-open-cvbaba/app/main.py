@@ -8,6 +8,7 @@ from app.api.routes.feedback import feedback_router
 from app.api.routes.chat_comment import chat_comment_router
 from app.api.routes.page_notes import router as page_notes_router
 from app.api.routes.mistral_media import router as mistral_media_router
+from app.api.routes.brand_dna import router as brand_dna_router
 
 
 from app.config import settings
@@ -43,6 +44,7 @@ app.include_router(chat_comment_router, prefix="/api/chat", tags=["Chat Comments
 app.include_router(page_notes_router, prefix="/api", tags=["Page Notes"])
 app.include_router(mistral_media_router, prefix="/api/file", tags=["Mistral OCR"])
 app.include_router(mistral_media_router, prefix="/api", tags=["Mistral Voxtral"])
+app.include_router(brand_dna_router, prefix="/api", tags=["Brand DNA"])
 
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles

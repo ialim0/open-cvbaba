@@ -9,6 +9,8 @@ export interface ActivityFormData {
     pageCount: number;
     documentSize: string;
     documentOrientation: string;
+    layoutImageBase64?: string | null;
+    layoutImageUrl?: string | null;
 }
 
 export interface UserProfile {

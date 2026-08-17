@@ -483,7 +483,10 @@ class AIGenerator:
         document_type: Optional[str] = None,
         template_content: Optional[str] = None,
         template_id: Optional[str] = None,
-        num_pages: Optional[int] = None
+        num_pages: Optional[int] = None,
+        layout_image_base64: Optional[str] = None,
+        layout_image_url: Optional[str] = None,
+        brand_context: Optional[str] = None
     ) -> str:
         """
         Long-form generation pipeline:
@@ -501,7 +504,10 @@ class AIGenerator:
                 document_type=document_type,
                 template_content=template_content,
                 template_id=template_id,
-                num_pages=num_pages or 1
+                num_pages=num_pages or 1,
+                layout_image_base64=layout_image_base64,
+                layout_image_url=layout_image_url,
+                brand_context=brand_context
             )
             if result and len(result.strip()) > 50:
                 return result
@@ -573,13 +579,13 @@ class AIGenerator:
         document_type: Optional[str] = None,
         template_content: Optional[str] = None,
         template_id: Optional[str] = None,
-        num_pages: Optional[int] = None
+        num_pages: Optional[int] = None,
+        layout_image_base64: Optional[str] = None,
+        layout_image_url: Optional[str] = None
     ) -> AsyncIterator[str]:
         """
-        Stream document generation using single-pass Mistral generation.
-        
-        Mistral 2.0 Flash supports 64k output tokens, which is more than enough
-        for 70 pages (~105,000 tokens). Single-pass is more reliable than multi-pass.
+        Stream document generation using LangGraph multi-agent pipeline (Mistral Large + Codestral).
+        Supports multimodal hand-drawn layout sketches.
         """
         logger.info(f"Using LangGraph + Codestral stream generation (num_pages={num_pages}, document_type={document_type})")
         
@@ -592,7 +598,9 @@ class AIGenerator:
                 document_type=document_type,
                 template_content=template_content,
                 template_id=template_id,
-                num_pages=num_pages or 1
+                num_pages=num_pages or 1,
+                layout_image_base64=layout_image_base64,
+                layout_image_url=layout_image_url
             ):
                 if chunk:
                     yielded_any = True
@@ -1359,18 +1367,22 @@ async def generate_ai_response(
     document_type: Optional[str] = None,
     template_content: Optional[str] = None,
     template_id: Optional[str] = None,
-    num_pages: Optional[int] = None
+    num_pages: Optional[int] = None,
+    layout_image_base64: Optional[str] = None,
+    layout_image_url: Optional[str] = None,
+    brand_context: Optional[str] = None
 ) -> str:
-    """Generate an AI response for document creation using a single async content call.
-    Template-aware and document-type constrained for consistent outputs.
-    """
+    """Generate an AI response for document creation using LangGraph multi-agent pipeline."""
     return await AIGenerator.generate_document(
         user_input,
         conversation_history=conversation_history,
         document_type=document_type,
         template_content=template_content,
         template_id=template_id,
-        num_pages=num_pages
+        num_pages=num_pages,
+        layout_image_base64=layout_image_base64,
+        layout_image_url=layout_image_url,
+        brand_context=brand_context
     )
 
 async def generate_title_from_input(user_input: str) -> str:

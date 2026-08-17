@@ -2,7 +2,7 @@
 import logging
 from dataclasses import dataclass
 from types import SimpleNamespace
-from typing import Any, AsyncIterator, Optional, List, Union
+from typing import Any, AsyncIterator, Optional, List, Union, Dict
 from openai import AsyncOpenAI
 
 try:
@@ -41,19 +41,45 @@ class _Models:
         self.client = client
 
     @staticmethod
-    def _text(contents: Any) -> str:
+    def _format_user_content(contents: Any) -> Union[str, List[Dict[str, Any]]]:
         if isinstance(contents, str):
             return contents
         if isinstance(contents, list):
-            values = []
+            has_multimodal = any(
+                isinstance(item, dict) and ("image_url" in item or "type" in item or "file_uri" in item)
+                for item in contents
+            )
+            if not has_multimodal:
+                values = []
+                for item in contents:
+                    if isinstance(item, str):
+                        values.append(item)
+                    elif isinstance(item, dict):
+                        values.append(item.get("text", item.get("file_uri", "")))
+                    else:
+                        values.append(getattr(item, "text", str(item)))
+                return "\n".join(v for v in values if v)
+
+            parts = []
             for item in contents:
                 if isinstance(item, str):
-                    values.append(item)
+                    parts.append({"type": "text", "text": item})
                 elif isinstance(item, dict):
-                    values.append(item.get("text", item.get("file_uri", "")))
+                    if item.get("type") == "image_url":
+                        parts.append(item)
+                    elif "image_url" in item:
+                        url_val = item.get("image_url")
+                        url = url_val.get("url") if isinstance(url_val, dict) else url_val
+                        parts.append({"type": "image_url", "image_url": {"url": url}})
+                    elif "file_uri" in item:
+                        parts.append({"type": "image_url", "image_url": {"url": item["file_uri"]}})
+                    elif "text" in item:
+                        parts.append({"type": "text", "text": item["text"]})
+                    else:
+                        parts.append(item)
                 else:
-                    values.append(getattr(item, "text", ""))
-            return "\n".join(v for v in values if v)
+                    parts.append({"type": "text", "text": str(item)})
+            return parts
         return str(contents)
 
     async def generate_content(
@@ -67,7 +93,7 @@ class _Models:
         messages = []
         if config.system_instruction:
             messages.append({"role": "system", "content": config.system_instruction})
-        messages.append({"role": "user", "content": self._text(contents)})
+        messages.append({"role": "user", "content": self._format_user_content(contents)})
 
         response = await self.client._client.chat.completions.create(
             model=model,
@@ -91,7 +117,7 @@ class _Models:
         messages = []
         if config.system_instruction:
             messages.append({"role": "system", "content": config.system_instruction})
-        messages.append({"role": "user", "content": self._text(contents)})
+        messages.append({"role": "user", "content": self._format_user_content(contents)})
 
         stream = await self.client._client.chat.completions.create(
             model=model,
@@ -118,4 +144,13 @@ class MistralClient:
             except Exception as e:
                 logger.debug(f"Mistral SDK native init skipped: {e}")
         self.models = _Models(self)
+        self.embeddings = _Embeddings(self)
         self.aio = self
+
+
+class _Embeddings:
+    def __init__(self, client: "MistralClient"):
+        self.client = client
+
+    async def create(self, model: str, inputs: list[str]):
+        return await self.client._client.embeddings.create(model=model, input=inputs)

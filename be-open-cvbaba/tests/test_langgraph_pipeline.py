@@ -5,6 +5,7 @@ from types import SimpleNamespace
 
 from app.services.chat.langgraph_pipeline import (
     IntentData,
+    VisualLayoutData,
     LayoutPlanData,
     ValidationResult,
     DocumentGraphState,
@@ -13,6 +14,7 @@ from app.services.chat.langgraph_pipeline import (
     render_to_pdf_node,
     decide_next_step,
     create_document_generation_graph,
+    parse_visual_layout_node,
     parse_intent_node,
     plan_layout_node,
     generate_code_node,
@@ -180,3 +182,33 @@ async def test_full_langgraph_pipeline_execution():
         assert "<!DOCTYPE html>" in output
         assert '<div class="pdf-page">' in output
         assert "Jane Doe" in output
+
+
+@pytest.mark.asyncio
+async def test_parse_visual_layout_node_without_sketch():
+    state: DocumentGraphState = {
+        "user_input": "Test CV",
+    }
+    result = await parse_visual_layout_node(state)
+    assert result["visual_layout"] is None
+    assert result["status"] == "no_visual_sketch"
+
+
+@pytest.mark.asyncio
+async def test_parse_visual_layout_node_with_sketch():
+    fake_visual_json = '{"has_sketch": true, "layout_type": "two-column-sidebar", "column_ratio": "30_70", "header_style": "top-banner", "sections_order": ["Header", "Skills", "Experience"], "visual_elements": ["avatar_circle", "skill_pill_tags"], "spatial_notes": "Left sidebar with skills, right main with experience"}'
+    mock_client = MagicMock()
+    mock_client.models.generate_content = AsyncMock(return_value=SimpleNamespace(text=fake_visual_json))
+
+    state: DocumentGraphState = {
+        "layout_image_base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+    }
+
+    with patch("app.services.chat.langgraph_pipeline._get_mistral_client", return_value=mock_client):
+        result = await parse_visual_layout_node(state)
+        assert result["status"] == "visual_layout_parsed"
+        vl = result["visual_layout"]
+        assert vl["has_sketch"] is True
+        assert vl["layout_type"] == "two-column-sidebar"
+        assert vl["column_ratio"] == "30_70"
+        assert "avatar_circle" in vl["visual_elements"]

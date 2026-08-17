@@ -2,7 +2,7 @@ from .degree import Degree
 from .experience import Experience
 from .project import Project  
 from .user_profile import UserProfileUpdate, UserProfileResponse
-from .chat import ChatResponse, ChatInput
+from .chat import ChatResponse, ChatInput, VisionLayoutRequest, VisionLayoutResponse
 from .feedback import (
     QuickFeedbackRequest,
     QuickFeedbackResponse,
@@ -23,6 +23,8 @@ __all__ = [
     "UserProfileResponse",
     "ChatResponse",
     "ChatInput",
+    "VisionLayoutRequest",
+    "VisionLayoutResponse",
     "QuickFeedbackRequest",
     "QuickFeedbackResponse",
     "WhyFeedbackRequest",

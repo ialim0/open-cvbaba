@@ -59,6 +59,35 @@ async def extract_text(file: UploadFile = File(...)):
         raise HTTPException(status_code=502, detail="Mistral OCR failed") from exc
 
 
+@router.post("/vision/parse-layout")
+async def parse_vision_layout(
+    file: Optional[UploadFile] = File(None),
+    image_base64: Optional[str] = None
+):
+    """
+    Interpret a hand-drawn sketch, napkin drawing, or wireframe image
+    into structured spatial layout AST using Mistral Vision.
+    """
+    _require_key()
+    from app.services.chat.langgraph_pipeline import parse_visual_layout_node
+
+    img_b64 = image_base64
+    if file:
+        content = await file.read()
+        mime = (file.content_type or "image/png").lower()
+        img_b64 = f"data:{mime};base64,{base64.b64encode(content).decode()}"
+
+    if not img_b64:
+        raise HTTPException(status_code=400, detail="Must provide an uploaded image file or image_base64 string")
+
+    result = await parse_visual_layout_node({"layout_image_base64": img_b64})
+    visual_layout = result.get("visual_layout")
+    if not visual_layout:
+        raise HTTPException(status_code=422, detail="Failed to interpret layout from provided sketch")
+
+    return visual_layout
+
+
 async def _audio_chunks(websocket: WebSocket) -> AsyncIterator[bytes]:
     while True:
         yield await websocket.receive_bytes()

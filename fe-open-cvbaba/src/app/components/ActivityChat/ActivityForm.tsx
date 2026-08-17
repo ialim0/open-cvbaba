@@ -14,6 +14,7 @@ import TranslateModal from './TranslateModal';
 import ATSModal from './ATSModal';
 import StyleModal from './StyleModal';
 import JustifyModal from './JustifyModal';
+import { SketchCanvasModal } from '../SketchCanvas/SketchCanvasModal';
 
 import { languageOptions, getLanguageShortName } from '@/app/config/languages';
 import type { ActivityFormData, UserProfile } from '@/app/types/form';
@@ -133,6 +134,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   const [isATSModalOpen, setIsATSModalOpen] = useState(false);
   const [isStyleModalOpen, setIsStyleModalOpen] = useState(false);
   const [isJustifyModalOpen, setIsJustifyModalOpen] = useState(false);
+  const [isSketchModalOpen, setIsSketchModalOpen] = useState(false);
 
   // Multimodal attachment state
   const [isLinkInputVisible, setIsLinkInputVisible] = useState(false);
@@ -1266,6 +1268,28 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                   </div>
                 ))}
 
+                {/* Sketch / Wireframe chip */}
+                {formData.layoutImageBase64 && (
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg text-sm">
+                    <PenTool className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                    <span className="text-purple-700 dark:text-purple-300 max-w-[140px] truncate font-medium">Layout Sketch Attached</span>
+                    <button
+                      type="button"
+                      onClick={() => setIsSketchModalOpen(true)}
+                      className="text-xs text-purple-600 dark:text-purple-400 underline hover:text-purple-800 font-semibold"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, layoutImageBase64: null }))}
+                      className="p-0.5 hover:bg-purple-100 dark:hover:bg-purple-800 rounded"
+                    >
+                      <X className="w-3.5 h-3.5 text-purple-500" />
+                    </button>
+                  </div>
+                )}
+
                 {/* Link input field */}
                 {isLinkInputVisible && (
                   <div className="flex items-center gap-2 flex-1 min-w-[200px]">
@@ -1309,6 +1333,23 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                 {/* Attachment buttons */}
                 {!isLinkInputVisible && (
                   <>
+                    {!hasExistingChat && (
+                      <button
+                        type="button"
+                        onClick={() => setIsSketchModalOpen(true)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                          formData.layoutImageBase64
+                            ? "bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 font-medium"
+                            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`}
+                        title="Draw or upload a wireframe layout sketch"
+                      >
+                        <PenTool className="w-4 h-4" />
+                        <span className="hidden sm:inline">
+                          {formData.layoutImageBase64 ? "Sketch Attached" : "Sketch Layout"}
+                        </span>
+                      </button>
+                    )}
                     {attachedFiles.length < 5 && (
                       <button
                         type="button"
@@ -1387,6 +1428,20 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
           isOpen={isJustifyModalOpen}
           onClose={() => setIsJustifyModalOpen(false)}
           setFormData={setFormData}
+        />
+
+        {/* Vision-to-Layout Sketch Canvas Modal */}
+        <SketchCanvasModal
+          isOpen={isSketchModalOpen}
+          onClose={() => setIsSketchModalOpen(false)}
+          onApplySketch={(imageBase64, promptText) => {
+            setFormData(prev => ({
+              ...prev,
+              layoutImageBase64: imageBase64,
+              resumeDescription: promptText || prev.resumeDescription
+            }));
+          }}
+          initialPrompt={formData.resumeDescription}
         />
 
         {/* User Images Modal */}

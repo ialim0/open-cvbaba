@@ -681,9 +681,12 @@ class ChatService:
         num_pages: Optional[int] = None,
         file_paths: List[Path] = None,
         youtube_urls: List[str] = None,
-        webpage_urls: List[str] = None
+        webpage_urls: List[str] = None,
+        layout_image_base64: Optional[str] = None,
+        layout_image_url: Optional[str] = None,
+        brand_context: Optional[str] = None
     ) -> Chat:
-        """Create a new chat with AI-generated content (supports multimodal)."""
+        """Create a new chat with AI-generated content (supports multimodal & visual sketches)."""
         try:
             # OPTIMIZATION: Reduced logging for performance
             user_input_clean, template_content, document_type = await self._prepare_generation_inputs(
@@ -709,93 +712,19 @@ class ChatService:
                     webpage_urls=webpage_urls_safe,
                     prompt=user_input_clean
                  )
-            elif True:
-                # Use Gemini for document generation (original behavior)
-                logger.debug(f"Generating AI response... (num_pages={num_pages})")
-                logger.info(f"Using Gemini for document generation (num_pages={num_pages})")
+            else:
+                logger.info(f"Generating document with LangGraph (num_pages={num_pages})")
                 pdf_content = await generate_ai_response(
                     user_input=user_input_clean,
                     conversation_history=None,
                     document_type=document_type,
                     template_content=template_content,
                     template_id=template_id,
-                    num_pages=num_pages
+                    num_pages=num_pages,
+                    layout_image_base64=layout_image_base64,
+                    layout_image_url=layout_image_url,
+                    brand_context=brand_context
                 )
-            else:
-                # Use the configured Mistral model
-                default_model = get_default_model()
-                logger.info(f"Using {default_model.value} for document generation")
-                
-                # Build comprehensive prompt for document generation with A4 page structure
-                prompt_parts = []
-                prompt_parts.append("You are an expert HTML document generator. Generate a professional, accessible, and semantic HTML5 document.")
-                prompt_parts.append("\n===== CRITICAL FORMATTING REQUIREMENTS =====")
-                prompt_parts.append("The HTML MUST follow this exact structure:")
-                prompt_parts.append("""<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    /* A4 Page Dimensions at 96 DPI */
-    .pdf-page {
-      width: 794px;           /* 210mm */
-      height: 1123px;         /* 297mm */
-      margin: 0 auto 20px;    /* Center pages with spacing */
-      padding: 38px;          /* 1cm margins on all sides */
-      box-sizing: border-box;
-      background: white;
-      position: relative;
-      page-break-after: always;
-    }
-    
-    /* Content area is 718px × 1047px (794-76 × 1123-76) */
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #f5f5f5;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-    
-    /* Add your document-specific styles here */
-  </style>
-</head>
-<body>
-  <div class="pdf-page">
-    <!-- Page 1 content goes here -->
-  </div>
-  
-  <div class="pdf-page">
-    <!-- Page 2 content (if needed) -->
-  </div>
-</body>
-</html>""")
-                prompt_parts.append("\nIMPORTANT: Each <div class='pdf-page'> represents one A4 page. Split content across multiple pages if needed.")
-                prompt_parts.append("IMPORTANT: Content area inside each .pdf-page is 718px wide × 1047px tall (after 38px padding on all sides).")
-                prompt_parts.append("IMPORTANT: Do NOT add extra margins or padding inside .pdf-page - the 38px padding is already applied.")
-                
-                if document_type == "cover_letter":
-                    prompt_parts.append("\nThe output MUST be a professional cover letter in HTML format. Do not produce a resume/CV.")
-                    prompt_parts.append("A cover letter typically fits on ONE page. Use only one <div class='pdf-page'>.")
-                elif document_type == "resume":
-                    prompt_parts.append("\nThe output MUST be a resume/CV in HTML format. Do not produce a cover letter.")
-                    prompt_parts.append("A resume may span multiple pages. Use multiple <div class='pdf-page'> elements as needed.")
-                
-                if template_content:
-                    prompt_parts.append(f"\n===== TEMPLATE STRUCTURE =====\n{template_content}")
-                    prompt_parts.append("Adhere strictly to the provided template structure. Preserve layout, hierarchy, section order, class names, and ids.")
-                    prompt_parts.append("Ensure the template content is wrapped in the .pdf-page structure described above.")
-                
-                prompt_parts.append(f"\n===== USER REQUEST =====\n{user_input_clean}")
-                prompt_parts.append("\n===== OUTPUT REQUIREMENTS =====")
-                prompt_parts.append("- Return ONLY valid HTML5 code following the exact structure shown above")
-                prompt_parts.append("- Include the complete <!DOCTYPE html>, <html>, <head>, and <body> tags")
-                prompt_parts.append("- All content MUST be inside <div class='pdf-page'> elements")
-                prompt_parts.append("- Use clean, professional styling within the <style> tag")
-                prompt_parts.append("- Do NOT include explanations, markdown formatting, or code blocks")
-                prompt_parts.append("- Do NOT use ```html or ``` markers")
-                
-                full_prompt = "\n".join(prompt_parts)
-                pdf_content = await self._call_api(full_prompt, default_model, max_tokens=4000)
-            
             title = await title_task
             pdf_content = pdf_content.replace('\x00', '')
             title = title.replace('\x00', '')
@@ -926,7 +855,9 @@ class ChatService:
         num_pages: Optional[int] = None,
         file_paths: List[Path] = None,
         youtube_urls: List[str] = None,
-        webpage_urls: List[str] = None
+        webpage_urls: List[str] = None,
+        layout_image_base64: Optional[str] = None,
+        layout_image_url: Optional[str] = None
     ) -> AsyncIterator[str]:
         try:
             user_input_clean, template_content, document_type = await self._prepare_generation_inputs(
@@ -957,35 +888,21 @@ class ChatService:
                              chunks.append(chunk)
                              yield self._format_sse_event({"type": "chunk", "content": chunk})
                     else:
-                         # TEXT ONLY FLOW (Existing)
-                         should_use_gemini = True or True
-
-                         if not should_use_gemini:
-                             logger.info(f"Using {"mistral"} as primary streaming provider (num_pages={num_pages})")
-                             async for chunk in self._stream_fallback_generation(
-                                 user_input=user_input_clean,
-                                 conversation_history=None,
-                                 document_type=document_type,
-                                 template_content=template_content,
-                                 template_id=template_id,
-                                 num_pages=num_pages
-                             ):
-                                 chunks.append(chunk)
-                                 yield self._format_sse_event({"type": "chunk", "content": chunk})
-                         else:
-                             logger.info(f"Using Gemini as primary streaming provider (num_pages={num_pages})")
-                             try:
-                                 async for chunk in AIGenerator.stream_generate_document_chunks(
-                                     user_input=user_input_clean,
-                                     conversation_history=None,
-                                     document_type=document_type,
-                                     template_content=template_content,
-                                     template_id=template_id,
-                                     num_pages=num_pages
-                                 ):
-                                     chunks.append(chunk)
-                                     yield self._format_sse_event({"type": "chunk", "content": chunk})
-                             except ClientError as e:
+                        logger.info(f"Streaming document with LangGraph + Codestral (num_pages={num_pages})")
+                        try:
+                            async for chunk in AIGenerator.stream_generate_document_chunks(
+                                user_input=user_input_clean,
+                                conversation_history=None,
+                                document_type=document_type,
+                                template_content=template_content,
+                                template_id=template_id,
+                                num_pages=num_pages,
+                                layout_image_base64=layout_image_base64,
+                                layout_image_url=layout_image_url
+                            ):
+                                chunks.append(chunk)
+                                yield self._format_sse_event({"type": "chunk", "content": chunk})
+                        except ClientError as e:
                                  if e.code == 429:
                                      logger.warning("Gemini 429 Limit reached. Switching to fallback provider...")
                                      yield self._format_sse_event({"type": "status", "message": "switching_provider"})

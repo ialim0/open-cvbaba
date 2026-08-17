@@ -7,7 +7,8 @@ from alembic import context
 
 # Import your models and database engine from your app
 from app.db import Base, engine
-from app.models import user, chat, education, experience, interest , skill, user  # Import your models
+from app import models  # Import all SQLAlchemy models for autogenerate
+config.set_main_option("sqlalchemy.url", str(engine.url))
 
 # Interpret the config file for Python logging.
 config = context.config

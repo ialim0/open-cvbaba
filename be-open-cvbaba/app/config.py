@@ -37,10 +37,16 @@ class Settings(BaseSettings):
     MISTRAL_MODEL: str = "mistral-large-latest"
     MISTRAL_PLANNING_MODEL: str = "mistral-large-latest"
     MISTRAL_CODE_MODEL: str = "codestral-latest"
+    MISTRAL_VISION_MODEL: str = "pixtral-large-latest"
+    MISTRAL_CRITIC_MODEL: str = "mistral-large-latest"
+    MISTRAL_EMBEDDING_MODEL: str = "mistral-embed"
     MISTRAL_OCR_MODEL: str = "mistral-ocr-latest"
     MISTRAL_TRANSCRIPTION_MODEL: str = "voxtral-mini-latest"
     MISTRAL_REALTIME_MODEL: str = "voxtral-mini-transcribe-realtime-2602"
     MISTRAL_BASE_URL: str = "https://api.mistral.ai/v1"
+    ENABLE_VISUAL_CRITIC: bool = True
+    VISUAL_CRITIC_MAX_RETRIES: int = 2
+    PLAYWRIGHT_BROWSER: str = "chromium"
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore"  # Allow extra fields in .env

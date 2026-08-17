@@ -19,7 +19,18 @@ class ChatInput(BaseModel):
         le=70,
         description="Optional desired number of pages (1-70). If not specified, AI determines optimal length."
     )
+    layout_image_base64: Optional[str] = Field(
+        None,
+        description="Optional base64-encoded image of a hand-drawn sketch or wireframe"
+    )
+    layout_image_url: Optional[str] = Field(
+        None,
+        description="Optional URL of an uploaded layout sketch or photo"
+    )
     
+    brand_id: Optional[str] = Field(None, description="Optional brand DNA collection to use during planning")
+    brand_context: Optional[str] = Field(None, description="Optional pre-retrieved brand DNA context")
+
     @field_validator('user_input')
     @classmethod
     def validate_user_input(cls, v: str) -> str:
@@ -215,3 +226,19 @@ class ChatPageResponse(BaseModel):
 class TranslateRequest(BaseModel):
     target_language: str = Field(..., min_length=2, max_length=50, description="Target language code or name (e.g. 'es', 'French')")
     page_numbers: Optional[List[int]] = Field(None, description="Optional list of 1-based page numbers to translate")
+
+
+class VisionLayoutRequest(BaseModel):
+    image_base64: Optional[str] = Field(None, description="Base64 encoded sketch or wireframe image")
+    image_url: Optional[str] = Field(None, description="URL of sketch or wireframe image")
+    user_prompt: Optional[str] = Field(None, description="Optional text context explaining the sketch")
+
+
+class VisionLayoutResponse(BaseModel):
+    layout_type: str = Field("two-column-sidebar", description="Detected column/grid layout")
+    column_ratio: str = Field("30_70", description="Column distribution ratio")
+    header_style: str = Field("top-banner", description="Detected header style")
+    sections_order: List[str] = Field(default_factory=list, description="Ordered detected sections")
+    visual_elements: List[str] = Field(default_factory=list, description="Detected visual UI elements")
+    spatial_notes: str = Field("", description="Spatial summary")
+    status: str = "success"

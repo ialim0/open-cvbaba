@@ -1,1 +1,1 @@
-web: gunicorn --bind :8080 --workers 4 --worker-class uvicorn.workers.UvicornWorker app.main:app
+web: sh -c "python -c 'import asyncio; from app.db import init_db; asyncio.run(init_db())' && alembic upgrade head && exec gunicorn --bind :8080 --workers 4 --worker-class uvicorn.workers.UvicornWorker app.main:app"

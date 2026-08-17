@@ -15,3 +15,4 @@ from .chat_read_status import ChatReadStatus
 
 
 
+from .brand_dna import BrandDNAChunk

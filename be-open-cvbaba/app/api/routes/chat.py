@@ -23,6 +23,7 @@ from app.services.chat.chat_service import ChatService
 from app.services.pdf_service import PDFService
 from app.services.word_service import WordService
 from app.core.workspace import get_workspace_user
+from app.services.brand_dna import BrandDNAStore
 
 logger = logging.getLogger(__name__)
 
@@ -191,6 +192,10 @@ class ChatRouter:
         user_input = ""
         template_id = None
         num_pages = None
+        layout_image_base64 = None
+        layout_image_url = None
+        brand_id = None
+        brand_context = None
         files = []
         yt_urls = []
         web_urls = []
@@ -207,6 +212,10 @@ class ChatRouter:
                     user_input = chat_input.user_input
                     template_id = chat_input.template_id
                     num_pages = chat_input.num_pages
+                    layout_image_base64 = chat_input.layout_image_base64
+                    layout_image_url = chat_input.layout_image_url
+                    brand_id = chat_input.brand_id
+                    brand_context = chat_input.brand_context
                 except Exception as e:
                     raise HTTPException(status_code=400, detail=f"Invalid JSON: {e}")
                     
@@ -217,6 +226,9 @@ class ChatRouter:
                 template_id = form.get("template_id") or None
                 num_pages_raw = form.get("num_pages")
                 num_pages = int(num_pages_raw) if num_pages_raw else None
+                layout_image_base64 = form.get("layout_image_base64")
+                layout_image_url = form.get("layout_image_url")
+                brand_id = form.get("brand_id") or None
                 
                 youtube_urls = form.get("youtube_urls")
                 webpage_urls = form.get("webpage_urls")
@@ -250,6 +262,9 @@ class ChatRouter:
             if not user_input:
                 raise HTTPException(status_code=400, detail="user_input is required")
 
+            if brand_id and not brand_context:
+                brand_context = await BrandDNAStore(db).context(current_user.id, brand_id, user_input)
+
             self._log_user_activity("Creating", current_user, template_id=template_id)
             
             chat = await chat_service.create_chat(
@@ -261,7 +276,10 @@ class ChatRouter:
                 num_pages=num_pages,
                 file_paths=temp_paths,
                 youtube_urls=yt_urls,
-                webpage_urls=web_urls
+                webpage_urls=web_urls,
+                layout_image_base64=layout_image_base64,
+                layout_image_url=layout_image_url,
+                brand_context=brand_context
             )
             return ChatResponse.model_validate(chat)
             
@@ -294,6 +312,8 @@ class ChatRouter:
         user_input = ""
         template_id = None
         num_pages = None
+        layout_image_base64 = None
+        layout_image_url = None
         files = []
         yt_urls = []
         web_urls = []
@@ -310,6 +330,8 @@ class ChatRouter:
                     user_input = chat_input.user_input
                     template_id = chat_input.template_id
                     num_pages = chat_input.num_pages
+                    layout_image_base64 = chat_input.layout_image_base64
+                    layout_image_url = chat_input.layout_image_url
                 except Exception as e:
                     raise HTTPException(status_code=400, detail=f"Invalid JSON: {e}")
                     
@@ -320,6 +342,8 @@ class ChatRouter:
                 template_id = form.get("template_id") or None
                 num_pages_raw = form.get("num_pages")
                 num_pages = int(num_pages_raw) if num_pages_raw else None
+                layout_image_base64 = form.get("layout_image_base64")
+                layout_image_url = form.get("layout_image_url")
                 
                 youtube_urls = form.get("youtube_urls")
                 webpage_urls = form.get("webpage_urls")
@@ -364,7 +388,9 @@ class ChatRouter:
                 num_pages=num_pages,
                 file_paths=temp_paths,
                 youtube_urls=yt_urls,
-                webpage_urls=web_urls
+                webpage_urls=web_urls,
+                layout_image_base64=layout_image_base64,
+                layout_image_url=layout_image_url
             )
             
             async def cleanup_stream(inner_stream):
