@@ -9,8 +9,6 @@ import { useRouter, usePathname } from 'next/navigation'
 
 import { SidebarProvider, useSidebar } from "../contexts/SidebarContext"
 import Sidebar from "./Sidebar/Sidebar"
-import GeneralComponent from "./Sidebar/General"
-import LanguageModal from "./Sidebar/components/LanguageModal"
 import { useTranslation } from "../i18n/i18n"
 import { OpenCvbabaLogo } from "./ui/OpenCvbabaLogo"
 
@@ -117,9 +115,7 @@ const ActivityLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =
 const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { t } = useTranslation('activity')
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false)
   const [isLoading] = useState<boolean>(false)
-  const [isLanguageModalOpen, setIsLanguageModalOpen] = useState<boolean>(false)
   const [isMobile, setIsMobile] = useState<boolean>(false)
   const [isSidebarLocked, setIsSidebarLocked] = useState<boolean>(false)
 
@@ -134,24 +130,6 @@ const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-
-  const handleOpenSettingsModal = useCallback(() => {
-    setIsSettingsModalOpen(true)
-    if (isMobile) setIsSidebarOpen(false)
-  }, [isMobile, setIsSidebarOpen])
-
-  const handleCloseSettingsModal = useCallback(() => {
-    setIsSettingsModalOpen(false)
-  }, [])
-
-  const handleOpenLanguageModal = useCallback(() => {
-    setIsLanguageModalOpen(true)
-    if (isMobile) setIsSidebarOpen(false)
-  }, [isMobile, setIsSidebarOpen])
-
-  const handleCloseLanguageModal = useCallback(() => {
-    setIsLanguageModalOpen(false)
-  }, [])
 
   const toggleSidebar = useCallback(() => {
     setIsSidebarOpen((prev) => !prev)
@@ -210,8 +188,6 @@ const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         >
           {isSidebarOpen && (
             <Sidebar
-              onOpenSettingsModal={handleOpenSettingsModal}
-              onOpenLanguageModal={handleOpenLanguageModal}
               isMobile={isMobile}
               onLockedChange={setIsSidebarLocked}
             />
@@ -235,9 +211,6 @@ const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       </main>
 
       {/* Modals */}
-      <GeneralComponent isOpen={isSettingsModalOpen} onClose={handleCloseSettingsModal} />
-      <LanguageModal isOpen={isLanguageModalOpen} onClose={handleCloseLanguageModal} />
-
       {/* Enhanced Loading Overlay */}
       {isLoading && (
         <div className="fixed inset-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md flex items-center justify-center z-50">

@@ -52,7 +52,7 @@ const UploadPage: React.FC<UploadPageProps> = ({ onBack, onComplete, onFileExtra
                 extractedText,
                 documentType: 'cv',
                 templateId: '',
-                language: 'en-US',
+                language: 'en',
             });
         } catch (error) {
             console.error('Error processing file:', error);

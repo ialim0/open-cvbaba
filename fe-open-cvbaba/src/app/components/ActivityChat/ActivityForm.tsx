@@ -1,7 +1,7 @@
 // ActivityForm.tsx
 import React, { useState, useCallback, ChangeEvent, useEffect, useRef } from 'react';
 import { useAnimatedPlaceholder } from '@/app/hooks/useAnimatedPlaceholder';
-import { Loader2, ArrowRight, Camera, ChevronDown, Upload, Type, Sparkles, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Settings, Globe, Grid3X3, Layers, Paperclip, Link2, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
+import { Loader2, ArrowRight, Camera, ChevronDown, Upload, Type, Sparkles, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Globe, Grid3X3, Layers, Paperclip, Link2, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
 import Label from '../ui/Label';
 import TemplateSelector from './TemplateSelector';
 import { templates } from './data/templates';
@@ -9,7 +9,6 @@ import Textarea from '../ui/Textarea';
 import { AutoResizeTextarea } from '../ui/AutoResizeTextarea';
 import axios from 'axios';
 import { useTranslation } from '@/app/i18n/i18n';
-import AdditionalOptionsModal from './SettingsModal';
 import TranslateModal from './TranslateModal';
 import ATSModal from './ATSModal';
 import StyleModal from './StyleModal';
@@ -129,7 +128,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   const [languageSearchTerm, setLanguageSearchTerm] = useState('');
   const [isPhotoDropdownOpen, setIsPhotoDropdownOpen] = useState(false);
 
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isTranslateModalOpen, setIsTranslateModalOpen] = useState(false);
   const [isATSModalOpen, setIsATSModalOpen] = useState(false);
   const [isStyleModalOpen, setIsStyleModalOpen] = useState(false);
@@ -180,7 +178,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   };
 
   // Speech-to-text integration
-  // Use input_language from user profile (set in Settings)
   // Google STT 'long' model requires specific region codes (e.g. fr-FR, not just fr)
   const getFullLocale = (code?: string) => {
     if (!code) return 'en-US';
@@ -501,7 +498,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   };
 
   const handleRemovePhoto = async () => {
-    // Photo removal is now managed through Settings
     // Just toggle the include photo setting off
     setIncludePhoto(false);
   };
@@ -1390,18 +1386,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
             accept=".pdf,.docx,.txt,.doc"
           />
         </form>
-
-        {/* Additional Options Modal */}
-        <AdditionalOptionsModal
-          isOpen={isSettingsModalOpen}
-          onClose={() => setIsSettingsModalOpen(false)}
-          formData={formData}
-          setFormData={setFormData}
-          includePhoto={includePhoto}
-          setIncludePhoto={setIncludePhoto}
-          userProfile={userProfile}
-          setUserProfile={setUserProfile}
-        />
 
         {/* Translate Modal */}
         <TranslateModal

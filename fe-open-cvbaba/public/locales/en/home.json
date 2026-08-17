@@ -1196,5 +1196,10 @@
         "hasComponent": false
       }
     ]
+  },
+  "errors": {
+    "submissionError": "We could not submit your request. Please try again.",
+    "assistantError": "The assistant could not complete that request. Please try again.",
+    "input_too_long": "Your request is too long. Please shorten it and try again."
   }
 }

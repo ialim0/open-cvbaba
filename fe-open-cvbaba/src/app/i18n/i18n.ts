@@ -2,7 +2,6 @@
 import i18next, { i18n as I18nInstance, InitOptions } from 'i18next';
 import { initReactI18next, useTranslation as useTranslationAlias } from 'react-i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
 import { supportedLanguages, fallbackLng, LocaleTypes } from '../config/languages';
 
 // Re-export for backward compatibility
@@ -21,17 +20,11 @@ const defaultOptions: InitOptions = {
   fallbackLng,
   fallbackNS: defaultNamespace,
   defaultNS: defaultNamespace,
-  detection: {
-    order: ['localStorage', 'navigator'],
-    caches: ['localStorage'],
-    lookupLocalStorage: 'preferredLanguage',
-  },
   debug: process.env.NODE_ENV === 'development',
 };
 
 export const i18nInstance = i18next
   .use(initReactI18next)
-  .use(LanguageDetector)
   .use(
     resourcesToBackend((language: string, namespace: string) =>
       import(`../../../public/locales/${language}/${namespace}.json`).catch(() => {

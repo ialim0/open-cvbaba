@@ -47,7 +47,7 @@ const ImportPage: React.FC<ImportPageProps> = ({ onBack, onComplete }) => {
                 extractedText: mockExtractedText,
                 documentType: 'cv',
                 templateId: '',
-                language: 'en-US',
+                language: 'en',
                 sourceUrl: url
             });
         } catch (error) {

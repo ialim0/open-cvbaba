@@ -6,7 +6,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ActivityChatProps } from "./ActivityChat.types";
 import { useSidebar } from "@/app/contexts/SidebarContext";
-import { useLanguage } from "@/app/contexts/LanguageContext";
 import { useTranslation } from "@/app/i18n/i18n";
 import { useExtractSlug } from "@/app/hooks/useExtractSlug";
 import { submitData } from "@/app/hooks/useSubmitData";
@@ -45,7 +44,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   chat,
 }) => {
   const { isSidebarOpen } = useSidebar();
-  const { language } = useLanguage();
   const router = useRouter();
   const searchParams = useSearchParams();
   const previewRef = useRef<{
@@ -113,7 +111,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   const [formData, setFormData] = useState<ActivityFormData>({
     resumeDescription: "",
     selectedTemplateId: "",
-    language: "en-US",
+    language: "en",
     pageCount: 1,
     documentSize: "A2" as string,
     documentOrientation: "portrait" as string,
@@ -864,7 +862,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
           if (responseError && Array.isArray(responseError.detail)) {
             const errorDetail = responseError.detail[0];
             if (errorDetail.type === "string_too_long") {
-              setError(t('activity_chat.messages.input_too_long'));
+              setError(t('errors.input_too_long'));
             } else {
               setError(t('errors.assistantError'));
             }

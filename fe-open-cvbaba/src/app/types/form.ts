@@ -19,13 +19,13 @@ export interface UserProfile {
     // New fields from API update
     custom_instructions: string | null;
     theme_preference: string | null;
-    input_language: string;  // Voice input language (default: "en-US")
+    input_language: string;  // Voice input language (default: "en")
     output_language: string; // Document output language (default: "en")
 }
 
 // Default values for new user profiles
 export const DEFAULT_USER_PROFILE: Partial<UserProfile> = {
-    input_language: 'en-US',
+    input_language: 'en',
     output_language: 'en',
     custom_instructions: null,
     theme_preference: null,

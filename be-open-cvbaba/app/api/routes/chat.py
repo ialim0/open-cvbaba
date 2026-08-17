@@ -196,6 +196,7 @@ class ChatRouter:
         layout_image_url = None
         brand_id = None
         brand_context = None
+        language = "en"
         files = []
         yt_urls = []
         web_urls = []
@@ -216,6 +217,7 @@ class ChatRouter:
                     layout_image_url = chat_input.layout_image_url
                     brand_id = chat_input.brand_id
                     brand_context = chat_input.brand_context
+                    language = chat_input.language
                 except Exception as e:
                     raise HTTPException(status_code=400, detail=f"Invalid JSON: {e}")
                     
@@ -229,6 +231,9 @@ class ChatRouter:
                 layout_image_base64 = form.get("layout_image_base64")
                 layout_image_url = form.get("layout_image_url")
                 brand_id = form.get("brand_id") or None
+                language = form.get("language") or "en"
+                if language not in {"en", "fr", "es"}:
+                    raise HTTPException(status_code=422, detail="Document language must be en, fr, or es")
                 
                 youtube_urls = form.get("youtube_urls")
                 webpage_urls = form.get("webpage_urls")
@@ -261,6 +266,8 @@ class ChatRouter:
 
             if not user_input:
                 raise HTTPException(status_code=400, detail="user_input is required")
+
+            user_input = f"{user_input}\n\nTarget document language: {language}."
 
             if brand_id and not brand_context:
                 brand_context = await BrandDNAStore(db).context(current_user.id, brand_id, user_input)

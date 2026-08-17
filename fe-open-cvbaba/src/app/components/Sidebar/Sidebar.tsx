@@ -75,8 +75,6 @@ interface SharedChat {
 }
 
 interface SidebarProps {
-  onOpenSettingsModal: () => void;
-  onOpenLanguageModal: () => void;
   isMobile: boolean;
   onLockedChange?: (locked: boolean) => void;
 }
@@ -89,8 +87,6 @@ const quickActionIcons = {
 
 const Sidebar: React.FC<SidebarProps> = React.memo(
   ({
-    onOpenSettingsModal,
-    onOpenLanguageModal,
     isMobile,
     onLockedChange,
   }) => {
@@ -553,34 +549,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
           <div className="p-3 border-t border-border flex-shrink-0 bg-background/50 backdrop-blur-sm">
             <div className="flex items-center justify-between gap-1 px-1">
               <div className="flex items-center gap-1">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={onOpenSettingsModal}
-                      className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-200"
-                    >
-                      <Settings className="h-5 w-5" />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="bg-blue-600 text-white text-xs px-2 py-1 rounded shadow-lg animate-in fade-in zoom-in duration-200">
-                    {t("sidebar.settingsMenuItem")}
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={onOpenLanguageModal}
-                      className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-200"
-                    >
-                      <Languages className="h-5 w-5" />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="bg-blue-600 text-white text-xs px-2 py-1 rounded shadow-lg animate-in fade-in zoom-in duration-200">
-                    {t("sidebar.language")}
-                  </TooltipContent>
-                </Tooltip>
-
                 <ThemeSwitcher onOpenChange={onLockedChange} />
               </div>
 

@@ -80,7 +80,7 @@ const ImportUploadPage: React.FC<ImportUploadPageProps> = ({ onBack, onComplete,
                 extractedText,
                 documentType: 'cv',
                 templateId: '',
-                language: 'en-US',
+                language: 'en',
             });
         } catch (error) {
             console.error('Error processing file:', error);
@@ -103,7 +103,7 @@ const ImportUploadPage: React.FC<ImportUploadPageProps> = ({ onBack, onComplete,
                 extractedText,
                 documentType: 'cv',
                 templateId: '',
-                language: 'en-US',
+                language: 'en',
                 sourceUrl: url
             });
         } catch (error) {

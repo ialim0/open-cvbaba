@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict, field_validator, model_validator
 from datetime import datetime
-from typing import Optional, List
+from typing import Literal, Optional, List
 
 class ChatInput(BaseModel):
     user_input: str = Field(
@@ -12,6 +12,9 @@ class ChatInput(BaseModel):
     template_id: Optional[str] = Field(
         None,
         description="Optional template ID to use for formatting the response"
+    )
+    language: Literal["en", "fr", "es"] = Field(
+        "en", description="Language of the generated document; the website UI remains English"
     )
     num_pages: Optional[int] = Field(
         None,
@@ -224,7 +227,7 @@ class ChatPageResponse(BaseModel):
     content: str
 
 class TranslateRequest(BaseModel):
-    target_language: str = Field(..., min_length=2, max_length=50, description="Target language code or name (e.g. 'es', 'French')")
+    target_language: Literal["en", "fr", "es"] = Field(..., description="Target document language")
     page_numbers: Optional[List[int]] = Field(None, description="Optional list of 1-based page numbers to translate")
 
 

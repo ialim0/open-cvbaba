@@ -4,7 +4,6 @@ import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { TooltipProvider } from './components/ui/Tooltip';
-import { LanguageProvider } from './contexts/LanguageContext';
 import { ThemeProvider } from './components/ThemeProvider';
 import GoogleAnalytics from './components/Sidebar/components/GoogleAnalytics';
 
@@ -53,11 +52,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <GoogleAnalytics />
-        <LanguageProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <TooltipProvider>{children}</TooltipProvider>
-          </ThemeProvider>
-        </LanguageProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <TooltipProvider>{children}</TooltipProvider>
+        </ThemeProvider>
 
         <ToastContainer
           position="top-right"

@@ -14,7 +14,7 @@ const CreatePage: React.FC<CreatePageProps> = ({ onSelectOption, onBack }) => {
     const { t } = useTranslation('activity');
     const [step, setStep] = useState<'template' | 'language'>('template');
     const [selectedTemplateId, setSelectedTemplateId] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState('en-US');
+    const [selectedLanguage, setSelectedLanguage] = useState('en');
 
     const getStepNumber = () => {
         return step === 'template' ? 1 : 2;
