@@ -1,7 +1,7 @@
 // ActivityForm.tsx
 import React, { useState, useCallback, ChangeEvent, useEffect, useRef } from 'react';
 import { useAnimatedPlaceholder } from '@/app/hooks/useAnimatedPlaceholder';
-import { Loader2, ArrowRight, Camera, ChevronDown, Upload, Type, Sparkles, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Globe, Layers, Paperclip, Link2, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
+import { Loader2, ArrowRight, Camera, ChevronDown, Type, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Globe, Layers, Paperclip, Link2, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
 import Label from '../ui/Label';
 import Textarea from '../ui/Textarea';
 import { AutoResizeTextarea } from '../ui/AutoResizeTextarea';
@@ -29,8 +29,6 @@ interface ActivityFormProps {
   userProfile: UserProfile | null;
   setUserProfile: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   hasExistingChat?: boolean; // New prop to indicate if there's an existing chat/slug
-  selectedOption: 'prompt' | 'import' | 'create' | 'upload' | null;
-  setSelectedOption: (option: 'prompt' | 'import' | 'create' | 'upload' | null) => void;
   selectedDocumentType: string | null;
   setSelectedDocumentType: (type: string | null) => void;
   // Page tools props
@@ -87,8 +85,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   userProfile,
   setUserProfile,
   hasExistingChat = false,
-  selectedOption,
-  setSelectedOption,
   selectedDocumentType,
   setSelectedDocumentType,
   // Page tools
@@ -451,7 +447,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
         const extractedText = await handleFileExtract(file);
         setFormData(prev => ({ ...prev, resumeDescription: extractedText }));
         // Switch to prompt mode after successful upload
-        setSelectedOption('prompt');
       } catch (error) {
         console.error('Error extracting text from file:', error);
         // You might want to show an error message to the user here
@@ -495,117 +490,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
     }
   };
 
-
-  // Show initial options only for new resume creation (no existing chat)
-  if (!hasExistingChat && !selectedOption) {
-    return (
-      <div className="min-h-screen py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-
-            <p className="text-gray-600 dark:text-gray-400 text-xl sm:text-2xl font-medium transition-colors">
-              {t('activityForm.chooseMethodDescription')}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {/* Create option */}
-            <button
-              onClick={() => setSelectedOption('create')}
-              className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-800 focus:border-gray-400 dark:focus:border-gray-500 p-8 text-left w-full"
-              aria-label={`${t('activityForm.generatePrompt')} - ${t('activityForm.generatePromptDescription')}`}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="flex flex-col h-full">
-                {/* Icon container */}
-                <div className="flex justify-center mb-6">
-                  <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center group-hover:bg-gray-200 dark:group-hover:bg-gray-650 transition-all duration-300 group-hover:scale-105">
-                    <PenTool className="w-8 h-8 text-gray-900 dark:text-gray-100" />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-black dark:group-hover:text-white transition-colors text-center">
-                    {t('activityForm.generatePrompt')}
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-1 text-center">
-                    {t('activityForm.generatePromptDescription')}
-                  </p>
-                </div>
-              </div>
-            </button>
-
-            {/* Upload option */}
-            <button
-              onClick={() => setSelectedOption('upload')}
-              disabled={isUploadingDocument}
-              className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-800 focus:border-gray-400 dark:focus:border-gray-500 p-8 text-left w-full"
-              aria-label={t('activityForm.uploadButtonLabel', { defaultValue: 'Upload - Transform your existing document instantly' })}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="flex flex-col h-full">
-                {/* Icon container */}
-                <div className="flex justify-center mb-6">
-                  <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center group-hover:bg-gray-200 dark:group-hover:bg-gray-650 transition-all duration-300 group-hover:scale-105">
-                    {isUploadingDocument ? (
-                      <Loader2 className="w-8 h-8 text-gray-900 dark:text-gray-100 animate-spin" />
-                    ) : (
-                      <Upload className="w-8 h-8 text-gray-900 dark:text-gray-100" />
-                    )}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-black dark:group-hover:text-white transition-colors text-center">
-                    {t('activityForm.uploadButton', { defaultValue: 'Upload' })}
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-1 text-center">
-                    {t('activityForm.uploadButtonDescription', { defaultValue: 'Update your existing CV, cover letter, or SOP instantly.' })}
-                  </p>
-                </div>
-              </div>
-            </button>
-
-            {/* Import from URL option */}
-            <button
-              onClick={() => setSelectedOption('import')}
-              className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-800 focus:border-gray-400 dark:focus:border-gray-500 p-8 text-left w-full"
-              aria-label="Import from URL - Import content from YouTube, websites, or Notion"
-              role="button"
-              tabIndex={0}
-            >
-              <div className="flex flex-col h-full">
-                {/* Icon container */}
-                <div className="flex justify-center mb-6">
-                  <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center group-hover:bg-gray-200 dark:group-hover:bg-gray-650 transition-all duration-300 group-hover:scale-105">
-                    <Globe className="w-8 h-8 text-gray-900 dark:text-gray-100" />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-black dark:group-hover:text-white transition-colors text-center">
-                    Import from URL
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-1 text-center">
-                    Import content from YouTube, websites, or Notion
-                  </p>
-                </div>
-              </div>
-            </button>
-
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // All page rendering has been moved to ActivityChat component
-  // ActivityForm now only handles the main form when selectedOption is 'prompt' or null
 
   // Handle paste events for images and files
   const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {

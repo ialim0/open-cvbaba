@@ -22,7 +22,6 @@ import CreatePage from "./pages/CreatePage";
 import { OpenCvbabaLogo } from "../ui/OpenCvbabaLogo";
 import FeedbackToast from "../feedback/FeedbackToast";
 import FeedbackFollowUpModal from "../feedback/FeedbackFollowUpModal";
-import ImportUploadPage from "./pages/ImportUploadPage";
 import { PdfPreview } from "../PdfPreview/PdfPreview";
 import Modal from "../ui/Modal";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -63,7 +62,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   const [html, setHtml] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
-  const [selectedOption, setSelectedOption] = useState<'prompt' | 'import' | 'create' | 'upload' | null>(null);
+  const [selectedOption, setSelectedOption] = useState<'prompt' | 'create'>('prompt');
   const [versions, setVersions] = useState<Version[]>([]);
   const [currentVersionId, setCurrentVersionId] = useState<number | undefined>(undefined);
   const [isLoadingVersions, setIsLoadingVersions] = useState(false);
@@ -136,19 +135,13 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       setFormData(prev => ({ ...prev, resumeDescription: initialPrompt }));
     }
 
-    if (mode && ['prompt', 'import', 'create', 'upload'].includes(mode)) {
+    if (mode && ['prompt', 'create'].includes(mode)) {
       setSelectedOption(mode as any);
     } else {
-      setSelectedOption(null);
+      setSelectedOption('prompt');
     }
   }, [searchParams]);
 
-  useEffect(() => {
-    if (selectedOption === 'import') {
-      console.log('Import mode selected');
-      // Import initialization if needed
-    }
-  }, [selectedOption]);
 
 
 
@@ -954,10 +947,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
     router.push(`/activity?${newParams.toString()}`);
   };
 
-  const handleFileExtract = async (file: File): Promise<string> => {
-    // This is a placeholder - the actual implementation is in UploadPage
-    return "";
-  };
 
 
 
@@ -993,51 +982,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
 
 
-  const handleImportComplete = (data: {
-    extractedText: string;
-    documentType: string;
-    templateId: string;
-    language: string;
-    sourceUrl?: string;
-  }) => {
-    // Generate a clear prompt for import
-    // Generate a clear prompt for import/upload
-    let promptText = '';
-
-    if (data.sourceUrl) {
-      promptText = `
-        I have imported content from the URL: ${data.sourceUrl}.
-        
-        Please create a ${data.documentType.replace('-', ' ')} based on the content found at this URL.
-        Target Language: ${data.language}
-        
-        Extracted Content Preview:
-        ${data.extractedText}
-      `.trim();
-    } else {
-      promptText = `
-        I have uploaded a document.
-        
-        Please create a ${data.documentType.replace('-', ' ')} based on the extracted content.
-        Target Language: ${data.language}
-        
-        Extracted Content:
-        ${data.extractedText}
-      `.trim();
-    }
-
-    const prompt = promptText;
-
-    setFormData(prev => ({
-      ...prev,
-      resumeDescription: prompt,
-      selectedTemplateId: data.templateId,
-      language: data.language,
-    }));
-    setSelectedDocumentType(data.documentType);
-    router.push('/activity?mode=prompt');
-    setShouldAutoSubmit(true);
-  };
 
   const handleTranslateComplete = (data: {
     extractedText: string;
@@ -1061,24 +1005,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
     setShouldAutoSubmit(true);
   };
 
-  const handleSetSelectedOption = (option: 'prompt' | 'import' | 'create' | 'upload' | null) => {
-    if (option === null) {
-      router.push('/activity');
-    } else {
-      router.push(`/activity?mode=${option}`);
-    }
-  };
-
   // Render full-page views for each option
-  if (!slug && selectedOption === 'import') {
-    return (
-      <ImportUploadPage
-        onBack={() => router.push('/activity')}
-        onComplete={handleImportComplete}
-        onFileExtract={handleFileExtract}
-      />
-    );
-  }
   if (!slug && selectedOption === 'create') {
     return (
       <CreatePage
@@ -1192,8 +1119,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                       userProfile={userProfile}
                       setUserProfile={setUserProfile}
                       hasExistingChat={!!slug || !!chat}
-                      selectedOption={selectedOption}
-                      setSelectedOption={handleSetSelectedOption}
                       selectedDocumentType={selectedDocumentType}
                       setSelectedDocumentType={setSelectedDocumentType}
                       // Attachment props (multiple files and URLs)
