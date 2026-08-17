@@ -485,14 +485,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         data.profile_photo_url = currentAvatar;
       }
 
-      // Add visual sketch layout if present
-      if (formData.layoutImageBase64) {
-        data.layout_image_base64 = formData.layoutImageBase64;
-      }
-      if (formData.layoutImageUrl) {
-        data.layout_image_url = formData.layoutImageUrl;
-      }
-
       // Unified Multimodal Creation: Use FormData if attachments are present
       let submissionData: any = data;
       const hasAttachments = attachedFiles.length > 0;
