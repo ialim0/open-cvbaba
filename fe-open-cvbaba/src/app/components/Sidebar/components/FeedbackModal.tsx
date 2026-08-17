@@ -80,7 +80,8 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
     formDataToSend.append("message", message);
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_CONTACT as string, {
+      const endpoint = process.env.NEXT_PUBLIC_CONTACT || '/api/feedback';
+      const response = await fetch(endpoint, {
         method: "POST",
         body: formDataToSend,
       });

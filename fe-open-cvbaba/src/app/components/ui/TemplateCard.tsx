@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from './button';
+import { Button } from './Button';
 import { Template } from '@/app/types/template';
 import { Eye, Check } from 'lucide-react';
 import dynamic from 'next/dynamic';
@@ -67,7 +67,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({ template, onSelect, 
       </div>
       <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 rounded-lg bg-white/80 backdrop-blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <Button
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent) => {
             e.stopPropagation();
             onPreview();
           }}
@@ -79,7 +79,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({ template, onSelect, 
           <span>Preview</span>
         </Button>
         <Button
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent) => {
             e.stopPropagation();
             onSelect();
           }}

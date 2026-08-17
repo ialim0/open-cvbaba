@@ -2,7 +2,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from './button';
+import { Button } from './Button';
 import { X } from 'lucide-react';
 
 interface TemplatePreviewModalProps {

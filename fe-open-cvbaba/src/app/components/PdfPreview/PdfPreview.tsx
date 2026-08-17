@@ -57,6 +57,8 @@ import { useStreamSubmitData } from "@/app/hooks/useStreamSubmitData";
 import { TextSelectionToolbar } from "./TextSelectionToolbar";
 import { BlockHoverMenu } from "./BlockHoverMenu";
 import axios from "axios";
+const DESKTOP_WIDTH = 794;
+const DESKTOP_HEIGHT = 1123;
 
 interface Version {
   id: number;
@@ -64,14 +66,6 @@ interface Version {
   pdf_content: string;
   created_at: string;
   version_number: number;
-}
-
-interface SubscriptionData {
-  plan_type: string;
-  credits_available: number;
-  last_updated: string;
-  subscription_status: string;
-  created_at: string;
 }
 
 interface PdfPreviewProps {
@@ -104,8 +98,6 @@ interface PdfPreviewProps {
   isPdfGenerating?: boolean;
   onFixPagination?: (overflowPages?: number[]) => void;
   isStreaming?: boolean;
-  subscription?: SubscriptionData | null;
-  creditsAvailable?: number;
   onShare?: (email: string) => Promise<void>;
   onTogglePublic?: (isPublic: boolean) => Promise<void>;
   isPublic?: boolean;
@@ -138,8 +130,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   isPdfGenerating = false,
   onFixPagination,
   isStreaming = false,
-  subscription: propSubscription,
-  creditsAvailable: propCreditsAvailable,
   onShare,
   onTogglePublic,
   isPublic = false,
@@ -203,11 +193,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const userHasScrolledRef = useRef(false);
   const isAutoScrollingRef = useRef(false);
-
-  // State for subscription data
-  const [subscription, setSubscription] = useState<SubscriptionData | null>(propSubscription || null);
-  const [isLoadingSubscription, setIsLoadingSubscription] = useState(false);
-  const [subscriptionError, setSubscriptionError] = useState<string | null>(null);
 
   // Share state
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -910,9 +895,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     }
   }, [chatSlug, fetchComments]);
 
-  // Fetch subscription data
-  const fetchSubscription = useCallback(async () => {}, []);
-
   // Only show loader for PDF mode, not during streaming or editing
   useEffect(() => {
     if (pdfUrl && !isEditMode && !isStreaming) {
@@ -1241,7 +1223,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     // Create content container
     const contentContainer = document.createElement('div');
     contentContainer.className = 'document-body';
-    contentContainer.setAttribute('contenteditable', (isEditMode && canEdit) ? 'true' : 'false');
+    contentContainer.setAttribute('contenteditable', (isEditMode) ? 'true' : 'false');
     shadow.appendChild(contentContainer);
 
     // Add event listeners
@@ -1577,11 +1559,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   const handleInsertPage = async (prompt: string, position: 'before' | 'after') => {
     if (!chatSlug || !prompt.trim()) return;
 
-    if (subscription && subscription.credits_available < 1) {
-      toast.error(t('errors.insufficientCredits', { defaultValue: 'Insufficient credits' }));
-      return;
-    }
-
     // Keep modal open/loading state managed by isAddingPage
     setIsAddingPage(true);
 
@@ -1837,10 +1814,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     }
     try {
       await onPdfGenerate(pages);
-      // Refresh subscription data after generation to update credits
-      if (!propSubscription) {
-        fetchSubscription();
-      }
     } finally {
       suppressCommitRef.current = false;
       setIsGenerating(false);
@@ -2030,7 +2003,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
             <div className="h-4 w-px bg-gray-200 dark:bg-gray-700 mx-2 transition-colors" />
 
             {/* Version History Dropdown - Hidden for shared chats */}
-            {canSeeVersionHistory && (
+            {true && (
               <div className="relative group">
                 <Button
                   variant="outline"
@@ -2089,7 +2062,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
                 <div className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 hidden group-hover:block animate-in fade-in zoom-in-95 duration-100">
                   {/* Version History (Mobile) */}
-                  {canSeeVersionHistory && (
+                  {true && (
                     <button
                       onClick={() => {
                         /* Handle simple version toggle or show a modal for versions on mobile if needed */
@@ -2114,7 +2087,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                   <div className="my-1 border-t border-gray-100 dark:border-gray-700" />
 
                   {/* Export Options (Mobile) */}
-                  {canExport && (
+                  {true && (
                     <>
                       <button
                         onClick={() => handleDownloadClick()}
@@ -2173,7 +2146,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
               <div className="h-4 w-px bg-gray-200 dark:bg-gray-700 mx-2 transition-colors" />
 
               {/* Make a Copy Button (visible for shared chats) */}
-              {canCopy && onCopyChat && (
+              {onCopyChat && (
                 <Button
                   variant="default"
                   size="sm"
@@ -2212,7 +2185,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
               {/* Share and Export Buttons - Desktop */}
               <div className="flex items-center space-x-2">
                 {/* Share Button */}
-                {canShare && onShare && (
+                {onShare && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -2225,7 +2198,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                 )}
 
                 {/* Download PDF Button */}
-                {canExport && (
+                {true && (
                   <div className="relative" ref={formatMenuRef}>
                     <Button
                       variant="default"
@@ -2272,7 +2245,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
             {isMobile && (
               <div className="flex items-center space-x-1">
                 {/* Minimal Share Button for Mobile */}
-                {canShare && onShare && (
+                {onShare && (
                   <Button
                     variant="ghost"
                     size="sm"
@@ -2307,10 +2280,9 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       <div className="flex flex-1 min-h-0">
         {/* Document Preview */}
         <div
-          ref={setRefs}
+          ref={containerRef}
           onScroll={handleScroll}
-          className={`w-full overflow-auto relative transition-colors ${isDragging ? "cursor-grabbing" : "cursor-default"
-            } scroll-smooth scrollbar-modern`}
+          className="w-full overflow-auto relative transition-colors cursor-default scroll-smooth scrollbar-modern"
           style={{
             backgroundColor: '#ffffff',
             backgroundImage: 'radial-gradient(#e5e7eb 1px, transparent 1px)',

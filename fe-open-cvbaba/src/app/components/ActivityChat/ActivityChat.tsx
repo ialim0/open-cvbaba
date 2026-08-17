@@ -39,14 +39,6 @@ interface Version {
   version_number: number;
 }
 
-interface SubscriptionData {
-  plan_type: string;
-  credits_available: number;
-  last_updated: string;
-  subscription_status: string;
-  created_at: string;
-}
-
 const ActivityChat: React.FC<ActivityChatProps> = ({
   includePhoto,
   setIncludePhoto,
@@ -76,16 +68,12 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
   const [html, setHtml] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [paymentModalMessage, setPaymentModalMessage] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<'prompt' | 'import' | 'templates' | 'create_mode' | 'upload' | null>(null);
   const [versions, setVersions] = useState<Version[]>([]);
   const [currentVersionId, setCurrentVersionId] = useState<number | undefined>(undefined);
   const [isLoadingVersions, setIsLoadingVersions] = useState(false);
   const [streamingHtml, setStreamingHtml] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
-  const [subscription, setSubscription] = useState<SubscriptionData | null>(null);
-  const [creditsAvailable, setCreditsAvailable] = useState<number>(0);
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const [accessLevel, setAccessLevel] = useState<string | undefined>(undefined);
   const [chatTitle, setChatTitle] = useState<string>(chat?.title || "");
@@ -263,10 +251,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
     fetchChatDetails();
   }, [fetchChatDetails]);
 
-
-
-  const fetchSubscription = useCallback(async () => {}, []);
-
   const handleVersionChange = async (versionId: number) => {
     try {
       setError(null);
@@ -323,12 +307,8 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       );
 
       if (!response.ok) {
-        if (response.status === 402) {
-          throw new Error('payment_required');
-        }
         throw new Error('PDF generation failed.');
       }
-
 
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
@@ -367,21 +347,15 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         URL.revokeObjectURL(url);
       }, 100);
     } catch (err) {
-      if (err === 'payment_required' || (err instanceof Error && err.message === 'payment_required')) {
-        toast.dismiss(toastId);
-        setError('payment_required');
-        setIsPaymentModalOpen(true);
-      } else {
-        toast.update(toastId, {
-          render: t('activity_chat.messages.download_failed'),
-          type: "error",
-          isLoading: false,
-          autoClose: 5000,
-          closeButton: true,
-          closeOnClick: true
-        });
-        setError(t('activity_chat.messages.generation_error', { format: 'PDF' }));
-      }
+      toast.update(toastId, {
+        render: t('activity_chat.messages.download_failed'),
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
+        closeOnClick: true
+      });
+      setError(t('activity_chat.messages.generation_error', { format: 'PDF' }));
     }
   };
 
@@ -877,24 +851,14 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
         if (axios.isAxiosError(error)) {
           const responseError = error.response?.data;
 
-          if (responseError && typeof responseError.detail === 'string' &&
-            responseError.detail.includes("Insufficient credits")) {
-            setError('');
-            setIsPaymentModalOpen(true);
-          }
-          else if (responseError && Array.isArray(responseError.detail)) {
+          if (responseError && Array.isArray(responseError.detail)) {
             const errorDetail = responseError.detail[0];
             if (errorDetail.type === "string_too_long") {
               setError(t('activity_chat.messages.input_too_long'));
             } else {
               setError(t('errors.assistantError'));
             }
-          }
-          else if (error.response?.status === 402) {
-            setError('payment_required');
-            setIsPaymentModalOpen(true);
-          }
-          else {
+          } else {
             setError(t('errors.submissionError'));
           }
         } else {
@@ -1050,8 +1014,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       t,
       fetchVersions,
       streamSubmitData,
-      subscription,
-      creditsAvailable,
       isSubmitting,
       selectedDocumentType,
       attachedFiles,
@@ -1074,15 +1036,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
       setShouldAutoSubmit(false);
     }
   }, [shouldAutoSubmit, formData, handleSubmit]);
-
-  const handleUpgrade = () => {
-    window.location.href = "https://open-cvbaba.com/pricing";
-  };
-
-  const handleRefreshCredits = async () => {
-    await fetchSubscription();
-    toast.success(t('activity_chat.messages.credits_refreshed'));
-  };
 
   if (isLoadingProfile) {
     return (
@@ -1284,7 +1237,7 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
           />
         )}
 
-        {error && error !== 'payment_required' && (
+        {error && (
           <div className="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-900/50 rounded-lg text-red-600 dark:text-red-400 text-center mx-4 sm:mx-6 shadow-soft">
             {error}
           </div>
@@ -1328,8 +1281,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                     isLoadingVersions={isLoadingVersions}
                     onFixPagination={handleFixPagination}
                     isStreaming={isStreaming}
-                    subscription={subscription}
-                    creditsAvailable={creditsAvailable}
                     onShare={handleShare}
                     onTogglePublic={handleTogglePublic}
                     isPublic={isPublic}
@@ -1399,11 +1350,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                       webpageUrls={webpageUrls}
                       setWebpageUrls={setWebpageUrls}
 
-                      onRefreshCredits={handleRefreshCredits}
-
-                      subscription={subscription}
-                      creditsAvailable={creditsAvailable}
-
                       // Page tools props - use reactive state synced from PdfPreview
                       selectedPageIndex={selectedPageIndex}
                       pageCount={docPageCount}
@@ -1412,7 +1358,6 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
                       onViewComments={(pageIndex) => previewRef.current?.triggerViewComments?.(pageIndex)}
                       onExportPage={(pageNum) => previewRef.current?.triggerExportPage?.(pageNum)}
                       onDeletePage={(pageIndex) => previewRef.current?.triggerDeletePage?.(pageIndex)}
-
                     />
                   )}
                 </div>

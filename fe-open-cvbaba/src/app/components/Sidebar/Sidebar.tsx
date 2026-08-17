@@ -3,10 +3,8 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import {
   Search,
-  LogOut,
   Settings,
   Plus,
-  CreditCard,
   Linkedin,
   Languages,
   Facebook,
@@ -340,7 +338,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
       if (isMobile) {
         setIsSidebarOpen(false);
       }
-    }, [router, isMobile, setIsSidebarOpen]);    }, [router, isMobile, setIsSidebarOpen]);
+    }, [router, isMobile, setIsSidebarOpen]);
 
     const displayChats = useMemo(() => {
       const normalizedQuery = debouncedSearchQuery.trim().toLowerCase();
@@ -572,28 +570,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
-                      onClick={handleBillingRedirect}
-                      className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-200"
-                    >
-                      <CreditCard className="h-5 w-5" />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="bg-blue-600 text-white text-xs px-2 py-1 rounded shadow-lg animate-in fade-in zoom-in duration-200">
-                    {t("sidebar.billingMenuItem")}
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="bg-blue-600 text-white text-xs px-2 py-1 rounded shadow-lg animate-in fade-in zoom-in duration-200">
-                    {t("sidebar.inviteFriends")}
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
                       onClick={onOpenLanguageModal}
                       className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-200"
                     >
@@ -608,18 +584,6 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                 <ThemeSwitcher onOpenChange={onLockedChange} />
               </div>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={                    className="p-2 text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200"
-                  >
-                    <LogOut className="h-5 w-5 transform group-hover:-translate-x-1 transition-transform" />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent side="top" className="bg-gray-900 text-white text-xs px-2 py-1 rounded shadow-lg">
-                  {t("sidebar.logoutTooltip")}
-                </TooltipContent>
-              </Tooltip>
             </div>
           </div>
 

@@ -47,7 +47,7 @@ interface ChatHistoryItemProps {
   onClick: () => void;
   isShared?: boolean;
   ownerEmail?: string;
-
+  unreadCount?: number;
 }
 
 interface EditModeProps {

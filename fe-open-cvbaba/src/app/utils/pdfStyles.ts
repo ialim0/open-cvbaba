@@ -224,9 +224,13 @@ export const pdfStyles = `
   }
 `;
 
-// Export dimensions for components that need them (in mm)
+// Export dimensions for components that need them (in mm and px at 96 DPI)
 export const PDF_DIMENSIONS = {
   PAGE_WIDTH,
   PAGE_HEIGHT,
   PAGE_MARGIN,
+  A4_WIDTH_PX: 794,
+  A4_HEIGHT_PX: 1123,
+  CONTENT_HEIGHT_PX: 1009,
+  MARGIN_PX: 57,
 };

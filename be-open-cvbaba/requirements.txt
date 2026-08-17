@@ -18,11 +18,9 @@ boto3
 python-multipart
 PyJWT
 fastapi_mail
-sqlalchemy[postgresql]
-databases[postgresql]
 mangum
 asyncpg
-psycopg2-binary 
+psycopg2-binary
 python-docx
 pypdf2
 pillow

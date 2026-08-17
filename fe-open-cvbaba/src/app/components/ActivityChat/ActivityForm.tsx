@@ -1,14 +1,6 @@
 // ActivityForm.tsx
 import React, { useState, useCallback, ChangeEvent, useEffect, useRef } from 'react';
 import { useAnimatedPlaceholder } from '@/app/hooks/useAnimatedPlaceholder';
-
-interface SubscriptionData {
-  plan_type: string;
-  credits_available: number;
-  last_updated: string;
-  subscription_status: string;
-  created_at: string;
-}
 import { Loader2, ArrowRight, Camera, ChevronDown, Upload, Type, Sparkles, Wand2, GraduationCap, Briefcase, Crown, Users, RefreshCw, Languages, Target, Star, BarChart3, X, Linkedin, PenTool, Search, Settings, Globe, Grid3X3, Layers, Paperclip, Link2, FileText, FilePlus, Edit2, Trash2, Download, MessageSquare, Mic, MicOff, ImagePlus } from 'lucide-react';
 import Label from '../ui/Label';
 import TemplateSelector from './TemplateSelector';
@@ -23,13 +15,10 @@ import ATSModal from './ATSModal';
 import StyleModal from './StyleModal';
 import JustifyModal from './JustifyModal';
 
-
 import { languageOptions, getLanguageShortName } from '@/app/config/languages';
 import type { ActivityFormData, UserProfile } from '@/app/types/form';
 import { useSpeechToText } from '@/app/hooks/useSpeechToText';
 import { useUserImages } from '@/app/hooks/useUserImages';
-
-
 
 interface ActivityFormProps {
   formData: ActivityFormData;
@@ -39,16 +28,12 @@ interface ActivityFormProps {
   setIncludePhoto: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
-  isPro?: boolean;
   showTemplateSelector: boolean;
   userProfile: UserProfile | null;
   setUserProfile: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   hasExistingChat?: boolean; // New prop to indicate if there's an existing chat/slug
   selectedOption: 'prompt' | 'import' | 'templates' | 'create_mode' | 'upload' | null;
   setSelectedOption: (option: 'prompt' | 'import' | 'templates' | 'create_mode' | 'upload' | null) => void;
-  onRefreshCredits: () => void;
-  creditsAvailable: number;
-  subscription: SubscriptionData | null;
   selectedDocumentType: string | null;
   setSelectedDocumentType: (type: string | null) => void;
   // Page tools props
@@ -102,16 +87,12 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   setIncludePhoto,
   onSubmit,
   isLoading,
-  isPro = false,
   showTemplateSelector,
   userProfile,
   setUserProfile,
   hasExistingChat = false,
   selectedOption,
   setSelectedOption,
-  onRefreshCredits,
-  creditsAvailable,
-  subscription,
   selectedDocumentType,
   setSelectedDocumentType,
   // Page tools

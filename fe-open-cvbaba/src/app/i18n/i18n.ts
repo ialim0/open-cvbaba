@@ -10,7 +10,7 @@ export { supportedLanguages, fallbackLng };
 export type { LocaleTypes };
 
 // Available namespaces for the application
-export const namespaces = ['common', 'legal', 'activity', 'settings', 'templates'] as const;
+export const namespaces = ['common', 'activity', 'settings', 'templates'] as const;
 export type Namespace = (typeof namespaces)[number];
 export const defaultNamespace: Namespace = 'common';
 
