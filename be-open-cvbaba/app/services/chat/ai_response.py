@@ -628,7 +628,7 @@ class AIGenerator:
         
         while True:
             try:
-                stream = await client.models.generate_content_stream(
+                stream = client.models.generate_content_stream(
                     model=model_name,
                     contents=[{"role": "user", "parts": [{"text": prompt}]}],
                     config=config
@@ -732,7 +732,7 @@ class AIGenerator:
         
         while True:
             try:
-                stream = await client.models.generate_content_stream(
+                stream = client.models.generate_content_stream(
                     model=model_name,
                     contents=[{"role": "user", "parts": [{"text": prompt}]}],
                     config=config
@@ -831,7 +831,7 @@ class AIGenerator:
         
         while True:
             try:
-                stream = await client.models.generate_content_stream(
+                stream = client.models.generate_content_stream(
                     model=model_name,
                     contents=[{"role": "user", "parts": [{"text": prompt}]}],
                     config=config
@@ -996,7 +996,7 @@ class AIGenerator:
         
         while True:
             try:
-                stream = await client.models.generate_content_stream(
+                stream = client.models.generate_content_stream(
                     model=model_name,
                     contents=[{"role": "user", "parts": [{"text": prompt}]}],
                     config=config
@@ -1326,7 +1326,7 @@ Generate a beautifully formatted HTML document using the standard A4 page layout
 - Professional typography and spacing.
 - Return only valid HTML (no markdown blocks).
 """
-            stream = await async_client.models.generate_content_stream(
+            stream = async_client.models.generate_content_stream(
                 model=generation_model,
                 contents=[generation_prompt]
             )

@@ -14,7 +14,7 @@ from app.models.chat_version import ChatVersion
 from app.models.chat_page import ChatPage
 from bs4 import BeautifulSoup
 from app.schemas.chat import ChatUpdate
-from app.services.chat.mistral_client import MistralClient
+from app.services.chat.mistral_client import MistralClient, MistralClientError as ClientError
 from app.services.chat.ai_response import (
     AIGenerator,
     ContentFormatter,

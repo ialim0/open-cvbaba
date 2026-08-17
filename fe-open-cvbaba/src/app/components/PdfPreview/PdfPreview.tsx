@@ -685,37 +685,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     }
   }, [chatSlug, onRefreshVersions]);
 
-  const fetchComments = useCallback(async () => {
-    if (!chatSlug) return;
-
-    setIsLoadingComments(true);
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/${chatSlug}/comments`,
-        {
-          credentials: 'include',
-          headers: { Accept: 'application/json' },
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setComments(data);
-      }
-    } catch (error) {
-      console.error('Error fetching comments:', error);
-    } finally {
-      setIsLoadingComments(false);
-    }
-  }, [chatSlug]);
-
-  // Fetch comments to show notification badge
-  useEffect(() => {
-    if (chatSlug) {
-      fetchComments();
-    }
-  }, [chatSlug, fetchComments]);
-
   // Only show loader for PDF mode, not during streaming or editing
   useEffect(() => {
     if (pdfUrl && !isEditMode && !isStreaming) {
@@ -1896,15 +1865,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                     </button>
                   )}
 
-                  {/* Translate (Mobile) */}
-                  <button
-                    onClick={() => setIsTranslateModalOpen(true)}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
-                  >
-                    <Languages className="h-4 w-4 mr-3 text-gray-400" />
-                    <span>{"Translate"}</span>
-                  </button>
-
                   <div className="my-1 border-t border-gray-100 dark:border-gray-700" />
 
                   {/* Export Options (Mobile) */}
@@ -1936,47 +1896,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
             {/* Desktop Action Buttons (Hidden on mobile) */}
             <div className={`flex items-center space-x-2 ${isMobile ? 'hidden' : 'flex'}`}>
-
-              {/* Translate Button */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setIsTranslateModalOpen(true)}
-                      disabled={isTranslating}
-                      className={`h-8 w-8 p-0 hover:shadow-sm transition-all ${isTranslating ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/30' : 'text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
-                    >
-                      {isTranslating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4" />}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>{"Translate"}</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              <div className="h-4 w-px bg-gray-200 dark:bg-gray-700 mx-2 transition-colors" />
-
-              {/* Comments Button */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => {
-                        const pageNum = (selectedPageIndex ?? 0) + 1;
-                        setPageCommentsModalPage(pageNum);
-                        setPageCommentsModalOpen(true);
-                      }}
-                      className="h-8 w-8 p-0 hover:shadow-sm transition-all text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-                    >
-                      <MessageSquare className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>{"Comments"}</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
 
               {/* Export Buttons - Desktop */}
               <div className="flex items-center space-x-2">
@@ -2027,19 +1946,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
             {/* Mobile Primary Actions (Always visible if space permits) */}
             {isMobile && (
               <div className="flex items-center space-x-1">
-                {/* Minimal Comments for Mobile */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    const pageNum = (selectedPageIndex ?? 0) + 1;
-                    setPageCommentsModalPage(pageNum);
-                    setPageCommentsModalOpen(true);
-                  }}
-                  className="h-8 w-8 p-0 text-gray-600 dark:text-gray-400"
-                >
-                  <MessageSquare className="h-4 w-4" />
-                </Button>
               </div>
             )}
 
@@ -2062,26 +1968,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
             scrollbarColor: 'rgba(0,0,0,0.2) transparent',
           }}
         >
-          {/* Floating Comments Button for Active Page */}
-          {showCommentIndicators && selectedPageIndex !== null && pageCount > 0 && (
-            <div className="sticky top-4 right-4 z-30 flex justify-end mr-4 pointer-events-none">
-              <button
-                className="pointer-events-auto bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 shadow-lg rounded-full px-4 py-2 flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all transform hover:scale-105"
-                onClick={() => {
-                  setPageCommentsModalPage(selectedPageIndex + 1);
-                  setPageCommentsModalOpen(true);
-                }}
-              >
-                <MessageSquare className="w-4 h-4 text-purple-600" />
-                <span className="text-sm font-medium">
-                  {comments.filter(c => c.page_number === selectedPageIndex + 1).length > 0
-                    ? "Viewcount"
-                    : "Add Comment"}
-                </span>
-              </button>
-            </div>
-          )}
-
           <style>{`
             .scrollbar-modern::-webkit-scrollbar {
               width: 10px;
@@ -2245,11 +2131,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                     <div className={`w-12 h-16 bg-white dark:bg-gray-50 border shadow-sm flex items-center justify-center text-[10px] text-gray-400 rounded-sm transition-all ${selectedPageIndex === i ? 'ring-2 ring-blue-500 border-blue-500 shadow-md' : 'border-gray-200 dark:border-gray-600'
                       } ${dragOverPageIndex === i ? 'ring-2 ring-blue-400 border-blue-400 shadow-lg' : ''}`}>
                       {i + 1}
-                      {showCommentIndicators && comments.filter(c => c.page_number === i + 1).length > 0 && (
-                        <div className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white shadow-sm z-10">
-                          {comments.filter(c => c.page_number === i + 1).length}
-                        </div>
-                      )}
+
                     </div>
                   </div>
                 ))}
@@ -2274,173 +2156,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           }
           // Fallback: don't render or render in place if needed (but requirement is strict about location)
           return null;
-        })()
-      }
-
-
-
-      {/* Translate Modal */}
-      <Modal
-        isOpen={isTranslateModalOpen}
-        onClose={() => setIsTranslateModalOpen(false)}
-        title={"Translate Document"}
-      >
-        <div className="p-4 space-y-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {"Select a language to translate your document."}
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            {[
-              { code: 'en', name: 'English' },
-              { code: 'fr', name: 'French' },
-              { code: 'es', name: 'Spanish' },
-              { code: 'de', name: 'German' },
-              { code: 'pt', name: 'Portuguese' },
-              { code: 'ar', name: 'Arabic' },
-              { code: 'zh', name: 'Chinese' },
-              { code: 'ja', name: 'Japanese' },
-            ].map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => handleTranslate(lang.code)}
-                disabled={isTranslating}
-                className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-400 transition-all text-left"
-              >
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{lang.name}</span>
-              </button>
-            ))}
-          </div>
-          <div className="flex justify-end pt-2 border-t border-gray-100 dark:border-gray-800">
-            <Button variant="outline" onClick={() => setIsTranslateModalOpen(false)}>
-              {"Cancel"}
-            </Button>
-          </div>
-        </div>
-      </Modal>
-
-      {/* Page Tools Modal - Portaled to Sidebar Overlay */}
-      {
-        pageToolsPopoverIndex !== null && (() => {
-          const portalTarget = document.getElementById('sidebar-overlay-portal');
-          if (!portalTarget) return null;
-
-          const pageNum = pageToolsPopoverIndex + 1;
-
-          return createPortal(
-            <div className="absolute inset-x-0 top-0 bottom-24 bg-white dark:bg-gray-900 z-50 flex flex-col animate-in slide-in-from-bottom-5 duration-200 shadow-xl rounded-b-xl">
-              <div className="flex items-center justify-between p-3 border-b border-gray-100 dark:border-gray-800">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                  {"Page"} {pageNum}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setPageToolsPopoverIndex(null)}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full h-7 w-7 p-0"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-
-              <div className="flex-1 p-4">
-                <div className="grid grid-cols-3 gap-3">
-                  {/* Insert Page */}
-                  <button
-                    className="flex flex-col items-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-400 transition-all"
-                    onClick={() => {
-                      setAddPageAfterIndex(pageToolsPopoverIndex);
-                      setIsAddPageModalOpen(true);
-                      setPageToolsPopoverIndex(null);
-                    }}
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                      <FilePlus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                      {"Insert"}
-                    </span>
-                  </button>
-
-                  {/* Edit Page */}
-                  <button
-                    className="flex flex-col items-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:border-amber-400 transition-all"
-                    onClick={() => {
-                      setEditPageIndex(pageToolsPopoverIndex);
-                      setIsEditPageModalOpen(true);
-                      setPageToolsPopoverIndex(null);
-                    }}
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
-                      <Edit className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                    </div>
-                    <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                      {"Edit"}
-                    </span>
-                  </button>
-
-                  {/* Comments Page Tool */}
-                  <button
-                    className="flex flex-col items-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:border-purple-400 transition-all"
-                    onClick={() => {
-                      setPageCommentsModalPage(pageNum);
-                      setPageCommentsModalOpen(true);
-                      setPageToolsPopoverIndex(null);
-                    }}
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center relative">
-                      <MessageSquare className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-                      {comments.filter(c => c.page_number === pageNum).length > 0 && (
-                        <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
-                          {comments.filter(c => c.page_number === pageNum).length}
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                      {"Comments"}
-                    </span>
-                  </button>
-
-                  {/* Export Page */}
-                  <button
-                    className="flex flex-col items-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-400 transition-all"
-                    onClick={() => {
-                      setDownloadScope('single');
-                      setSinglePageInput(pageNum);
-                      setIsDownloadModalOpen(true);
-                      setPageToolsPopoverIndex(null);
-                    }}
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                      <Download className="w-5 h-5 text-green-600 dark:text-green-400" />
-                    </div>
-                    <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                      {"Export"}
-                    </span>
-                  </button>
-
-                  {/* Delete Page */}
-                  {pageCount > 1 && (
-                    <button
-                      className="flex flex-col items-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-400 transition-all"
-                      onClick={() => {
-                        setPageToolsPopoverIndex(null);
-                        setDeletePageIndex(pageNum - 1); // pageNum is 1-based
-                        setIsDeleteModalOpen(true);
-                      }}
-                    >
-                      <div className="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                        <Trash2 className="w-5 h-5 text-red-600 dark:text-red-400" />
-                      </div>
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                        {"Delete"}
-                      </span>
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>,
-            portalTarget
-          );
         })()
       }
 
@@ -2654,18 +2369,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           );
         })()
       }
-      {/* Page Comments Sheet */}
-      <PageCommentsSheet
-        isOpen={pageCommentsModalOpen}
-        onClose={() => setPageCommentsModalOpen(false)}
-        pageNumber={pageCommentsModalPage || 1}
-        comments={comments}
-        onAddComment={handleAddComment}
-        onEditComment={handleEditComment}
-        onDeleteComment={handleDeleteComment}
-        isLoading={isLoadingComments}
-      />
-
       {/* Export Modal */}
       <ExportModal
         isOpen={isDownloadModalOpen}
@@ -2690,73 +2393,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
         pageCount={pageCount}
         isGenerating={isGenerating || isDownloading}
       />
-
-      {/* Insert Page Sheet */}
-      <InsertPageSheet
-        isOpen={isAddPageModalOpen}
-        onClose={() => {
-          setIsAddPageModalOpen(false);
-          setAddPageAfterIndex(null);
-        }}
-        onConfirm={handleInsertPage}
-        pageNumber={addPageAfterIndex !== null ? addPageAfterIndex + 1 : pageCount}
-        isGenerating={isAddingPage}
-      />
-
-      {/* Delete Page Sheet */}
-      <DeletePageSheet
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleDeletePage}
-        pageNumber={deletePageIndex !== null ? deletePageIndex + 1 : 0}
-        isDeleting={isDeletingPage}
-      />
-
-      {/* Insert Image Modal */}
-      <InsertImageModal
-        isOpen={isInsertImageModalOpen}
-        onClose={() => setIsInsertImageModalOpen(false)}
-        pageNumber={insertImagePageNumber}
-        isUploading={isUploadingImage}
-        onConfirm={async (image: File, prompt: string) => {
-          try {
-            setIsUploadingImage(true);
-            const formData = new FormData();
-            formData.append('image', image);
-            formData.append('prompt', prompt || 'Insert image');
-
-            const response = await axios.post(
-              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/${chatSlug}/page/${insertImagePageNumber}/image`,
-              formData,
-              {
-                headers: { 'Content-Type': 'multipart/form-data' },
-                withCredentials: true,
-              }
-            );
-
-            // Update the page content with the response
-            if (response.data?.content) {
-              // Parse current html and update the specific page
-              const tempDiv = document.createElement('div');
-              tempDiv.innerHTML = html;
-              const pages = tempDiv.querySelectorAll('.pdf-page');
-              if (pages[insertImagePageNumber - 1]) {
-                pages[insertImagePageNumber - 1].outerHTML = response.data.content;
-                onSave?.(true, tempDiv.innerHTML);
-              }
-              toast.success('Image inserted successfully!');
-            }
-
-            setIsInsertImageModalOpen(false);
-          } catch (error) {
-            console.error('Failed to insert image:', error);
-            toast.error('Failed to insert image. Please try again.');
-          } finally {
-            setIsUploadingImage(false);
-          }
-        }}
-      />
-
 
       {/* Rich Interaction Overlays */}
       {

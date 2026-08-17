@@ -116,45 +116,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   // Multimodal attachment state
   const attachmentInputRef = useRef<HTMLInputElement>(null);
 
-  // User images list for page editing
-  interface UserImage {
-    id: number;
-    slug?: string;
-    file_url: string;
-    filename: string;
-    created_at: string;
-  }
-  const [userImagesList, setUserImagesList] = useState<UserImage[]>([]);
-  const [isLoadingUserImages, setIsLoadingUserImages] = useState(false);
-  const [isUserImagesModalOpen, setIsUserImagesModalOpen] = useState(false);
-  // Use prop if provided, otherwise use local state
-  const [localSelectedImageUrl, setLocalSelectedImageUrl] = useState<string | null>(null);
-  const selectedImageUrl = selectedImageUrlProp ?? localSelectedImageUrl;
-  const setSelectedImageUrl = setSelectedImageUrlProp ?? setLocalSelectedImageUrl;
-
-  const handleDeleteImage = async (slug: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!confirm("Are you sure you want to delete this image?")) return;
-
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/file/user/images/${slug}`, {
-        method: 'DELETE',
-        credentials: 'include',
-      });
-      if (res.ok) {
-        setUserImagesList(prev => prev.filter(img => (img.slug || img.id.toString()) !== slug));
-        // If the deleted image was selected, clear selection
-        if (selectedImageUrl && userImagesList.find(img => (img.slug || img.id.toString()) === slug)?.file_url === selectedImageUrl) {
-          setSelectedImageUrl(null);
-        }
-      } else {
-        console.error('Failed to delete image');
-      }
-    } catch (err) {
-      console.error('Error deleting image:', err);
-    }
-  };
-
   // Speech-to-text integration
   // Google STT 'long' model requires specific region codes (e.g. fr-FR, not just fr)
   const getFullLocale = (code?: string) => {
@@ -203,24 +164,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
       clearTranscript();
     }
   }, [transcript, setFormData, clearTranscript]);
-
-  // Fetch user images when in page edit mode
-  useEffect(() => {
-    if (hasExistingChat && selectedPageIndex !== null && selectedPageIndex !== undefined) {
-      setIsLoadingUserImages(true);
-      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/file/user/images`, {
-        credentials: 'include',
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (Array.isArray(data)) {
-            setUserImagesList(data);
-          }
-        })
-        .catch(err => console.error('Failed to fetch user images:', err))
-        .finally(() => setIsLoadingUserImages(false));
-    }
-  }, [hasExistingChat, selectedPageIndex]);
 
   // Animated Placeholder Logic
   const creationPlaceholders: Record<string, string[]> = {
@@ -538,119 +481,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
               />
             </section>
           )}
-
-          {/* Page Tools - Only show for existing documents */}
-          {hasExistingChat && selectedPageIndex !== null && selectedPageIndex !== undefined && (
-            <div className="space-y-3">
-              {/* Page indicator */}
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 rounded-lg flex items-center justify-center shadow-sm">
-                  <span className="text-xs font-bold text-white dark:text-gray-900">{selectedPageIndex + 1}</span>
-                </div>
-                <div>
-                  <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                    {"Page"} {selectedPageIndex + 1}
-                  </span>
-                  {pageCount > 1 && (
-                    <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
-                      {"of"} {pageCount}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Page Actions Grid */}
-              <div className="grid grid-cols-2 gap-2">
-                <button type="button" onClick={() => onInsertPage?.(selectedPageIndex)} className="group flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all">
-                  <div className="w-9 h-9 bg-blue-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
-                    <FilePlus className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-sm font-semibold text-blue-900 dark:text-blue-100">{"Insert"}</div>
-                    <div className="text-[10px] text-blue-600 dark:text-blue-400">{"Add new page"}</div>
-                  </div>
-                </button>
-
-
-
-                {/* Insert Image Tool - HIDDEN */}
-                {false && (
-                  <button type="button" onClick={() => onInsertImage?.((selectedPageIndex ?? 0) + 1)} className="group flex items-center gap-3 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-all">
-                    <div className="w-9 h-9 bg-amber-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
-                      <ImagePlus className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-amber-900 dark:text-amber-100">{"Image"}</div>
-                      <div className="text-[10px] text-amber-600 dark:text-amber-400">{"Add to page"}</div>
-                    </div>
-                  </button>
-                )}
-
-
-
-                {pageCount > 1 && (
-                  <button type="button" onClick={() => onDeletePage?.(selectedPageIndex)} className="group flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl hover:bg-red-100 dark:hover:bg-red-900/40 transition-all">
-                    <div className="w-9 h-9 bg-red-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
-                      <Trash2 className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-red-900 dark:text-red-100">{"Delete"}</div>
-                      <div className="text-[10px] text-red-600 dark:text-red-400">{"Remove page"}</div>
-                    </div>
-                  </button>
-                )}
-              </div>
-
-              {/* Images Button */}
-              <button
-                type="button"
-                onClick={() => setIsUserImagesModalOpen(true)}
-                className={`group flex items-center gap-3 p-3 border rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-all w-full ${selectedImageUrl
-                  ? 'bg-purple-100 dark:bg-purple-900/40 border-purple-400 dark:border-purple-600'
-                  : 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800'
-                  }`}
-              >
-                {selectedImageUrl ? (
-                  <div className="w-9 h-9 rounded-lg overflow-hidden border-2 border-purple-400">
-                    <img src={selectedImageUrl} alt="Selected" className="w-full h-full object-cover" />
-                  </div>
-                ) : (
-                  <div className="w-9 h-9 bg-purple-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
-                    <ImagePlus className="w-4 h-4 text-white" />
-                  </div>
-                )}
-                <div className="text-left flex-1">
-                  <div className="text-sm font-semibold text-purple-900 dark:text-purple-100">
-                    {selectedImageUrl ? "Image Selected" : "Your Images"}
-                  </div>
-                  <div className="text-[10px] text-purple-600 dark:text-purple-400">
-                    {selectedImageUrl
-                      ? "Click to change"
-                      : isLoadingUserImages
-                        ? "Loading..."
-                        : `${userImagesList.length} ${"images"}`
-                    }
-                  </div>
-                </div>
-                {selectedImageUrl && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedImageUrl(null);
-                    }}
-                    className="p-1.5 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors"
-                    title={"Remove"}
-                  >
-                    <X className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                  </button>
-                )}
-              </button>
-
-              <div className="border-t border-gray-200 dark:border-gray-700"></div>
-            </div>
-          )}
-
 
           {/* Inline Options Row - Hide on slug pages */}
           {!hasExistingChat && (
@@ -1019,14 +849,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
           />
         </form>
 
-        {/* Translate Modal */}
-        <TranslateModal
-          isOpen={isTranslateModalOpen}
-          onClose={() => setIsTranslateModalOpen(false)}
-          formData={formData}
-          setFormData={setFormData}
-          onSubmit={handleSubmitForm}
-        />
         <ATSModal
           isOpen={isATSModalOpen}
           onClose={() => setIsATSModalOpen(false)}
@@ -1060,76 +882,6 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
           initialPrompt={formData.resumeDescription}
         />
 
-        {/* User Images Modal */}
-        {isUserImagesModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
-              {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  {"Your Images"}
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setIsUserImagesModalOpen(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                >
-                  <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                </button>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 overflow-y-auto p-4">
-                {isLoadingUserImages ? (
-                  <div className="flex items-center justify-center py-12">
-                    <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
-                  </div>
-                ) : userImagesList.length === 0 ? (
-                  <div className="text-center py-12 text-gray-500 dark:text-gray-400">
-                    {"No images uploaded yet"}
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                    {userImagesList.map((img) => (
-                      <button
-                        key={img.id}
-                        type="button"
-                        onClick={() => {
-                          setSelectedImageUrl(img.file_url);
-                          setIsUserImagesModalOpen(false);
-                        }}
-                        className={`aspect-square rounded-lg overflow-hidden border-2 focus:outline-none transition-all group relative ${selectedImageUrl === img.file_url
-                          ? 'border-blue-500 ring-2 ring-blue-500/20'
-                          : 'border-transparent hover:border-blue-500'
-                          }`}
-                        title={img.filename}
-                      >
-                        <img
-                          src={img.file_url}
-                          alt={img.filename}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                          <span className="opacity-0 group-hover:opacity-100 text-white text-xs font-medium bg-black/50 px-2 py-1 rounded">
-                            {"Select"}
-                          </span>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={(e) => handleDeleteImage(img.slug || img.id.toString(), e)}
-                          className="absolute top-1 right-1 p-1 bg-red-500/80 hover:bg-red-600 text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                          title={"Delete"}
-                        >
-                          <Trash2 className="w-3 h-3" />
-                        </button>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </div >
     </div >
   );

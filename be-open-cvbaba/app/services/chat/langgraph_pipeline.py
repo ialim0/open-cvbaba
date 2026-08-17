@@ -955,7 +955,7 @@ async def stream_document_with_langgraph(
         system_instruction=system_instruction
     )
 
-    stream = await client.models.generate_content_stream(
+    stream = client.models.generate_content_stream(
         model=code_model,
         contents=full_prompt,
         config=config
