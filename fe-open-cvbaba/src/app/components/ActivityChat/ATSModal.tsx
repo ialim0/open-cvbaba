@@ -57,7 +57,7 @@ const ATSModal: React.FC<ATSModalProps> = ({ isOpen, onClose, formData, setFormD
       <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-strong border border-blue-100 dark:border-gray-800 w-full max-w-md transform transition-all duration-300">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-blue-100 dark:border-gray-800 rounded-t-xl transition-colors">
-          <h3 className="text-lg font-bold text-blue-900 dark:text-blue-400">{"Atsmodaltitle"}</h3>
+          <h3 className="text-lg font-bold text-blue-900 dark:text-blue-400">ATS Keyword Match</h3>
           <button onClick={onClose} className="text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/40 rounded-lg p-1.5 transition-all duration-200">
             <X className="h-4 w-4" />
           </button>
@@ -66,13 +66,13 @@ const ATSModal: React.FC<ATSModalProps> = ({ isOpen, onClose, formData, setFormD
         {/* Content */}
         <form onSubmit={handleSubmit} className="p-4 space-y-3">
           <label htmlFor="atsJobInfo" className="block text-sm font-semibold text-blue-900 dark:text-blue-400">
-            {"Atsjobinfolabel"}
+            Job Description & Target Role
           </label>
           <textarea
             ref={textareaRef}
             id="atsJobInfo"
             className="block w-full p-3 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 border border-blue-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500 transition-all resize-y min-h-[120px] placeholder-gray-500 dark:placeholder-gray-400"
-            placeholder={"Atsjobinfoplaceholder"}
+            placeholder="Paste the target job description or requirements here..."
             value={jobInfo}
             onChange={(e) => setJobInfo(e.target.value)}
             required
@@ -82,7 +82,7 @@ const ATSModal: React.FC<ATSModalProps> = ({ isOpen, onClose, formData, setFormD
             type="submit"
             className="w-full px-4 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            {"Atsapplybutton"}
+            Optimize for ATS
           </button>
         </form>
       </div>

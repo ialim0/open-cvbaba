@@ -1,22 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '../ui/Button';
-import { ScrollArea } from '../ui/ScrollArea';
-import { Template } from './data/templates';
-import { Badge } from '../ui/Badge';
-import { Card, CardContent } from '../ui/Card';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '../ui/Dialog';
-import dynamic from 'next/dynamic';
+'use client';
 
-// Lazy-load heavy preview renderer to reduce initial bundle
-const TemplatePreview = dynamic(() => import('./templates/TemplatePreview'), {
-  ssr: false,
-});
+import React, { useState, useMemo } from 'react';
+import { Check, Search, Sparkles, X } from 'lucide-react';
+import { Template } from './data/templates';
 
 interface TemplateSelectorProps {
   templates: Template[];
@@ -24,358 +10,211 @@ interface TemplateSelectorProps {
   onSelectTemplate: (templateId: string) => void;
 }
 
-const ASPECT_RATIO = 1.414;
-const CARD_WIDTH = 200;
-const MOBILE_CARD_WIDTH = 160; // Smaller cards for mobile
-
-// Simple IntersectionObserver hook
-function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
-  const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => setInView(entry.isIntersecting));
-    }, { root: null, rootMargin: '100px', threshold: 0.01, ...(options || {}) });
-
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [options]);
-
-  return { ref, inView } as const;
-}
-
-const TemplateSelector = ({
+const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   templates,
   selectedTemplateId,
   onSelectTemplate,
-}: TemplateSelectorProps) => {
-  const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
-  const [hoveredTemplateId, setHoveredTemplateId] = useState<string | null>(null);
-  const [isPreviewHovered, setIsPreviewHovered] = useState(false);
-  const [cardScale, setCardScale] = useState(0.6);
+}) => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const previewScrollRef = useRef<HTMLDivElement | null>(null);
+  // Extract unique categories
+  const categories = useMemo(() => {
+    const cats = new Set<string>();
+    templates.forEach((t) => {
+      if (t.category) cats.add(t.category);
+    });
+    return ['All', ...Array.from(cats)];
+  }, [templates]);
 
-  // All templates are available in the open-source edition.
+  // Filter templates based on category and search query
+  const filteredTemplates = useMemo(() => {
+    return templates.filter((template) => {
+      const matchesCategory =
+        selectedCategory === 'All' || template.category === selectedCategory;
 
-  // Scroll modal preview to top whenever the previewed template changes
-  useEffect(() => {
-    if (previewScrollRef.current) {
-      previewScrollRef.current.scrollTop = 0;
-    }
-  }, [previewTemplate?.id]);
+      const query = searchQuery.trim().toLowerCase();
+      const matchesSearch =
+        !query ||
+        template.name.toLowerCase().includes(query) ||
+        template.description?.toLowerCase().includes(query) ||
+        template.category?.toLowerCase().includes(query) ||
+        template.characteristics?.some((c) => c.toLowerCase().includes(query));
 
-  // Responsive scale tuning (client-only)
-  useEffect(() => {
-    const updateScale = () => {
-      const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-      setCardScale(isMobile ? 0.52 : 0.6);
-    };
-    updateScale();
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
-  }, []);
+      return matchesCategory && matchesSearch;
+    });
+  }, [templates, selectedCategory, searchQuery]);
 
-  useEffect(() => {
-    if (selectedTemplateId && cardRefs.current[selectedTemplateId]) {
-      cardRefs.current[selectedTemplateId]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'center',
-      });
-    }
-  }, [selectedTemplateId]);
-
-  const handleTemplateClick = (template: Template, e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    if (false && !true) return;
-    onSelectTemplate(template.id);
-  };
-
-  const handlePreview = (template: Template, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setPreviewTemplate(template);
-  };
-
-  const navigateTemplates = (direction: 'prev' | 'next') => {
-    if (!previewTemplate) return;
-    const currentIndex = templates.findIndex((t) => t.id === previewTemplate.id);
-    if (currentIndex === -1) return;
-    let newIndex;
-    if (direction === 'prev') {
-      newIndex = currentIndex > 0 ? currentIndex - 1 : templates.length - 1;
-    } else {
-      newIndex = currentIndex < templates.length - 1 ? currentIndex + 1 : 0;
-    }
-    const newTemplate = templates[newIndex];
-    setPreviewTemplate(newTemplate);
-  };
-
-  const TemplateCard = ({ template }: { template: Template }) => {
-    const isLocked = false && !true;
-    const isSelected = selectedTemplateId === template.id;
-    const isHovered = hoveredTemplateId === template.id;
-
-    const { ref, inView } = useInView<HTMLDivElement>();
-
-    return (
-      <Card
-        ref={(el) => {
-          cardRefs.current[template.id] = el;
-        }}
-        onClick={(e) => !isLocked && handleTemplateClick(template, e)}
-        onKeyDown={(e) => {
-          if (!isLocked && (e.key === 'Enter' || e.key === ' ')) {
-            e.preventDefault();
-            handleTemplateClick(template, e as unknown as React.MouseEvent<HTMLDivElement>);
-          }
-        }}
-        role="button"
-        tabIndex={isLocked ? -1 : 0}
-        className={`relative flex-shrink-0 transition-all duration-300 ease-in-out
-          ${isSelected ? 'ring-2 ring-blue-600 dark:ring-blue-500 shadow-xl scale-105' : 'hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-700 hover:shadow-xl hover:scale-102'}
-          ${isLocked ? 'opacity-75 cursor-not-allowed' : 'cursor-pointer'}
-          shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800
-          w-[160px] h-[226px] sm:w-[200px] sm:h-[283px] bg-white dark:bg-gray-900`}
-        aria-disabled={isLocked}
-        onMouseEnter={() => setHoveredTemplateId(template.id)}
-        onMouseLeave={() => setHoveredTemplateId(null)}
-      >
-        <CardContent className="h-full p-0 relative" ref={ref}>
-          <div className="relative h-full w-full">
-            <div
-              role="button"
-              className="relative h-full w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900"
-              aria-hidden="true"
-            >
-              {isHovered && !isLocked && (
-                <>
-                  {!isSelected && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10 backdrop-blur-sm">
-                      <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-lg border border-gray-200 dark:border-gray-700">
-                        <button
-                          type="button"
-                          className="rounded-full px-4 py-2 font-medium text-gray-900 dark:text-gray-100"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            onSelectTemplate(template.id);
-                          }}
-                        >
-                          Use this template
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {isSelected && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none z-10 backdrop-blur-sm">
-                      <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-lg border border-gray-200 dark:border-gray-700">
-                        <span>Click to unselect</span>
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-
-              {isHovered && isLocked && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none z-10">
-                  <div className="bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-md">
-                    Upgrade to use
-                  </div>
-                </div>
-              )}
-
-              {template.hasComponent ? (
-                <div className="w-full h-full p-2 sm:p-3 overflow-hidden bg-white dark:bg-gray-800 rounded-md shadow-inner border border-gray-200 dark:border-gray-700">
-                  {inView ? (
-                    <TemplatePreview
-                      templateId={template.id}
-                      scale={cardScale}
-                      compact={false}
-                      className="w-full h-full"
-                    />
-                  ) : (
-                    <div className="w-full h-full animate-pulse bg-gray-50 dark:bg-gray-700/50 rounded" />
-                  )}
-                </div>
-              ) : (
-                <img
-                  src={template.imageUrl}
-                  alt="Template preview"
-                  className="object-contain w-full h-full p-1 sm:p-2"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.src = '/images/open-cvbaba-logo.png';
-                  }}
-                />
-              )}
-
-              
-
-              {false ? (
-                <Badge className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs">
-                  {"PRO"}
-                </Badge>
-              ) : (
-                !true && (
-                  <Badge className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-green-500 text-white text-xs">
-                    {"Free"}
-                  </Badge>
-                )
-              )}
-
-              <Button
-                type="button"
-                size="sm"
-                className="absolute top-1 right-1 sm:top-2 sm:right-2 shadow-md hover:shadow-lg transition-shadow z-20 h-8 w-8 sm:h-9 sm:w-9"
-                onClick={(e) => handlePreview(template, e)}
-              >
-                <Maximize2 className="h-3 w-3 sm:h-4 sm:w-4" />
-              </Button>
-            </div>
-
-            <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 bg-gradient-to-t from-white/95 to-white/80 dark:from-gray-900/95 dark:to-gray-900/80 backdrop-blur-sm z-20 border-t border-gray-200 dark:border-gray-800 transition-colors">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-xs sm:text-sm truncate text-gray-700 dark:text-gray-200">
-                  {template.name}
-                </span>
-                {isSelected && (
-                  <Badge className="bg-blue-600 dark:bg-blue-500 text-white text-xs font-medium shadow-sm border-0">
-                    {"Selected"}
-                  </Badge>
-                )}
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  };
+  const selectedTemplate = useMemo(
+    () => templates.find((t) => t.id === selectedTemplateId),
+    [templates, selectedTemplateId]
+  );
 
   return (
-    <div className="relative space-y-4" onClick={(e) => e.stopPropagation()}>
-      <div className="relative">
-        <ScrollArea className="w-full">
-          <div
-            className="flex space-x-2 sm:space-x-4 p-1 sm:p-2 pb-4 scroll-smooth"
-            role="list"
-            aria-label="Available templates"
-          >
-            {templates.map((template) => (
-              <div key={template.id} role="listitem" className="flex-shrink-0">
-                <TemplateCard template={template} />
-              </div>
-            ))}
-          </div>
-        </ScrollArea>
+    <div className="space-y-4">
+      {/* Category Pills and Search Bar */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        {/* Category Tabs */}
+        <div className="flex flex-wrap gap-1.5">
+          {categories.map((category) => {
+            const isActive = selectedCategory === category;
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategory(category)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  isActive
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                {category}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Search Input */}
+        <div className="relative w-full sm:w-56">
+          <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search templates..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-8 pr-7 py-1.5 text-xs rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
       </div>
 
-      <Dialog open={!!previewTemplate} onOpenChange={(open) => !open && setPreviewTemplate(null)}>
-        <DialogContent className="max-w-4xl w-full h-[85vh] bg-gray-50 dark:bg-gray-950 border-gray-200 dark:border-gray-800 flex flex-col">
-          <DialogHeader>
-            <DialogTitle>
-              <div className="flex items-center text-gray-900 dark:text-gray-100">
-                <span>{previewTemplate?.name}</span>
-                {false && (
-                  <Badge className="ml-2 bg-blue-600 dark:bg-blue-500 text-white border-0">
-                    {"PRO"}
-                  </Badge>
+      {/* Selected Template Notification Banner */}
+      {selectedTemplate && (
+        <div className="flex items-center justify-between p-3 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/60 text-xs text-blue-900 dark:text-blue-300 animate-in fade-in duration-200">
+          <div className="flex items-center gap-2 min-w-0">
+            <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <span className="font-semibold truncate">
+              Selected: {selectedTemplate.name}
+            </span>
+            <span className="text-blue-600/70 dark:text-blue-400/70 hidden sm:inline truncate">
+              — {selectedTemplate.category}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => onSelectTemplate(selectedTemplate.id)}
+            className="ml-3 px-2.5 py-1 rounded-md text-[11px] font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-sm flex-shrink-0 transition-colors"
+          >
+            Clear selection
+          </button>
+        </div>
+      )}
+
+      {/* Templates Grid */}
+      {filteredTemplates.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[420px] overflow-y-auto pr-1 pb-1 scrollbar-thin">
+          {filteredTemplates.map((template) => {
+            const isSelected = selectedTemplateId === template.id;
+
+            return (
+              <div
+                key={template.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => onSelectTemplate(template.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSelectTemplate(template.id);
+                  }
+                }}
+                className={`relative flex flex-col justify-between p-4 rounded-xl border-2 text-left cursor-pointer transition-all duration-200 select-none ${
+                  isSelected
+                    ? 'border-blue-600 bg-blue-50/50 dark:bg-blue-950/25 dark:border-blue-500 shadow-sm ring-2 ring-blue-500/20'
+                    : 'border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/80 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-sm'
+                }`}
+              >
+                {/* Header: Title, Category & Selection Indicator */}
+                <div>
+                  <div className="flex items-start justify-between gap-2 mb-1.5">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">
+                          {template.name}
+                        </h3>
+                        {template.category && (
+                          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200/50 dark:border-gray-600/50">
+                            {template.category}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Radio / Selection Circle */}
+                    <div
+                      className={`h-5 w-5 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
+                        isSelected
+                          ? 'bg-blue-600 dark:bg-blue-500 text-white'
+                          : 'border-2 border-gray-300 dark:border-gray-600 bg-transparent'
+                      }`}
+                    >
+                      {isSelected && <Check className="h-3 w-3 stroke-[3]" />}
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3">
+                    {template.description}
+                  </p>
+                </div>
+
+                {/* Characteristics / Tags */}
+                {template.characteristics && template.characteristics.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-3 pt-2.5 border-t border-gray-100 dark:border-gray-700/60">
+                    {template.characteristics.map((tag) => (
+                      <span
+                        key={tag}
+                        className={`text-[10px] px-1.5 py-0.5 rounded font-medium transition-colors ${
+                          isSelected
+                            ? 'bg-blue-100/70 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300'
+                            : 'bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-400'
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 )}
               </div>
-            </DialogTitle>
-          </DialogHeader>
-
-          <div className="flex flex-col w-full flex-1 min-h-0 p-6">
-            <div
-              className={`relative bg-white dark:bg-gray-900 shadow-lg rounded-lg border-2 border-gray-200 dark:border-gray-800 flex-1 overflow-hidden transition-all duration-300 ${false && !true
-                ? 'cursor-not-allowed'
-                : 'cursor-pointer hover:ring-2 hover:ring-blue-600 dark:hover:ring-blue-500 hover:border-transparent'
-                }`}
-              style={{
-                width: '100%',
-                maxWidth: '800px',
-                height: '100%',
-                minHeight: '400px',
-              }}
-              onClick={() => {
-                if (previewTemplate && (!false || true)) {
-                  onSelectTemplate(previewTemplate.id);
-                  setPreviewTemplate(null);
-                }
-              }}
-              role="button"
-              tabIndex={false && !true ? -1 : 0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && previewTemplate && (!false || true)) {
-                  onSelectTemplate(previewTemplate.id);
-                  setPreviewTemplate(null);
-                }
-              }}
-              onMouseEnter={() => setIsPreviewHovered(true)}
-              onMouseLeave={() => setIsPreviewHovered(false)}
-            >
-              {isPreviewHovered && previewTemplate && !false && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none z-10">
-                  <div className="bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-full font-medium shadow-md border border-gray-200 dark:border-gray-700">
-                    {previewTemplate.id === selectedTemplateId
-                      ? "Already selected"
-                      : "Use this template"}
-                  </div>
-                </div>
-              )}
-
-              {previewTemplate && (
-                <>
-                  {previewTemplate.hasComponent ? (
-                    <div className="w-full h-full overflow-y-auto overflow-x-hidden rounded-md p-2" ref={previewScrollRef}>
-                      <TemplatePreview
-                        templateId={previewTemplate.id}
-                        scale={0.5}
-                        compact={false}
-                        isModal={true}
-                        className="w-full"
-                      />
-                    </div>
-                  ) : (
-                    <img
-                      src={previewTemplate.imageUrl}
-                      alt="Template preview"
-                      className="object-contain w-full h-full rounded-md"
-                      onError={(e) => {
-                        e.currentTarget.src = '/images/open-cvbaba-logo.png';
-                      }}
-                    />
-                  )}
-                </>
-              )}
-            </div>
-
-            <div className="flex items-center justify-between w-full mt-4 space-x-4 flex-shrink-0">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => navigateTemplates('prev')}
-                className="flex-1"
-              >
-                <ChevronLeft className="mr-2 h-4 w-4" />
-                {"Previous"}
-              </Button>
-
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => navigateTemplates('next')}
-                className="flex-1"
-              >
-                {"Next"}
-                <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="text-center py-8 bg-gray-50 dark:bg-gray-850 rounded-xl border border-dashed border-gray-200 dark:border-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            No templates match your search criteria.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedCategory('All');
+              setSearchQuery('');
+            }}
+            className="mt-2 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            Reset filters
+          </button>
+        </div>
+      )}
     </div>
   );
 };

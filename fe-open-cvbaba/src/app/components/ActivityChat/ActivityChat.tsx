@@ -226,11 +226,11 @@ const ActivityChat: React.FC<ActivityChatProps> = ({
 
   const handlePdfGenerate = async (pages?: string) => {
     if (!slug) {
-      toast.error("No document");
+      toast.error("No document found to download");
       return;
     }
 
-    const toastId = toast.loading("Preparing doc");
+    const toastId = toast.loading("Preparing PDF document...");
 
     try {
       const response = await fetch(

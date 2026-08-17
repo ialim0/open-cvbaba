@@ -271,7 +271,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-3 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
             >
               <Plus className="h-4 w-4" />
-              <span>{"Newbutton"}</span>
+              <span>New CV</span>
             </button>
           </div>
 
@@ -286,7 +286,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                   <Input
                     type="text"
-                    placeholder={"Searchplaceholder"}
+                    placeholder="Search CVs..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 pr-3 py-2 w-full rounded-xl border border-border bg-accent/80 dark:bg-accent/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-background transition-all shadow-sm"

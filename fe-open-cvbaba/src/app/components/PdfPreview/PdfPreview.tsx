@@ -47,7 +47,6 @@ import { toast } from "react-toastify";
 import { autoFixPagination } from "@/app/utils/autoFixPagination";
 import { PageCommentsSheet } from "./PageCommentsSheet";
 import { InsertPageSheet } from "./InsertPageSheet";
-import { ExportModal } from "./ExportModal";
 import { DeletePageSheet } from "./DeletePageSheet";
 import { InsertImageModal } from "./InsertImageModal";
 import { useStreamSubmitData } from "@/app/hooks/useStreamSubmitData";
@@ -147,10 +146,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   const thumbnailScrollRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<number | null>(null);
   const currentHoveredElementRef = useRef<HTMLElement | null>(null);
-  const [shouldDownload, setShouldDownload] = useState(false);
-  const [downloadFormat, setDownloadFormat] = useState<'pdf' | 'word'>('pdf');
-  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
-  const [downloadScope, setDownloadScope] = useState<'full' | 'single' | 'range'>('full');
 
   // Rich Interaction State
   const [selectionState, setSelectionState] = useState<{
@@ -162,9 +157,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     position: { top: number; left: number } | null;
     target: HTMLElement | null;
   }>({ position: null, target: null });
-  const [rangeStart, setRangeStart] = useState(1);
-  const [rangeEnd, setRangeEnd] = useState(1);
-  const [singlePageInput, setSinglePageInput] = useState(1);
   const [isScrolling, setIsScrolling] = useState(false);
   const [hasOverflow, setHasOverflow] = useState(false);
   const [overflowPages, setOverflowPages] = useState<number[]>([]);
@@ -295,14 +287,12 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           setEditPageIndex(pageIndex);
           setIsEditPageModalOpen(true);
         },
-        triggerExportPage: (pageNum: number) => {
-          setDownloadScope('single');
-          setSinglePageInput(pageNum);
-          setIsDownloadModalOpen(true);
+        triggerExportPage: (_pageNum: number) => {
+          handleDownloadClick();
         },
         triggerDeletePage: async (pageIndex: number) => {
           const pageNum = pageIndex + 1;
-          if (!window.confirm("Confirmdeletepage")) {
+          if (!window.confirm("Are you sure you want to delete this page?")) {
             return;
           }
 
@@ -1464,48 +1454,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     }
   };
 
-  const handleDownloadPage = async (pageNumber: number, format: 'pdf' | 'docx') => {
-    // Determine scope based on input
-    // Reuse existing download logic via endpoint but strictly for single page
-    setIsDownloading(true);
-    setDownloadFormat(format === 'docx' ? 'word' : 'pdf'); // Update state for UI consistency
-
-    try {
-      await handleGenerateClick(pageNumber.toString());
-      // Wait, handleGenerateClick logic might need review but usually handles the download flow or triggers endpoint.
-      // Actually handleGenerateClick downloads based on `downloadScope` state? 
-      // Or it calls `handleDownloadClick`?
-      // Let's assume we can set scope and call the downloader.
-      // BUT setting state is not immediate.
-      // Instead of reusing functions that depend on state, let's call the API/logic directly if possible 
-      // OR rely on state update + effect, OR use the function that accepts params.
-      // Looking at current code, `handleDownloadClick` uses `downloadScope` state.
-
-      // Strategy: We won't use handleDownloadClick. We'll implement direct download here.
-      // (Simplified version of what likely exists elsewhere) or try to reuse if we can pass args.
-      // Since I can't easily see handleDownloadClick implementation details rn (it's lower down),
-      // I'll implement a safe version here calling the likely endpoint.
-
-      // Actually, looking at imports, `useStreamSubmitData` is used for generation. 
-      // Download usually is a GET or POST to generate-pdf/docx.
-
-      // Let's use `handleDownloadClick` but we must set the scope state first.
-      // However, since we are in a callback, state updates won't be visible immediately in `handleDownloadClick`.
-      // FIX: I will verify handleDownloadClick logic later. 
-      // For now, I'll alert or assume `handleGenerateClick` treats arguments as page numbers?
-      // `handleGenerateClick` signature: `async (pages?: string)`.
-
-      await handleGenerateClick(pageNumber.toString());
-
-    } catch (error) {
-      console.error("Download failed", error);
-      toast.error("Download failed");
-    } finally {
-      setIsDownloading(false);
-      setIsDownloadModalOpen(false);
-    }
-  };
-
   const handleBlockAction = useCallback(async () => {
     // Trigger save via commitEditsRef to ensure we use latest version
     await commitEditsRef.current(true);
@@ -1595,7 +1543,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   };
 
   const handleGenerateClick = async (pages?: string) => {
-
     setIsGenerating(true);
     suppressCommitRef.current = true;
     if (autosaveTimerRef.current) {
@@ -1610,80 +1557,20 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
     }
   };
 
-  useEffect(() => {
-    if (shouldDownload && pdfUrl) {
-      handleDownload();
-      setShouldDownload(false);
-      setTimeout(() => {
-        onEdit();
-      }, 500);
-    }
-  }, [shouldDownload, pdfUrl, handleDownload, onEdit]);
-
   const handleDownloadClick = async () => {
-
     setShowFormatMenu(false);
-
-    // Auto-download for single page documents
-    if (pageCount <= 1) {
-      if (isEditMode) {
-        setShouldDownload(true);
-        await handleGenerateClick();
-      } else {
-        handleDownload();
-      }
-      return;
-    }
-
-    // Open modal to select pages for multi-page documents
-    setIsDownloadModalOpen(true);
-    setDownloadScope('full');
-    setSinglePageInput(1);
-
-    // Reset range inputs
-    setRangeStart(1);
-    setRangeEnd(pageCount);
-  };
-
-  const confirmDownload = async () => {
-    setIsDownloadModalOpen(false);
-
-    let pagesParam: string | undefined = undefined;
-
-    if (downloadScope === 'single') {
-      pagesParam = singlePageInput.toString();
-    } else if (downloadScope === 'range') {
-      // Validate range
-      const start = Math.max(1, Math.min(rangeStart, pageCount));
-      const end = Math.max(start, Math.min(rangeEnd, pageCount));
-      pagesParam = `${start}-${end}`;
-    }
-
-    // Check if we need to regenerate
-    // Always trigger regeneration if range is selected to get the partial PDF
-    // OR if we are in edit mode
-
-    if (isEditMode) {
-      setShouldDownload(true);
-      await handleGenerateClick(pagesParam);
-    } else {
-      if (pagesParam) {
-        setIsGenerating(true);
-        try {
-          await onPdfGenerate(pagesParam);
-        } finally {
-          setIsGenerating(false);
-        }
-      } else {
-        handleDownload();
-      }
-    }
+    await handleGenerateClick();
   };
 
   const handleWordDownload = async () => {
+    if (!chatSlug) {
+      toast.error("No document found to download");
+      return;
+    }
 
     setShowFormatMenu(false);
     setIsGenerating(true);
+    const toastId = toast.loading("Preparing Word document...");
 
     try {
       const response = await fetch(
@@ -1702,14 +1589,33 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `document-${chatSlug}.docx`;
+      const safeTitle = fullName
+        ? `cv_${fullName.replace(/[^a-z0-9_\- ]/gi, '').replace(/\s+/g, "_")}`
+        : `document_${chatSlug}`;
+      link.download = `${safeTitle}.docx`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
+
+      toast.update(toastId, {
+        render: "Download success",
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
+        closeOnClick: true,
+      });
     } catch (error) {
       console.error('Word export error:', error);
-      toast.error("Couldn\'t complete the operation.");
+      toast.update(toastId, {
+        render: "Word export failed. Please try again.",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+        closeButton: true,
+        closeOnClick: true,
+      });
     } finally {
       setIsGenerating(false);
     }
@@ -1801,7 +1707,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                   className="h-8 text-xs font-medium text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
                   <RefreshCw className={`h-3.5 w-3.5 mr-2 ${isLoadingVersions ? 'animate-spin' : ''}`} />
-                  {versions.length > 0 ? "Versionnumbered" : "Current Version"}
+                  {versions.length > 0 ? "Versions" : "Current version"}
                   <ChevronDown className="h-3 w-3 ml-2 opacity-50" />
                 </Button>
 
@@ -1894,53 +1800,28 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
               </div>
             )}
 
-            {/* Desktop Action Buttons (Hidden on mobile) */}
-            <div className={`flex items-center space-x-2 ${isMobile ? 'hidden' : 'flex'}`}>
-
-              {/* Export Buttons - Desktop */}
-              <div className="flex items-center space-x-2">
-                {/* Download PDF Button */}
-                {true && (
-                  <div className="relative" ref={formatMenuRef}>
-                    <Button
-                      variant="default"
-                      size="sm"
-                      onClick={() => setShowFormatMenu(!showFormatMenu)}
-                      disabled={isGenerating}
-                      className="h-8 text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition-all"
-                    >
-                      {isGenerating ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin mr-2" />
-                      ) : (
-                        <Download className="h-3.5 w-3.5 mr-2" />
-                      )}
-                      {"Export"}
-                      <ChevronDown className="h-3 w-3 ml-2 opacity-70" />
-                    </Button>
-
-                    {showFormatMenu && (
-                      <div className="absolute top-full right-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-1 z-50 animate-in fade-in zoom-in-95 duration-100">
-                        <button
-                          onClick={() => handleDownloadClick()}
-                          className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center transition-colors"
-                        >
-                          <FileText className="h-4 w-4 mr-3 text-red-500" />
-                          <span className="font-medium">PDF</span>
-                        </button>
-                        <button
-                          onClick={() => handleWordDownload()}
-                          className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center transition-colors"
-                        >
-                          <FileDown className="h-4 w-4 mr-3 text-blue-500" />
-                          <div className="flex items-center">
-                            <span className="font-medium">Word</span>
-                          </div>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
+            {/* Direct export actions */}
+            <div className="hidden md:flex items-center space-x-2">
+              <Button
+                variant="default"
+                size="sm"
+                onClick={() => handleDownloadClick()}
+                disabled={isGenerating}
+                className="h-8 text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition-all"
+              >
+                {isGenerating ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-2" /> : <Download className="h-3.5 w-3.5 mr-2" />}
+                PDF
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleWordDownload()}
+                disabled={isGenerating}
+                className="h-8 text-xs font-medium"
+              >
+                <FileDown className="h-3.5 w-3.5 mr-2" />
+                Word
+              </Button>
             </div>
 
             {/* Mobile Primary Actions (Always visible if space permits) */}
@@ -2011,7 +1892,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
                 <iframe
                   src={pdfUrl}
                   className="w-full h-full border-none"
-                  title={"Pdfpreviewtitle"}
+                  title="Document Preview"
                   onLoad={handleIframeLoad}
                 />
               </div>
@@ -2369,31 +2250,6 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
           );
         })()
       }
-      {/* Export Modal */}
-      <ExportModal
-        isOpen={isDownloadModalOpen}
-        onClose={() => setIsDownloadModalOpen(false)}
-        onExportPdf={(scope, singlePage, rangeStartVal, rangeEndVal) => {
-          // Update state based on scope and call confirmDownload
-          if (scope === 'full') {
-            setDownloadScope('full');
-          } else if (scope === 'single' && singlePage) {
-            setDownloadScope('single');
-            setSinglePageInput(singlePage);
-          } else if (scope === 'range' && rangeStartVal && rangeEndVal) {
-            setDownloadScope('range');
-            setRangeStart(rangeStartVal);
-            setRangeEnd(rangeEndVal);
-          }
-          // Use setTimeout to ensure state updates before confirmDownload
-          setTimeout(() => confirmDownload(), 0);
-        }}
-        onExportWord={handleWordDownload}
-        pageNumber={singlePageInput}
-        pageCount={pageCount}
-        isGenerating={isGenerating || isDownloading}
-      />
-
       {/* Rich Interaction Overlays */}
       {
         isEditMode && (

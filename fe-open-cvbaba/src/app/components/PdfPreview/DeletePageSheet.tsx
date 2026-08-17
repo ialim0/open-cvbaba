@@ -62,7 +62,7 @@ export const DeletePageSheet: React.FC<DeletePageSheetProps> = ({
                     <Trash2 className="h-8 w-8 text-red-600 dark:text-red-400" />
                 </div>
                 <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                    {"Deletepageconfirmtitle"}
+                    {`Delete Page ${pageNumber}?`}
                 </h4>
                 <p className="text-sm text-gray-500 dark:text-gray-400 max-w-[250px]">
                     {"This action cannot be undone. The page will be permanently removed from your document."}

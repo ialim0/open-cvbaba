@@ -57,7 +57,7 @@ const VoiceInputSection: React.FC<VoiceInputSectionProps> = ({
         name="resumeDescription"
         value={resumeDescription}
         onChange={handleInputChange}
-        placeholder={"Voicetranscriptplaceholder"}
+        placeholder="Your speech transcript will appear here in real-time..."
         className="text-sm"
         readOnly={isRecording}
         minHeight={100}
@@ -68,7 +68,7 @@ const VoiceInputSection: React.FC<VoiceInputSectionProps> = ({
 
       {/* Instructions */}
       <p className="text-xs text-gray-500 px-1">
-        {"Voiceinputinstructions"}
+        Click the microphone above to record your experience, skills, and background.
       </p>
     </div>
   );

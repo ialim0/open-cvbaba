@@ -33,7 +33,7 @@ export const DeletePageModal: React.FC<DeletePageModalProps> = ({
         >
             <div className="p-6 pt-2">
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    {"Deletepageconfirm"}
+                    {`Are you sure you want to delete page ${pageNumber}? This action cannot be undone.`}
                 </p>
 
                 <div className="flex items-center justify-end gap-3">
