@@ -13,25 +13,31 @@ logger = logging.getLogger(__name__)
 
 class S3Service:
     def __init__(self):
+        region = settings.AWS_REGION if settings.AWS_REGION else "us-east-1"
+        max_pool = settings.AWS_S3_MAX_POOL_CONNECTIONS if settings.AWS_S3_MAX_POOL_CONNECTIONS > 0 else 10
         config = Config(
             retries={'max_attempts': 3, 'mode': 'adaptive'},
-            max_pool_connections=settings.AWS_S3_MAX_POOL_CONNECTIONS,
+            max_pool_connections=max_pool,
             read_timeout=60,
             connect_timeout=60,
             tcp_keepalive=True
         )
         
         self.session = boto3.Session(
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            region_name=settings.AWS_REGION
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID or None,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY or None,
+            region_name=region
         )
         
-        self.s3_client = self.session.client('s3', config=config)
+        try:
+            self.s3_client = self.session.client('s3', config=config)
+        except Exception as e:
+            logger.warning(f"S3 client initialization skipped/failed: {e}")
+            self.s3_client = None
+
         self.bucket_name = settings.AWS_S3_BUCKET_NAME
-        
-        self.multipart_threshold = settings.AWS_S3_MULTIPART_THRESHOLD
-        self.multipart_chunksize = settings.AWS_S3_MULTIPART_CHUNKSIZE
+        self.multipart_threshold = settings.AWS_S3_MULTIPART_THRESHOLD or (5 * 1024 * 1024)
+        self.multipart_chunksize = settings.AWS_S3_MULTIPART_CHUNKSIZE or (5 * 1024 * 1024)
         self.max_file_size = settings.MAX_FILE_SIZE
 
     def upload_file(self, file: BinaryIO, original_file_name: str, content_type: Optional[str] = None) -> str:

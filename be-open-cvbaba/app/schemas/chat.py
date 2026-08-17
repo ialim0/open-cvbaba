@@ -211,3 +211,7 @@ class ChatStructureResponse(BaseModel):
 class ChatPageResponse(BaseModel):
     page_number: int
     content: str
+
+class TranslateRequest(BaseModel):
+    target_language: str = Field(..., min_length=2, max_length=50, description="Target language code or name (e.g. 'es', 'French')")
+    page_numbers: Optional[List[int]] = Field(None, description="Optional list of 1-based page numbers to translate")
