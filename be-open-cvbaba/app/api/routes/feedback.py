@@ -23,9 +23,6 @@ from app.config import settings
 logger = logging.getLogger(__name__)
 
 
-from app.services.feedback_notification import send_daily_feedback_summary
-
-
 class FeedbackRouter:
     """YC-style feedback: ship fast, measure one metric, talk to users."""
 
@@ -128,7 +125,6 @@ class FeedbackRouter:
 
     async def daily_stats(
         self,
-        send_to_slack: bool = False,
         db: Session = Depends(get_db),
         current_user: User = Depends(get_workspace_user),
     ) -> DailyStatsResponse:
@@ -136,14 +132,7 @@ class FeedbackRouter:
         Daily feedback metrics for admin dashboard.
         
         Returns thumbs up %, samples today, pending contacts, top issues.
-        Requires authentication (admin check via ADMIN_EMAILS).
         """
-        # Check if user is admin
-        if current_user.email not in settings.ADMIN_EMAILS:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Admin access required"
-            )
 
         try:
             # Get today's start (UTC)
@@ -200,9 +189,6 @@ class FeedbackRouter:
                 pending_contacts=pending_contacts,
                 top_issues=top_issues,
             )
-
-            if send_to_slack:
-                await send_daily_feedback_summary(stats)
 
             return stats
 

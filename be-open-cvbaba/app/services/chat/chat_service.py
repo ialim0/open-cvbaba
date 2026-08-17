@@ -188,15 +188,10 @@ class TemplateManager:
             logger.error(f"Error reading template {template_id}: {str(e)}", exc_info=True)
             return None
 
-from app.services.email import EmailService
-
 class ChatService:
     def __init__(self):
         self.template_manager = TemplateManager()
         self.validator = InputValidator()
-        
-        # Initialize email service
-        self.email_service = EmailService()
         
         # Mistral is the only AI provider used by this application.
         self.clients = {
@@ -653,24 +648,26 @@ class ChatService:
         """Create a short-lived token for chat access."""
         payload = {
             "slug": slug,
-            "exp": datetime.now(timezone.utc) + timedelta(hours=settings.VERIFICATION_TOKEN_EXPIRE_HOURS)
+            "exp": datetime.now(timezone.utc) + timedelta(hours=24)
         }
-        return jwt.encode(payload, settings.EMAIL_VERIFICATION_SECRET, algorithm="HS256")
+        secret = settings.SECRET_KEY or "open-cvbaba-secret-key"
+        return jwt.encode(payload, secret, algorithm="HS256")
 
     def create_tracking_pixel_token(self, chat_slug: str, user_id: int) -> str:
         """Create a secure token for the tracking pixel."""
         payload = {
             "slug": chat_slug,
             "uid": user_id,
-            "exp": datetime.now(timezone.utc) + timedelta(hours=settings.VERIFICATION_TOKEN_EXPIRE_HOURS)
+            "exp": datetime.now(timezone.utc) + timedelta(hours=24)
         }
-        # Use existing secret from settings
-        return jwt.encode(payload, settings.EMAIL_VERIFICATION_SECRET, algorithm="HS256")
+        secret = settings.SECRET_KEY or "open-cvbaba-secret-key"
+        return jwt.encode(payload, secret, algorithm="HS256")
         
     def decode_tracking_pixel_token(self, token: str) -> dict:
         """Decode and validate tracking pixel token."""
         try:
-            return jwt.decode(token, settings.EMAIL_VERIFICATION_SECRET, algorithms=["HS256"])
+            secret = settings.SECRET_KEY or "open-cvbaba-secret-key"
+            return jwt.decode(token, secret, algorithms=["HS256"])
         except Exception:
             return None
 
@@ -2827,38 +2824,6 @@ The HTML MUST maintain this structure:
             db.commit()
             db.refresh(new_share)
             
-            # Get the sharer's information for the email (reuse owner from earlier)
-            sharer_name = owner.full_name if owner and owner.full_name else owner.email if owner else "A user"
-            sharer_email = owner.email if owner else None
-            
-            # Send email notification to the recipient
-            try:
-                await self.email_service.send_chat_share_notification(
-                    recipient_email=share_with_email,
-                    sharer_name=sharer_name,
-                    chat_title=chat.title,
-                    chat_slug=chat.slug
-                )
-                logger.info(f"Share notification email sent to {share_with_email}")
-            except Exception as email_error:
-                # Log error but don't fail the share operation
-                logger.error(f"Failed to send share notification email: {email_error}")
-            
-            # Send confirmation email to the sharer
-            if sharer_email:
-                try:
-                    await self.email_service.send_chat_share_confirmation(
-                        sharer_email=sharer_email,
-                        sharer_name=sharer_name,
-                        recipient_email=share_with_email,
-                        chat_title=chat.title,
-                        chat_slug=chat.slug
-                    )
-                    logger.info(f"Share confirmation email sent to {sharer_email}")
-                except Exception as email_error:
-                    # Log error but don't fail the share operation
-                    logger.error(f"Failed to send share confirmation email: {email_error}")
-            
             logger.info(f"Chat {slug} shared with {share_with_email}")
             return new_share
             
@@ -3427,75 +3392,6 @@ The HTML MUST maintain this structure:
         db.add(new_comment)
         db.commit()
         db.refresh(new_comment)
-        
-        # --- Send Email Notifications ---
-        try:
-            # 1. Identify recipients
-            recipients = set()
-            
-            # Add owner if not the commenter
-            if chat.user_id != user.id:
-                # Need to fetch owner email
-                owner = db.query(User).filter(User.id == chat.user_id).first()
-                if owner:
-                    recipients.add(owner.email)
-            
-            # Add shared users if not the commenter
-            shares = db.query(ChatShare).filter(ChatShare.chat_id == chat.id).all()
-            for share in shares:
-                if share.shared_with_email != user.email:
-                    recipients.add(share.shared_with_email)
-            
-            # 2. Send emails
-            if recipients:
-                # Resolve users for tracking and mute check
-                recipient_users = db.query(User).filter(User.email.in_(recipients)).all()
-                
-                # Fetch mute status for all recipients
-                recipient_ids = [u.id for u in recipient_users]
-                mute_statuses = db.query(ChatReadStatus).filter(
-                    ChatReadStatus.chat_id == chat.id,
-                    ChatReadStatus.user_id.in_(recipient_ids)
-                ).all()
-                
-                muted_user_ids = {s.user_id for s in mute_statuses if s.is_muted}
-                
-                # Filter out muted users
-                final_recipients = [u for u in recipient_users if u.id not in muted_user_ids]
-                
-                email_service = EmailService()
-                commenter_name = user.full_name or user.email
-                
-                # In a real async worker environment, this should be offloaded a task queue
-                # OPTIMIZATION: Use asyncio.gather for parallel email dispatch
-                if final_recipients:
-                    async def send_notification(recipient_user):
-                        try:
-                            pixel_token = self.create_tracking_pixel_token(chat.slug, recipient_user.id)
-                            base_url = settings.BACKEND_BASE_URL.rstrip('/')
-                            pixel_url = f"{base_url}/api/chat/{chat.slug}/pixel.png?token={pixel_token}"
-
-                            await email_service.send_comment_notification(
-                                recipient_email=recipient_user.email,
-                                commenter_name=commenter_name,
-                                chat_title=chat.title,
-                                comment_content=content, 
-                                chat_slug=slug,
-                                tracking_pixel_url=pixel_url,
-                                page_number=page_number
-                            )
-                        except Exception as e:
-                            logger.error(f"Failed to send notification to {recipient_user.email}: {e}")
-                    
-                    # Fire all emails in parallel, don't wait for all to complete to avoid blocking
-                    await asyncio.gather(
-                        *[send_notification(u) for u in final_recipients],
-                        return_exceptions=True  # Don't fail if one email fails
-                    )
-        except Exception as e:
-            # Log but don't fail the comment creation
-            logger.error(f"Failed to send comment notifications for chat {slug}: {e}")
-
         return new_comment
 
     async def get_comments(

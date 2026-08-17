@@ -15,11 +15,33 @@ services:
       timeout: 5s
       retries: 10
 
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   api:
     build: ./be-open-cvbaba
     environment:
       DATABASE_URL: postgresql://open-cvbaba:open-cvbaba@postgres:5432/open-cvbaba
       CORS_ORIGINS: '["http://localhost:3000"]'
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_PUBLIC_URL: http://localhost:9000
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_BUCKET_NAME: open-cvbaba
       MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
       MISTRAL_MODEL: ${MISTRAL_MODEL:-mistral-large-latest}
       MISTRAL_PLANNING_MODEL: ${MISTRAL_PLANNING_MODEL:-mistral-large-latest}
@@ -30,6 +52,8 @@ services:
       - "8000:8000"
     depends_on:
       postgres:
+        condition: service_healthy
+      minio:
         condition: service_healthy
 
   frontend:
@@ -44,3 +68,4 @@ services:
 
 volumes:
   postgres_data:
+  minio_data:

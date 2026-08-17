@@ -12,7 +12,6 @@ from app.api.routes.mistral_media import router as mistral_media_router
 
 from app.config import settings
 from app.db import init_db
-from mangum import Mangum
 
 from fastapi.responses import ORJSONResponse
 
@@ -45,6 +44,14 @@ app.include_router(page_notes_router, prefix="/api", tags=["Page Notes"])
 app.include_router(mistral_media_router, prefix="/api/file", tags=["Mistral OCR"])
 app.include_router(mistral_media_router, prefix="/api", tags=["Mistral Voxtral"])
 
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+
+# Ensure uploads directory exists and is mounted for static file serving
+uploads_dir = Path("uploads")
+uploads_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
+
 # Health check endpoint
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -52,9 +59,6 @@ from redis import asyncio as aioredis
 import logging
 
 logger = logging.getLogger(__name__)
-
-# AWS Lambda handler
-handler = Mangum(app)
 
 @app.on_event("startup")
 async def startup():
@@ -69,6 +73,3 @@ async def startup():
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
-
-# AWS Lambda handler
-handler = Mangum(app)
