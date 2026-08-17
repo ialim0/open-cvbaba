@@ -19,6 +19,7 @@ export function useSpeechToText({ url, language = "en-US" }: UseSpeechToTextProp
     const [error, setError] = useState<string | null>(null);
 
     const wsRef = useRef<WebSocket | null>(null);
+    const interimTranscriptRef = useRef('');
     const audioProcessorRef = useRef<ScriptProcessorNode | null>(null);
     const streamRef = useRef<MediaStream | null>(null);
 
@@ -37,6 +38,7 @@ export function useSpeechToText({ url, language = "en-US" }: UseSpeechToTextProp
             setError(null);
             setTranscript('');
             setInterimTranscript('');
+            interimTranscriptRef.current = '';
 
             // Get microphone access
             const stream = await navigator.mediaDevices.getUserMedia({
@@ -137,18 +139,47 @@ export function useSpeechToText({ url, language = "en-US" }: UseSpeechToTextProp
 
             ws.onmessage = (event) => {
                 try {
-                    const data: TranscriptionResult = JSON.parse(event.data);
+                    const data = JSON.parse(event.data) as {
+                        type?: string;
+                        text?: string;
+                        delta?: string;
+                        transcript?: string | { text?: string };
+                        error?: string | { message?: string };
+                    };
+                    const eventType = data.type || '';
+                    const text =
+                        data.text ||
+                        data.delta ||
+                        (typeof data.transcript === 'string' ? data.transcript : data.transcript?.text) ||
+                        '';
+                    const isError = eventType === 'error' || eventType.endsWith('.error');
+                    const isDelta = eventType.includes('delta') || eventType === 'partial';
+                    const isFinal =
+                        eventType === 'transcription' ||
+                        eventType.includes('.done') ||
+                        eventType.includes('.final');
 
-                    if (data.type === 'error') {
-                        console.error('STT Error:', data.text);
-                        setError(data.text || "Unknown error");
-                    } else if (data.type === 'transcription') {
-                        // Final result
-                        setTranscript(prev => prev + (prev ? ' ' : '') + data.text);
+                    if (isError) {
+                        const errorText =
+                            typeof data.error === 'string'
+                                ? data.error
+                                : data.error?.message || text || "Realtime transcription failed";
+                        console.error('STT Error:', errorText);
+                        setError(errorText);
+                    } else if (isDelta && text) {
+                        // Mistral sends realtime text in transcription.text.delta events.
+                        setInterimTranscript(prev => {
+                            const next = prev + text;
+                            interimTranscriptRef.current = next;
+                            return next;
+                        });
+                    } else if (isFinal) {
+                        const finalText = text || interimTranscriptRef.current;
+                        if (finalText) {
+                            setTranscript(prev => prev + (prev ? ' ' : '') + finalText.trim());
+                        }
                         setInterimTranscript('');
-                    } else if (data.type === 'partial') {
-                        // Interim result
-                        setInterimTranscript(data.text);
+                        interimTranscriptRef.current = '';
                     }
                 } catch (e) {
                     console.error('Failed to parse STT message', e);
@@ -217,6 +248,7 @@ export function useSpeechToText({ url, language = "en-US" }: UseSpeechToTextProp
     const clearTranscript = useCallback(() => {
         setTranscript('');
         setInterimTranscript('');
+        interimTranscriptRef.current = '';
     }, []);
 
     return {
