@@ -151,8 +151,6 @@ const TemplateSelector = ({
               className="relative h-full w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900"
               aria-hidden="true"
             >
-              <div className="absolute inset-0 bg-[url('/images/paper-texture.png')] opacity-5" />
-
               {isHovered && !isLocked && (
                 <>
                   {!isSelected && (
