@@ -196,7 +196,7 @@ const TemplateSelector = ({
                   className="object-contain w-full h-full p-1 sm:p-2"
                   loading="lazy"
                   onError={(e) => {
-                    e.currentTarget.src = '/images/open-cvbaba-black.png';
+                    e.currentTarget.src = '/images/open-cvbaba-logo.png';
                   }}
                 />
               )}
@@ -333,7 +333,7 @@ const TemplateSelector = ({
                       alt={t('templateSelector.templateAlt', { name: previewTemplate.name })}
                       className="object-contain w-full h-full rounded-md"
                       onError={(e) => {
-                        e.currentTarget.src = '/images/babaai.png';
+                        e.currentTarget.src = '/images/open-cvbaba-logo.png';
                       }}
                     />
                   )}

@@ -22,9 +22,9 @@ export const metadata: Metadata = {
       "Generate beautifully formatted PDF and Word documents instantly. More than just writing—create stunning reports, proposals, and CVs with AI.",
     images: [
       {
-        url: "/images/header-babaai-v1.png",
-        width: 1200,
-        height: 630,
+        url: "/images/open-cvbaba-logo.png",
+        width: 1254,
+        height: 1254,
         alt: "open-cvbaba - AI Document Designer",
       },
     ],
@@ -34,10 +34,10 @@ export const metadata: Metadata = {
     title: "open-cvbaba - Design & Create Professional Documents",
     description:
       "Generate beautifully formatted PDF and Word documents instantly. More than just writing—create stunning reports, proposals, and CVs with AI.",
-    images: ['/images/header-babaai-v1.png'],
+    images: ['/images/open-cvbaba-logo.png'],
   },
   icons: {
-    icon: '/images/header-babaai-v1.png',
+    icon: '/images/open-cvbaba-logo.png',
   },
 };
 
