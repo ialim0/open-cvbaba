@@ -322,13 +322,13 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
                           <Plus className="h-6 w-6 text-muted-foreground" />
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          {debouncedSearchQuery ? "Nochatsfound" : "Noactivitiesyet"}
+                          {debouncedSearchQuery ? "No CVs found" : "No CVs yet"}
                         </p>
                         <button
                           onClick={handleNewDocument}
                           className="mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
                         >
-                          {"Createfirstdocument"}
+                          {"Create your first CV"}
                         </button>
                       </div>
                     )}
