@@ -37,6 +37,18 @@ from app.models.enums import AIModel, AccessLevel
 
 logger = logging.getLogger(__name__)
 
+MAX_CV_PAGES = 4
+
+
+def enforce_cv_page_limit(html: str, requested_pages: Optional[int]) -> str:
+    """Remove generated page containers beyond the requested CV limit."""
+    target = max(1, min(int(requested_pages or 1), MAX_CV_PAGES))
+    soup = BeautifulSoup(html, "html.parser")
+    pages = soup.find_all("div", class_="pdf-page")
+    for page in pages[target:]:
+        page.decompose()
+    return str(soup)
+
 def get_model_names():
     """Return the single configured Mistral model."""
     return {AIModel.MISTRAL: settings.MISTRAL_MODEL}
@@ -740,6 +752,9 @@ class ChatService:
                 )
 
 
+            # Enforce the product limit before persisting page rows.
+            pdf_content = enforce_cv_page_limit(pdf_content, num_pages)
+
             # Parse content for pages and global styles
             soup = BeautifulSoup(pdf_content, 'html.parser')
             styles = [str(s) for s in soup.find_all('style')]
@@ -938,6 +953,7 @@ class ChatService:
                     title = await title_task
                     title = title.replace("\x00", "") if title else "Untitled"
 
+                    html_content = enforce_cv_page_limit(html_content, num_pages)
                     soup = BeautifulSoup(html_content, 'html.parser')
                     styles = [str(s) for s in soup.find_all('style')]
                     global_styles = "\n".join(styles) if styles else None

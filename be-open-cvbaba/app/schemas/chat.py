@@ -17,10 +17,10 @@ class ChatInput(BaseModel):
         "en", description="Language of the generated document; the website UI remains English"
     )
     num_pages: Optional[int] = Field(
-        None,
+        1,
         ge=1,
-        le=70,
-        description="Optional desired number of pages (1-70). If not specified, AI determines optimal length."
+        le=4,
+        description="Desired number of CV pages (1-4). Defaults to one page."
     )
     layout_image_base64: Optional[str] = Field(
         None,

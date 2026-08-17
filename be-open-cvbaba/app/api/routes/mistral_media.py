@@ -7,9 +7,12 @@ import json
 import logging
 from typing import AsyncIterator
 
-from fastapi import APIRouter, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
 
 from app.config import settings
+from app.core.workspace import get_workspace_user
+from app.models import User
+import httpx
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -24,6 +27,37 @@ def _require_key() -> None:
     if not settings.MISTRAL_API_KEY:
         raise HTTPException(status_code=503, detail="MISTRAL_API_KEY is not configured")
 
+
+
+@router.post("/realtime/token")
+async def create_realtime_token(current_user: User = Depends(get_workspace_user)):
+    """Mint a short-lived Mistral realtime token for the browser microphone client."""
+    _require_key()
+    model = settings.MISTRAL_REALTIME_MODEL
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as http_client:
+            response = await http_client.post(
+                f"{settings.MISTRAL_BASE_URL.rstrip('/')}/client/sessions",
+                headers={
+                    "Authorization": f"Bearer {settings.MISTRAL_API_KEY}",
+                    "Content-Type": "application/json",
+                },
+                json={"purpose": "realtime", "model": model},
+            )
+        response.raise_for_status()
+        payload = response.json()
+        client_secret = payload.get("client_secret") or {}
+        token = client_secret.get("value")
+        if not token:
+            raise ValueError("Mistral did not return a realtime client token")
+        return {
+            "token": token,
+            "model": model,
+            "expires_at": client_secret.get("expires_at") or payload.get("expires_at"),
+        }
+    except (httpx.HTTPError, ValueError) as exc:
+        logger.exception("Failed to mint Mistral realtime token")
+        raise HTTPException(status_code=502, detail="Unable to start realtime transcription") from exc
 
 @router.post("/extract_text")
 async def extract_text(file: UploadFile = File(...)):

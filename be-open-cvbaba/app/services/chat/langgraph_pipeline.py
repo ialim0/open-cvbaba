@@ -533,6 +533,7 @@ async def generate_code_node(state: DocumentGraphState) -> Dict[str, Any]:
 
     prompt_parts.append(
         "===== FINAL DIRECTIVE =====\n"
+        f"Generate exactly {num_pages} page container(s) and never exceed {num_pages}. "
         f"Generate the full {num_pages}-page document now. Return ONLY raw HTML starting with <!DOCTYPE html>."
     )
 
@@ -607,8 +608,11 @@ async def validate_html_node(state: DocumentGraphState) -> Dict[str, Any]:
         }
 
     pages = soup.find_all(class_=re.compile(r"\bpdf-page\b"))
+    target_pages = max(1, min(int(state.get("num_pages") or 1), 4))
     if not pages:
         errors.append("Document missing required .pdf-page container element.")
+    elif len(pages) > target_pages:
+        errors.append(f"Document contains {len(pages)} pages; maximum for this request is {target_pages}.")
 
     styles = soup.find_all("style")
     style_text = "\n".join(s.get_text() for s in styles) if styles else ""

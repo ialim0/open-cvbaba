@@ -61,12 +61,25 @@ export function useSpeechToText({ url, language = "en-US" }: UseSpeechToTextProp
             source.connect(analyser);
             analyserRef.current = analyser;
 
-            // Construct WebSocket URL
-            const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const baseUrl = url || process.env.NEXT_PUBLIC_WS_URL || `${wsProtocol}//${window.location.host}`;
-            const fullUrl = `${baseUrl}/api/ws/transcribe/${language}`.replace(/\/+$/, '');
+            // Mint a short-lived Mistral token server-side. Browser clients must
+            // never receive or send the long-lived MISTRAL_API_KEY.
+            const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || window.location.origin;
+            const tokenResponse = await fetch(`${apiBaseUrl}/api/realtime/token`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: { Accept: 'application/json' },
+            });
+            if (!tokenResponse.ok) {
+                throw new Error('Unable to start realtime transcription');
+            }
 
-            const ws = new WebSocket(fullUrl);
+            const tokenPayload: { token?: string; model?: string } = await tokenResponse.json();
+            if (!tokenPayload.token || !tokenPayload.model) {
+                throw new Error('Realtime transcription token was not returned');
+            }
+
+            const websocketUrl = `wss://api.mistral.ai/v1/audio/transcriptions/realtime?model=${encodeURIComponent(tokenPayload.model)}`;
+            const ws = new WebSocket(websocketUrl, ['realtime', tokenPayload.token]);
             wsRef.current = ws;
 
             // VAD Processing Loop
@@ -174,8 +187,9 @@ export function useSpeechToText({ url, language = "en-US" }: UseSpeechToTextProp
             };
 
         } catch (err) {
-            console.error('Microphone access denied:', err);
-            setError("Microphone access denied. Please allow permission.");
+            console.error('Realtime transcription startup failed:', err);
+            const message = err instanceof Error ? err.message : "Unable to start realtime transcription";
+            setError(message);
             setIsListening(false);
             isListeningRef.current = false;
         }

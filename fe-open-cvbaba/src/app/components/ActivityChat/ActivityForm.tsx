@@ -704,7 +704,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
                       className="bg-transparent border-none text-sm font-semibold text-gray-900 dark:text-gray-100 focus:ring-0 cursor-pointer py-0 pl-1 pr-6"
                       style={{ backgroundImage: 'none' }}
                     >
-                      {[...Array(70)].map((_, i) => (
+                      {[...Array(4)].map((_, i) => (
                         <option key={i + 1} value={i + 1}>{i + 1}</option>
                       ))}
                     </select>

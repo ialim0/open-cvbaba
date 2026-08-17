@@ -27,6 +27,21 @@ from app.services.brand_dna import BrandDNAStore
 
 logger = logging.getLogger(__name__)
 
+MAX_CV_PAGES = 4
+
+
+def normalize_cv_page_count(value: object) -> int:
+    """Return a safe CV page count or reject values outside the product limit."""
+    if value in (None, ""):
+        return 1
+    try:
+        page_count = int(value)
+    except (TypeError, ValueError) as exc:
+        raise HTTPException(status_code=422, detail="CV page count must be an integer from 1 to 4") from exc
+    if not 1 <= page_count <= MAX_CV_PAGES:
+        raise HTTPException(status_code=422, detail="CV page count must be between 1 and 4")
+    return page_count
+
 def parse_page_range(page_range: Optional[str]) -> Optional[List[int]]:
     """
     Parse page range string (e.g. '1-3', '1,5') into 0-based indices.
@@ -212,7 +227,7 @@ class ChatRouter:
                     chat_input = ChatInput(**data)
                     user_input = chat_input.user_input
                     template_id = chat_input.template_id
-                    num_pages = chat_input.num_pages
+                    num_pages = normalize_cv_page_count(chat_input.num_pages)
                     layout_image_base64 = chat_input.layout_image_base64
                     layout_image_url = chat_input.layout_image_url
                     brand_id = chat_input.brand_id
@@ -227,7 +242,7 @@ class ChatRouter:
                 user_input = form.get("user_input")
                 template_id = form.get("template_id") or None
                 num_pages_raw = form.get("num_pages")
-                num_pages = int(num_pages_raw) if num_pages_raw else None
+                num_pages = normalize_cv_page_count(num_pages_raw)
                 layout_image_base64 = form.get("layout_image_base64")
                 layout_image_url = form.get("layout_image_url")
                 brand_id = form.get("brand_id") or None
@@ -336,7 +351,7 @@ class ChatRouter:
                     chat_input = ChatInput(**data)
                     user_input = chat_input.user_input
                     template_id = chat_input.template_id
-                    num_pages = chat_input.num_pages
+                    num_pages = normalize_cv_page_count(chat_input.num_pages)
                     layout_image_base64 = chat_input.layout_image_base64
                     layout_image_url = chat_input.layout_image_url
                 except Exception as e:
@@ -348,7 +363,7 @@ class ChatRouter:
                 user_input = form.get("user_input")
                 template_id = form.get("template_id") or None
                 num_pages_raw = form.get("num_pages")
-                num_pages = int(num_pages_raw) if num_pages_raw else None
+                num_pages = normalize_cv_page_count(num_pages_raw)
                 layout_image_base64 = form.get("layout_image_base64")
                 layout_image_url = form.get("layout_image_url")
                 
