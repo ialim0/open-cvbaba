@@ -23,6 +23,10 @@ The hosted project was later paused because of compute costs and the rapidly cha
 
 ## Architecture
 
+The full system architecture is shown below. It covers the frontend, FastAPI orchestration, LangGraph generation pipeline, Mistral services, pgvector brand retrieval, visual self-critique loop, persistence, and Docker runtime.
+
+![open-cvbaba technical architecture overview](fe-open-cvbaba/public/images/architecture-overview.png)
+
 The system is divided into a frontend, a Python API, PostgreSQL, a rendering layer, and one AI provider layer.
 
 ```mermaid
