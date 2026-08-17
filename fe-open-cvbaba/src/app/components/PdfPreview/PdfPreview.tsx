@@ -1563,62 +1563,8 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   };
 
   const handleWordDownload = async () => {
-    if (!chatSlug) {
-      toast.error("No document found to download");
-      return;
-    }
-
     setShowFormatMenu(false);
-    setIsGenerating(true);
-    const toastId = toast.loading("Preparing Word document...");
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/chat/${chatSlug}/export/word`,
-        {
-          method: 'GET',
-          credentials: 'include',
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to generate Word document');
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      const safeTitle = fullName
-        ? `cv_${fullName.replace(/[^a-z0-9_\- ]/gi, '').replace(/\s+/g, "_")}`
-        : `document_${chatSlug}`;
-      link.download = `${safeTitle}.docx`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-
-      toast.update(toastId, {
-        render: "Download success",
-        type: "success",
-        isLoading: false,
-        autoClose: 5000,
-        closeButton: true,
-        closeOnClick: true,
-      });
-    } catch (error) {
-      console.error('Word export error:', error);
-      toast.update(toastId, {
-        render: "Word export failed. Please try again.",
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
-        closeButton: true,
-        closeOnClick: true,
-      });
-    } finally {
-      setIsGenerating(false);
-    }
+    toast.info("Word export is coming soon!");
   };
 
   const handleIframeLoad = () => {

@@ -148,7 +148,7 @@ class ChatRouter:
         )(self.translate_chat)
 
         self.router.get("/chat/{slug}/export/word")(self.export_chat_word)
-        self.router.get("/chat/{slug}/export/pdf")(self.export_chat_to_pdf)
+        self.router.get("/chat/{slug}/export/pdf")(self.export_chat_pdf)
         
         self.router.delete("/chat/{slug}", status_code=status.HTTP_204_NO_CONTENT)(self.delete_chat)
         self.router.get("/chat/{slug}/versions", response_model=List[ChatVersionResponse])(self.get_chat_versions)
@@ -1404,108 +1404,5 @@ class ChatRouter:
                 detail="Internal Server Error"
             )
 
-    async def export_chat_word(
-        self,
-        slug: str,
-        pages: Optional[str] = Query(None, description="Page range (e.g. '1-3', '1,5')"),
-        current_user: User = Depends(get_workspace_user),
-        db: Session = Depends(get_db),
-        chat_service: ChatService = Depends(get_chat_service)
-    ):
-        """Export chat as Word document."""
-        self._log_user_activity("Exporting Word", current_user, slug)
-        try:
-            # Parse page range
-            page_indices = None
-            if pages:
-                # Local helper or import if moved
-                def parse_page_range_local(pr):
-                     parts = pr.split(',')
-                     indices = []
-                     for part in parts:
-                         if '-' in part:
-                             start, end = map(int, part.split('-'))
-                             indices.extend(range(start, end + 1))
-                         else:
-                             indices.append(int(part))
-                     return [i - 1 for i in indices] # Convert to 0-based
-                page_indices = parse_page_range_local(pages)
-
-            # Get chat content
-            chat_data = await chat_service.get_specific_chat(
-                db=db, 
-                user_id=current_user.id, 
-                slug=slug
-            )
-            
-            # Use WordService
-            word_service = WordService()
-            doc_stream = await word_service.create_word_document(
-                html_content=chat_data["content"],
-                page_indices=page_indices
-            )
-            
-            filename = f"{chat_data.get('title', 'document')}.docx"
-            headers = {
-                'Content-Disposition': f'attachment; filename="{filename}"'
-            }
-            
-            return StreamingResponse(
-                doc_stream, 
-                media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                headers=headers
-            )
-            
-        except HTTPException as http_exc:
-            logger.warning(f"HTTPException during Word export: {http_exc.detail}")
-            raise http_exc
-        except Exception as e:
-            logger.error(f"Word export failed for user {current_user.email[:5]}**** (ID: {current_user.id}): {e}")
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Internal Server Error"
-            )
-
-    async def export_chat_to_pdf(
-        self,
-        slug: str,
-        current_user: User = Depends(get_workspace_user),
-        db: Session = Depends(get_db),
-        chat_service: ChatService = Depends(get_chat_service)
-    ):
-        """Export chat as PDF document."""
-        self._log_user_activity("Exporting PDF", current_user, slug)
-        try:
-            # Get chat content
-            chat_data = await chat_service.get_specific_chat(
-                db=db, 
-                user_id=current_user.id, 
-                slug=slug
-            )
-            
-            # Use PDFService
-            pdf_service = PDFService()
-            pdf_bytes = await run_in_threadpool(pdf_service.html_to_pdf, chat_data["pdf_content"])
-            
-            filename = f"{chat_data.get('title', 'document')}.pdf"
-            headers = {
-                'Content-Disposition': f'attachment; filename="{filename}"'
-            }
-            
-            return Response(
-                content=pdf_bytes,
-                media_type="application/pdf",
-                headers=headers
-            )
-            
-        except HTTPException as http_exc:
-            logger.warning(f"HTTPException during PDF export: {http_exc.detail}")
-            raise http_exc
-        except Exception as e:
-            logger.error(f"PDF export failed for user {current_user.email[:5]}**** (ID: {current_user.id}): {e}")
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Internal Server Error"
-            )
 
 chat_router = ChatRouter().router

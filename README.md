@@ -31,7 +31,7 @@ Designed to run locally with Docker without external accounts, OAuth, passwords,
 Choose from 24 curated templates, configure target roles, record live voice notes via Voxtral, or upload existing resume files:
 
 <div align="center">
-  <img src="docs/images/vibe-form.png" alt="Document Configuration Form" width="850" />
+  <img src="docs/images/optinal-template.png" alt="Document Configuration & Template Selection" width="850" />
 </div>
 
 ### 2. Real-Time Streaming Document Generation
@@ -41,11 +41,11 @@ Watch your document generate live with sub-second Server-Sent Events (SSE) strea
   <img src="docs/images/live-streaming.png" alt="Real-time Streaming Generation" width="850" />
 </div>
 
-### 3. WYSIWYG Shadow DOM Preview & A4 Pagination
-Isolated document rendering sandbox with realistic A4 pagination, page controls, and full theme styling:
+### 3. Spatial Wireframe Canvas & Layout Sketching
+Sketch custom document layouts directly or upload napkin sketches and photos for automated AST structuring:
 
 <div align="center">
-  <img src="docs/images/vibe-canvas.png" alt="WYSIWYG Shadow DOM Document Canvas" width="850" />
+  <img src="docs/images/vibe-canvas.png" alt="Spatial Wireframe Canvas" width="850" />
 </div>
 
 ### 4. Direct In-Place Text Editing
@@ -59,7 +59,7 @@ Edit any section, header, or bullet point directly on the canvas without leaving
 Download clean, ATS-friendly documents as print-ready PDF (WeasyPrint) or editable Microsoft Word (`.docx`) files with one click:
 
 <div align="center">
-  <img src="docs/images/example-vibe-cv.png" alt="Final Document Preview" width="850" />
+  <img src="docs/images/final-cv-preview.png" alt="Final Document Preview" width="850" />
 </div>
 
 ---

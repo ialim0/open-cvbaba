@@ -22,14 +22,21 @@ class WordService:
     """Service for converting HTML documents to Word."""
     
     @classmethod
-    def html_to_word(cls, html_content: str, pages: Optional[List[int]] = None) -> bytes:
+    def html_to_word(
+        cls,
+        html_content: str,
+        pages: Optional[List[int]] = None,
+        page_indices: Optional[List[int]] = None
+    ) -> bytes:
         """
         Convert HTML content to Word document bytes.
         
         Args:
             html_content: The HTML string to convert
             pages: List of 0-based page indices to keep. If None, keep all.
+            page_indices: Alias for pages.
         """
+        target_pages = pages if pages is not None else page_indices
         try:
             doc = Document()
             soup = BeautifulSoup(html_content, 'html.parser')
@@ -39,8 +46,8 @@ class WordService:
             
             if pdf_pages:
                 # Filter pages if requested
-                if pages is not None:
-                    indexes_to_keep = set(pages)
+                if target_pages is not None:
+                    indexes_to_keep = set(target_pages)
                     pdf_pages = [p for i, p in enumerate(pdf_pages) if i in indexes_to_keep]
                 
                 if not pdf_pages:
@@ -69,6 +76,21 @@ class WordService:
         except Exception as e:
             logger.error(f"Word generation failed: {e}", exc_info=True)
             raise
+    
+    @classmethod
+    def create_word_document(
+        cls,
+        html_content: str,
+        pages: Optional[List[int]] = None,
+        page_indices: Optional[List[int]] = None
+    ) -> BytesIO:
+        """
+        Create a Word document and return as a BytesIO stream.
+        """
+        word_bytes = cls.html_to_word(html_content, pages=pages, page_indices=page_indices)
+        buffer = BytesIO(word_bytes)
+        buffer.seek(0)
+        return buffer
     
     @classmethod
     def _process_element(cls, doc: Document, element, paragraph=None):
